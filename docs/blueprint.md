@@ -1,0 +1,135 @@
+# **App Name**: ScentForge
+
+## Core Features:
+
+- Exchange Solvent: Automatically calculate solvent adjustments when changing raw material concentrations to maintain overall formula weight and ratios.
+- Dynamic Scaling: Scale formulas by concentration (e.g., Eau de Toilette to Eau de Parfum) with automatic calculation of concentrate and solvent adjustments.
+- Fragrance Pyramid Visualization: Generate a visual 'Fragrance Pyramid' (Top/Mid/Base) and 'Fingerprint' (Olfactive Families) based on the input ingredients.
+- Component vs. Product Tracking: Track the cost and inventory of concentrated 'Juice' separately from the finished bottled product.
+- Granular Costing (COGS): Calculate the exact cost per gram of a formula based on ingredient prices and factor in shipping costs to provide a true 'Unit Cost'.
+- IFRA Compliance Flagging: Automatically flag ingredients in red if the user exceeds the safe limit for a specific IFRA category.
+- AI Formula Spark: The AI tool generates randomized but chemically informed starting formulas to inspire perfumers, using grams and chemical names.
+- Batch Tracking: Track which batch of raw material went into which bottle of perfume.
+- Allergen Aggregation: Calculate and display the total allergen load for EU labeling requirements.
+- Comparison Game: A game to input two materials and record the ratio at which they balance each other.
+- Time-Based Evaluation Logging: Log the smell of a material over time to create a longevity curve.
+- Flexible Categorization: Allow users to create custom tags to organize their libraries
+- Pre-populated Database: Provide a library of standard materials with density, IFRA limits and odor profiles
+- Pre-Dilution Tracker: User specifies each raw material with its supplier and dilution status. Software automatically calculates pure material weight, solvent weight contributed, and total formula concentration.
+- Automatic Concentration Tracking: Real-time display of total weight, pure vs. solvent breakdown, percentage of each ingredient, and visual warning if total > 100%.
+- Dilution Simulation: "What-if" mode for calculating solvent adjustments when changing dilution levels or final volumes.
+- Multi-Ingredient Solvent Exchange: Batch operations for exchanging multiple ingredients simultaneously between different solvent bases.
+- Scale by Total Weight: Scale formulas by specifying desired total finished volume/weight.
+- Scale by Concentration: Scale formulas by specifying desired final concentration (e.g., changing from Eau de Toilette to Eau de Parfum).
+- Batch Scaling: Scale all ingredients proportionally based on a specified batch size.
+- Concentration Visualization: Real-time display of fragrance pyramid and expected longevity characteristics at different concentrations.
+- Automatic Pyramid Generation: Generates a stacked bar chart showing the percentage of top, heart (upper mid), mid, base/heart (lower mid), and dry down/base notes.
+- Olfactive Family Fingerprint: Creates a radial/spider diagram showing the distribution across 10+ olfactive families.
+- Longevity Curve Projection: Predicts scent timeline based on ingredient volatility data.
+- Formula Card Display: Expandable cards for each ingredient showing name, concentration, pure weight, supplier, unit cost, IFRA category, and total cost.
+- Summary Metrics: Displays total formula weight, pure material weight, solvent weight, final dilution strength, total cost, cost per ml, and estimated retail price.
+- Warnings & Alerts: Red flags if any ingredient exceeds IFRA limit, formula total > 100%, pre-dilution mismatch, or allergen total exceeds labeling threshold.
+- Universal Input Acceptance: Accepts any unit: grams, drops, ml, parts, percentages and converts automatically.
+- Density Database: Pre-loaded densities for 500+ common fragrance materials.
+- Drop Estimation Warning: Warns against drop-based measurement and recommends grams for accuracy.
+- Pre-populated IFRA Database: Database including 2,000+ fragrance materials, IFRA Category 1–12 limits, concentration limits, restrictions/bans, and last IFRA standard reference.
+- Real-Time Limit Verification: Checks ingredients against IFRA limits for selected category as the user inputs them.
+- Category Selector: Dropdown menu to select product category, automatically adjusting limits based on selection.
+- Compliance Report Export: Generates IFRA Compliance Report as PDF with formula name, ingredients, percentages, IFRA limits, and overall compliance status.
+- Material Swap Suggestions: Suggests compliant alternatives if an ingredient exceeds its IFRA limit.
+- Allergen Database (82 Total): Pre-loaded with all 82 EU allergens, including CAS numbers, INCI names, and alternate synonyms.
+- Allergen Presence Mapping: For each raw material, specifies which allergens it contains and at what concentration.
+- Automatic Allergen Calculation: Calculates allergen contributions from each ingredient, summing them for a threshold check against EU labeling requirements.
+- Allergen Label Generator: Generates INCI-compliant label listing all raw materials and allergens above threshold.
+- Allergen Warnings: Provides red flags if total allergen load exceeds user-defined safety threshold, with an option to view an "allergen report".
+- Transition Support (Until July 31, 2026): Toggle for complying with old 26-allergen list vs. new 82-allergen list, assisting brands in planning migration.
+- Batch Tracking on Raw Materials: Tracks ingredient name, supplier, batch number, purchase date, quantity, and cost per unit.
+- Batch-to-Product Traceability: Logs which product batch was created using which raw material batch.
+- Recall Lookup: Scans all products and flags those containing a recalled batch of material.
+- Customer Notification Template: Auto-generates professional recall notice with refund/replacement policy and links to safety information.
+- Manufacturing Workflow: Tracks the process of creating "Juice" (Concentrate) and then bottling the finished product.
+- Inventory Deduction Logic: Manages two inventory queues: raw materials and intermediate components, deducting materials as they are used.
+- Batch Genealogy: Creates a traceability chain from finished product to Juice batch to raw materials batches.
+- Material Cost Input: Allows users to input unit cost, purchase quantity, and total cost for each raw material.
+- Shipping Cost Allocation: Splits shipping costs across all materials in an order using equal split, weight-based, or value-based allocation methods.
+- Formula COGS Calculation: Calculates raw material cost, ethanol cost, and total material cost per 10g concentrate and per finished bottle.
+- Manufacturing Yield & Evaporation: Accounts for expected yield and evaporation during aging, adjusting raw material quantities required.
+- COGS Report Export: Generates COGS Analysis report with ingredient breakdown, packaging costs, shipping allocation, yield calculations, and suggested retail prices.
+- Price Database: Master database of suppliers with material, size options, price, shipping cost estimate, and delivery time.
+- Price Comparison Table: Displays comparison table of suppliers for a specified material and quantity.
+- Recommendation Engine: Recommends best value, best speed, or best combined cost and speed for material purchases.
+- Historical Price Tracking: Optionally logs price changes over time, creating a chart showing price trends.
+- Inventory Dashboard: Quick view of total materials in stock, materials running low, materials out of stock, and materials expiring soon.
+- Low-Stock Alerts: Sends email/push notification when a material drops below its minimum threshold.
+- Location Tagging: Allows users to specify the storage location of each material with custom locations and optional photo.
+- Expiry Date Tracking: Tracks expiry date for each material and alerts users when materials are expiring soon.
+- One-on-One Material Comparison: Game to compare two materials and record the ratio at which they are equally strong.
+- Olfactory Potency Database: System aggregates comparisons across users to generate an average result with standard deviation.
+- Randomized Blind Tests: Blind test challenge to rank materials from weakest to strongest smell.
+- Longevity Curve Mapping: Longevity challenge to record the smell of a single material at different time intervals.
+- Gamification Elements: Points, achievements, and leaderboards to make olfactory training fun and consistent.
+- Evaluation Prompt System: Sets up an evaluation schedule for a formula and offers reminders at scheduled times.
+- Standardized Evaluation Form: Form to log overall impression, scent profile, longevity, color, and notes at each time point.
+- Evolution Timeline Visualization: Chart and text timeline showing how evaluation changed from Day 0 → Day 42.
+- Chemical Explanation Overlay: Explains what's happening chemically at each evaluation point.
+- Olfactory Baseline Test: Nose Profile questionnaire to determine user's sensitivity to different scent profiles.
+- Dynamic Sensitivity Adjustments: Tracks sensitivity patterns as user plays Comparison Game and makes personal adjustments.
+- Personalized Recommendations: Software provides recommendations based on the users scent profile
+- Material Preference Profile: Users can tag materials as liked, disliked or neutral and the AI will adjust future prompts
+- Specialized AI Training Data: The AI is trained on published fragrance patents, professional fragrance databases, and real-world formulas.
+- Accord Suggestion Engine: Suggests a bridge given two components, with amounts and reasoning
+- Banned Material Replacement Suggestions: AI suggests what materials can be used to replace a banned material
+- Fixative Recommendation for Longevity: AI suggests a fixative for extending the life of a scent
+- Chemistry Constraint Validation: AI validates is the materials chemically compatible and provides warnings for problematic combos
+- Formula Skeleton Generator: AI generates a base structure that still respects various constraints, for the user to build from
+- Master Material Database: Pre-loaded with 2,000+ materials including common synthetics, natural essentials, fixatives, and solvents.
+- Search & Import: Search the pre-populated database and add materials to the user's personal library.
+- User Customization: Allows users to edit any pre-populated entry with their own data.
+- Community-Driven Updates: Allows users to contribute data back to the master database.
+- Unlimited Custom Tags: Users can create a lot of tags. There should be no limits on how many tags they can create.
+- Multi-tag Assignment: Each material should have the ability to be assigned to multiple tags
+- Filter & Search by Tags: Search and filter for materials based on tag assignments
+- Search Bar Syntax: Shows all materials with 'Iso E' in name
+- Filter Panel: Checkboxes for olfactive families, suppliers, price range, IFRA category, allergen content, stock status, expiry status.
+- Saved Filter Views: Users can save the filters that they have selected
+- Version Control: Automatically tracks which version you are on, based on the date
+- Version Comparison View: A side by side comparison of versions
+- Rollback Functionality: If a user wants to go to a previous version, they can revert to it.
+- Version Notes & Tags: Users can tag their versions with custom notes
+- Export as PDF: The formula is exported as a professional sheet
+- Export as JSON: For use on a machine
+- Export as CSV: The sheet can be used as a spreadsheet
+- QR Code Generation: A QR code is generated to provide a unique link back to a particular formula
+- Share Functionality: Ability to share and hide aspects of the formula for educational purposes
+- SDS Database: Integrate safety data sheets for each material
+- Quick Access: Quick access to SDS
+- Safety Warnings on Formula: If you select a formula, provide any associated safety warnings
+- Web Application: The web app to be available to desktop computers
+- iOS App: A version of the app for all apple devices
+- Android App: A version of the app for all android devices
+- Sync Across Devices: Cloud sync capabilities to use the app across different devices
+- Offline Sync: When the user is online, sync data to device storage, so that when offline it's still possible to use the app
+- Offline Capabilities: Offline capabilties so that the app can still perform actions when not online
+- Offline Limitations: Limitations to the offline mode, because the internet is needed
+- Automatic Sync: Changes sync to server
+- Conflict Resolution: If multiple people are making changes at the same time
+- Collaborative Editing: If multiple users share a single formula, they can edit it at the same time
+- Biometric Auth: Use biometrics to login
+- End-to-End Encryption: All the data should be encrypted
+- Privacy Options: Users can choose full privacy
+- Automatic Backups: Backups happen on the regular
+- Manual Backup Export: There are a range of manual backup options
+- Data Recovery: If a data is deleted, there is a way to recover it
+- Public API: A public API to allow other third-party developers to make integrations
+- Webhook Support: There is webhook support
+- Data Export for Analysis: This will help researchers and brands perform research
+
+## Style Guidelines:
+
+- Primary color: Deep violet (#7957D6) to convey creativity and sophistication.
+- Background color: Very light grey (#F4F3F7), a desaturated near-white that lets the violet stand out.
+- Accent color: Lilac (#B294F2) to add a soft, complementary contrast to the violet.
+- Body and headline font: 'Alegreya', a serif with an elegant and contemporary feel, suits both headings and body text.
+- Use minimalist line icons to represent ingredients, categories, and functions.
+- Implement a clean, modular layout that supports clear data presentation and easy navigation across formulation, inventory, and compliance modules.
+- Incorporate subtle transitions and animations when scaling formulas, visualizing pyramids, and receiving AI suggestions.
