@@ -19,9 +19,26 @@ function DashboardPageContent() {
 
   React.useEffect(() => {
     const formulaId = searchParams.get('formula')
-    const foundFormula = allFormulas.find(f => f.id === formulaId)
-    if (foundFormula) {
-        setFormula(foundFormula)
+    const isNew = searchParams.get('new')
+
+    if (isNew) {
+      setFormula({
+        id: `formula-${Date.now()}`,
+        name: "Untitled Formula",
+        ingredients: [],
+      })
+      return;
+    }
+
+    if (formulaId) {
+        const foundFormula = allFormulas.find(f => f.id === formulaId)
+        if (foundFormula) {
+            setFormula(foundFormula)
+        } else {
+            setFormula(initialFormula)
+        }
+    } else {
+        setFormula(initialFormula)
     }
   }, [searchParams])
 

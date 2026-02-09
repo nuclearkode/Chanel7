@@ -16,10 +16,12 @@ export default function FormulasPage() {
           <div className="p-4 sm:p-6 lg:p-8 flex flex-col h-full">
             <div className="flex items-center justify-between mb-6">
                 <h1 className="text-3xl font-bold text-foreground font-headline">Formulas</h1>
-                <Button>
-                  <PlusCircle className="mr-2"/>
-                  New Formula
-                </Button>
+                <Link href="/dashboard?new=true">
+                  <Button>
+                    <PlusCircle className="mr-2"/>
+                    New Formula
+                  </Button>
+                </Link>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {allFormulas.map((formula) => (
