@@ -27,8 +27,19 @@ export type Ingredient = {
   ifraLimit: number; // percentage
 };
 
+export type Evaluation = {
+  id: string;
+  date: string;
+  dayOffset: number; // e.g. 0, 3, 7, 14, 28, 42
+  rating: number; // 1-10
+  notes: string;
+  longevity?: number; // hours
+  color?: string;
+};
+
 export type Formula = {
   id: string;
   name: string;
   ingredients: Ingredient[];
+  evaluations?: Evaluation[];
 };
