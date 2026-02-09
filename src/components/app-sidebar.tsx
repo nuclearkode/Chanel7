@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -18,12 +17,13 @@ import {
 import {
   LayoutDashboard,
   FlaskConical,
-  ClipboardList,
   Library,
   Trophy,
   Settings,
   UserCircle,
-  FileCheck2
+  FileCheck2,
+  Wand2,
+  ShoppingCart,
 } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { PlaceHolderImages } from "@/lib/placeholder-images"
@@ -35,6 +35,8 @@ const menuItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/formulas", label: "Formulas", icon: FlaskConical },
   { href: "/inventory", label: "Inventory", icon: Library },
+  { href: "/creation", label: "Creation", icon: Wand2 },
+  { href: "/sourcing", label: "Sourcing", icon: ShoppingCart },
   { href: "/compliance", label: "Compliance", icon: FileCheck2 },
   { href: "/training", label: "Training", icon: Trophy },
 ]
