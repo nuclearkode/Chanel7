@@ -27,6 +27,8 @@ export type Ingredient = {
   // New fields
   casNumber?: string;
   description?: string;
+  longevity: number; // hours (duration on skin)
+  impact: number; // 0-100 relative impact (strength)
 
   // Legacy fields - made mandatory for compatibility
   concentration: number; // For inventory items: strength (usually 100). For formula ingredients: concentration in formula.
@@ -48,6 +50,14 @@ export type Evaluation = {
   color?: string;
 };
 
+export type HistoryEntry = {
+  id: string;
+  date: string;
+  user: string;
+  action: string;
+  details?: string;
+};
+
 export type Formula = {
   id: string;
   name: string;
@@ -63,4 +73,5 @@ export type Formula = {
   evaluations?: Evaluation[];
   createdAt?: string;
   updatedAt?: string;
+  history?: HistoryEntry[];
 };

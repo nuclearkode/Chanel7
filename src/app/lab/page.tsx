@@ -9,6 +9,10 @@ import { IngredientsTable } from "@/components/lab/ingredients-table"
 import { Recommendations } from "@/components/lab/recommendations"
 import { LiveStats } from "@/components/lab/live-stats"
 import { usePerfume } from "@/lib/store"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { IngredientBrowser } from "@/components/ingredient-browser"
+import { FormulaHistory } from "@/components/formula-history"
+import { type Ingredient } from "@/lib/types"
 
 export default function LabPage() {
   const { state, dispatch } = usePerfume()
@@ -45,6 +49,14 @@ export default function LabPage() {
     dispatch({ type: "SET_FORMULA_NAME", payload: name })
   }
 
+  const handleAddIngredient = (ingredient: Ingredient) => {
+    // Check if ingredient already exists in formula
+    if (activeFormula.items?.some(i => i.ingredient.id === ingredient.id)) {
+        return;
+    }
+    dispatch({ type: "ADD_TO_FORMULA", payload: ingredient })
+  }
+
   return (
     <SidebarProvider>
       <div className="relative flex min-h-screen w-full bg-background">
@@ -58,25 +70,55 @@ export default function LabPage() {
                 setFormulaName={handleSetFormulaName}
               />
 
-              <div className="p-6 pt-0">
-                <DilutantConfig
-                  solvent={solvent}
-                  setSolvent={handleSetSolvent}
-                  solventWeight={solventAmount}
-                  setSolventWeight={handleSetSolventWeight}
-                  totalWeight={totalWeight}
-                />
+              <Tabs defaultValue="editor" className="flex-1 flex flex-col">
+                <div className="px-6 border-b bg-background/95 backdrop-blur z-10 sticky top-0">
+                  <TabsList className="w-full justify-start h-12 bg-transparent p-0">
+                    <TabsTrigger
+                      value="editor"
+                      className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-full px-6"
+                    >
+                      Formula Editor
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="history"
+                      className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-full px-6"
+                    >
+                      History & Changes
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
 
-                <div className="pt-6">
-                  <IngredientsTable
-                    items={items}
-                    onUpdateQuantity={handleUpdateQuantity}
-                    onRemove={handleRemoveIngredient}
+                <TabsContent value="editor" className="flex-1 p-6 pt-6 mt-0 space-y-6">
+                  <DilutantConfig
+                    solvent={solvent}
+                    setSolvent={handleSetSolvent}
+                    solventWeight={solventAmount}
+                    setSolventWeight={handleSetSolventWeight}
                     totalWeight={totalWeight}
                   />
+
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <h3 className="font-semibold text-lg font-display">Ingredients</h3>
+                      <IngredientBrowser onAdd={handleAddIngredient} />
+                    </div>
+                    <IngredientsTable
+                      items={items}
+                      onUpdateQuantity={handleUpdateQuantity}
+                      onRemove={handleRemoveIngredient}
+                      totalWeight={totalWeight}
+                    />
+                  </div>
+
                   <Recommendations />
-                </div>
-              </div>
+                </TabsContent>
+
+                <TabsContent value="history" className="flex-1 p-6 mt-0 overflow-y-auto">
+                   <div className="max-w-3xl mx-auto">
+                      <FormulaHistory history={activeFormula.history} />
+                   </div>
+                </TabsContent>
+              </Tabs>
             </section>
 
             {/* Right Pane: Live Stats (Fixed width) */}

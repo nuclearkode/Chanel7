@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/accordion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AlertTriangle, PlusCircle, Trash2 } from "lucide-react"
 import { type Formula, type Ingredient, type Note, type OlfactiveFamily } from '@/lib/types'
 import { Badge } from './ui/badge'
@@ -16,6 +17,8 @@ import { Input } from './ui/input'
 import { Label } from './ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 import { notes, olfactiveFamilies } from '@/lib/data'
+import { FormulaHistory } from './formula-history'
+import { IngredientBrowser } from './ingredient-browser'
 
 interface FormulaEditorProps {
   formula: Formula;
@@ -92,10 +95,18 @@ const IngredientRow = ({
                 {ingredient.olfactiveFamilies.map(family => <Badge key={family} variant="secondary">{family}</Badge>)}
               </div>
             </div>
-            <div className="flex justify-end items-center">
-              <Button variant="ghost" size="icon" onClick={() => onDelete(ingredient.id)}>
-                <Trash2 className="h-4 w-4 text-muted-foreground" />
-                <span className="sr-only">Delete Ingredient</span>
+             <div className="space-y-2">
+              <Label htmlFor={`longevity-${ingredient.id}`}>Longevity (h)</Label>
+              <Input id={`longevity-${ingredient.id}`} type="number" value={ingredient.longevity} onChange={(e) => handleFieldChange('longevity', parseFloat(e.target.value) || 0)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor={`impact-${ingredient.id}`}>Impact (0-100)</Label>
+              <Input id={`impact-${ingredient.id}`} type="number" value={ingredient.impact} onChange={(e) => handleFieldChange('impact', parseFloat(e.target.value) || 0)} />
+            </div>
+            <div className="flex justify-end items-center col-span-2 md:col-span-4">
+              <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={() => onDelete(ingredient.id)}>
+                <Trash2 className="h-4 w-4 mr-2" />
+                Delete Ingredient
               </Button>
             </div>
         </div>
@@ -111,19 +122,15 @@ export function FormulaEditor({ formula, onFormulaChange }: FormulaEditorProps) 
     onFormulaChange({ ...formula, ingredients: newIngredients });
   };
 
-  const handleAddIngredient = () => {
-    const newId = (Math.max(...formula.ingredients.map(i => parseInt(i.id))) + 1).toString();
+  const handleAddIngredient = (ingredient: Ingredient) => {
+    if (formula.ingredients.some(i => i.id === ingredient.id)) {
+      // Ingredient already exists.
+      return;
+    }
+
     const newIngredient: Ingredient = {
-      id: newId,
-      name: `New Ingredient ${newId}`,
+      ...ingredient,
       concentration: 0,
-      vendor: "N/A",
-      dilution: 100,
-      cost: 0,
-      note: "Mid",
-      olfactiveFamilies: [],
-      isAllergen: false,
-      ifraLimit: 100,
     };
     onFormulaChange({ ...formula, ingredients: [...formula.ingredients, newIngredient] });
   };
@@ -134,21 +141,31 @@ export function FormulaEditor({ formula, onFormulaChange }: FormulaEditorProps) 
   };
   
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="font-headline text-2xl">Formula Ingredients</CardTitle>
-        <Button variant="outline" onClick={handleAddIngredient}>
-          <PlusCircle className="mr-2" />
-          Add Ingredient
-        </Button>
-      </CardHeader>
-      <CardContent>
-        <Accordion type="multiple" className="w-full">
-          {formula.ingredients.map(ingredient => (
-            <IngredientRow key={ingredient.id} ingredient={ingredient} onUpdate={handleUpdateIngredient} onDelete={handleDeleteIngredient} />
-          ))}
-        </Accordion>
-      </CardContent>
-    </Card>
+    <div className="space-y-4">
+      <Tabs defaultValue="ingredients" className="w-full">
+        <TabsList className="grid w-full grid-cols-2 max-w-[400px]">
+          <TabsTrigger value="ingredients">Ingredients</TabsTrigger>
+          <TabsTrigger value="history">History</TabsTrigger>
+        </TabsList>
+        <TabsContent value="ingredients" className="mt-4">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle className="font-headline text-2xl">Formula Ingredients</CardTitle>
+              <IngredientBrowser onAdd={handleAddIngredient} />
+            </CardHeader>
+            <CardContent>
+              <Accordion type="multiple" className="w-full">
+                {formula.ingredients.map(ingredient => (
+                  <IngredientRow key={ingredient.id} ingredient={ingredient} onUpdate={handleUpdateIngredient} onDelete={handleDeleteIngredient} />
+                ))}
+              </Accordion>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="history" className="mt-4">
+          <FormulaHistory history={formula.history} />
+        </TabsContent>
+      </Tabs>
+    </div>
   )
 }
