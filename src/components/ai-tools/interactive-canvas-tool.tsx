@@ -23,6 +23,34 @@ import { AnalysisPanel } from "../analysis-panel"
 const uniqueIngredients = Array.from(new Map(allFormulas.flatMap(f => f.ingredients).map(item => [item.name, item])).values())
     .sort((a, b) => a.name.localeCompare(b.name));
 
+interface IngredientRowProps {
+  ingredient: Ingredient
+  onUpdateConcentration: (id: string, concentration: number) => void
+  onRemove: (id: string) => void
+}
+
+const IngredientRow = React.memo(({ ingredient, onUpdateConcentration, onRemove }: IngredientRowProps) => {
+  return (
+    <div className="flex items-center gap-2 p-2 rounded-md hover:bg-muted/50">
+      <span className="font-medium flex-1">{ingredient.name}</span>
+      <Input
+        type="number"
+        className="w-24 h-8"
+        value={ingredient.concentration}
+        onChange={(e) => onUpdateConcentration(ingredient.id, parseFloat(e.target.value))}
+        min="0"
+        step="0.1"
+        aria-label={`Concentration for ${ingredient.name}`}
+      />
+      <span className="text-muted-foreground">%</span>
+      <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => onRemove(ingredient.id)}>
+        <Trash2 className="h-4 w-4" />
+        <span className="sr-only">Remove {ingredient.name}</span>
+      </Button>
+    </div>
+  )
+})
+IngredientRow.displayName = "IngredientRow"
 
 export function InteractiveCanvasTool() {
   const [isLoading, setIsLoading] = React.useState(false)
@@ -49,19 +77,19 @@ export function InteractiveCanvasTool() {
     }
   }
 
-  const handleUpdateConcentration = (id: string, concentration: number) => {
+  const handleUpdateConcentration = React.useCallback((id: string, concentration: number) => {
      setFormula(prev => ({
         ...prev,
         ingredients: prev.ingredients.map(ing => ing.id === id ? {...ing, concentration: isNaN(concentration) ? 0 : concentration} : ing)
      }));
-  }
+  }, []);
   
-  const handleRemoveIngredient = (id: string) => {
+  const handleRemoveIngredient = React.useCallback((id: string) => {
     setFormula(prev => ({
         ...prev,
         ingredients: prev.ingredients.filter(ing => ing.id !== id)
     }));
-  }
+  }, []);
 
   async function handleAnalyze() {
     if (formula.ingredients.length < 2) {
@@ -136,21 +164,12 @@ export function InteractiveCanvasTool() {
                             <p>Add ingredients to get started</p>
                         </div>
                     ) : formula.ingredients.map(ing => (
-                        <div key={ing.id} className="flex items-center gap-2 p-2 rounded-md hover:bg-muted/50">
-                            <span className="font-medium flex-1">{ing.name}</span>
-                            <Input 
-                                type="number" 
-                                className="w-24 h-8"
-                                value={ing.concentration}
-                                onChange={e => handleUpdateConcentration(ing.id, parseFloat(e.target.value))}
-                                min="0"
-                                step="0.1"
-                            />
-                            <span className="text-muted-foreground">%</span>
-                            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleRemoveIngredient(ing.id)}>
-                                <Trash2 className="h-4 w-4"/>
-                            </Button>
-                        </div>
+                        <IngredientRow
+                            key={ing.id}
+                            ingredient={ing}
+                            onUpdateConcentration={handleUpdateConcentration}
+                            onRemove={handleRemoveIngredient}
+                        />
                     ))}
                 </div>
 
