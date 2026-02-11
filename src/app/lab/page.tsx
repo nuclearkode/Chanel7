@@ -15,8 +15,12 @@ export default function LabPage() {
   const { activeFormula } = state
 
   // Calculate Totals
-  const ingredientsWeight = activeFormula.items.reduce((sum, i) => sum + i.amount, 0)
-  const totalWeight = activeFormula.solventAmount + ingredientsWeight
+  const items = activeFormula.items || []
+  const solventAmount = activeFormula.solventAmount || 0
+  const solvent = activeFormula.solvent || "Perfumer's Alcohol"
+
+  const ingredientsWeight = items.reduce((sum, i) => sum + i.amount, 0)
+  const totalWeight = solventAmount + ingredientsWeight
 
   // Oil Concentration: (Ingredients Weight / Total Weight) * 100
   const oilConcentration = totalWeight > 0 ? (ingredientsWeight / totalWeight) * 100 : 0
@@ -29,12 +33,12 @@ export default function LabPage() {
     dispatch({ type: "REMOVE_FROM_FORMULA", payload: ingredientId })
   }
 
-  const handleSetSolvent = (solvent: string) => {
-    dispatch({ type: "SET_SOLVENT", payload: { solvent, amount: activeFormula.solventAmount } })
+  const handleSetSolvent = (solventVal: string) => {
+    dispatch({ type: "SET_SOLVENT", payload: { solvent: solventVal, amount: solventAmount } })
   }
 
   const handleSetSolventWeight = (weight: number) => {
-    dispatch({ type: "SET_SOLVENT", payload: { solvent: activeFormula.solvent, amount: weight } })
+    dispatch({ type: "SET_SOLVENT", payload: { solvent, amount: weight } })
   }
 
   const handleSetFormulaName = (name: string) => {
@@ -56,16 +60,16 @@ export default function LabPage() {
 
               <div className="p-6 pt-0">
                 <DilutantConfig
-                  solvent={activeFormula.solvent}
+                  solvent={solvent}
                   setSolvent={handleSetSolvent}
-                  solventWeight={activeFormula.solventAmount}
+                  solventWeight={solventAmount}
                   setSolventWeight={handleSetSolventWeight}
                   totalWeight={totalWeight}
                 />
 
                 <div className="pt-6">
                   <IngredientsTable
-                    items={activeFormula.items}
+                    items={items}
                     onUpdateQuantity={handleUpdateQuantity}
                     onRemove={handleRemoveIngredient}
                     totalWeight={totalWeight}
@@ -79,7 +83,7 @@ export default function LabPage() {
             <LiveStats
               totalWeight={totalWeight}
               oilConcentration={oilConcentration}
-              items={activeFormula.items}
+              items={items}
             />
           </main>
         </SidebarInset>
