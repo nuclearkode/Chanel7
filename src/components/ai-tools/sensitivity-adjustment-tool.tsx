@@ -93,11 +93,14 @@ export function SensitivityAdjustmentTool() {
                 <div className="space-y-4 mt-2">
                     {fields.map((field, index) => (
                         <div key={field.id} className="grid grid-cols-[1fr_1fr_auto_auto_auto] gap-2 items-end">
-                            <FormField control={form.control} name={`comparisonGameData.${index}.material1`} render={({ field }) => (<FormItem><FormControl><Input placeholder="Material 1" {...field} /></FormControl></FormItem>)} />
-                            <FormField control={form.control} name={`comparisonGameData.${index}.material2`} render={({ field }) => (<FormItem><FormControl><Input placeholder="Material 2" {...field} /></FormControl></FormItem>)} />
-                            <FormField control={form.control} name={`comparisonGameData.${index}.ratio`} render={({ field }) => (<FormItem><FormControl><Input placeholder="Ratio" {...field} /></FormControl></FormItem>)} />
-                            <FormField control={form.control} name={`comparisonGameData.${index}.userPreference`} render={({ field }) => (<FormItem><FormControl><Input placeholder="Preference" {...field} /></FormControl></FormItem>)} />
-                            <Button type="button" variant="ghost" size="icon" onClick={() => remove(index)}><Trash2 className="text-muted-foreground"/></Button>
+                            <FormField control={form.control} name={`comparisonGameData.${index}.material1`} render={({ field }) => (<FormItem><FormControl><Input placeholder="Material 1" aria-label="Material 1" {...field} /></FormControl></FormItem>)} />
+                            <FormField control={form.control} name={`comparisonGameData.${index}.material2`} render={({ field }) => (<FormItem><FormControl><Input placeholder="Material 2" aria-label="Material 2" {...field} /></FormControl></FormItem>)} />
+                            <FormField control={form.control} name={`comparisonGameData.${index}.ratio`} render={({ field }) => (<FormItem><FormControl><Input placeholder="Ratio" aria-label="Ratio" {...field} /></FormControl></FormItem>)} />
+                            <FormField control={form.control} name={`comparisonGameData.${index}.userPreference`} render={({ field }) => (<FormItem><FormControl><Input placeholder="Preference" aria-label="User Preference" {...field} /></FormControl></FormItem>)} />
+                            <Button type="button" variant="ghost" size="icon" onClick={() => remove(index)}>
+                                <Trash2 className="text-muted-foreground"/>
+                                <span className="sr-only">Delete Comparison</span>
+                            </Button>
                         </div>
                     ))}
                 </div>

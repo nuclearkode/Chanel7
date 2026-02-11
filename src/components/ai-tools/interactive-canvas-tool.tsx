@@ -145,10 +145,12 @@ export function InteractiveCanvasTool() {
                                 onChange={e => handleUpdateConcentration(ing.id, parseFloat(e.target.value))}
                                 min="0"
                                 step="0.1"
+                                aria-label={`Concentration for ${ing.name}`}
                             />
                             <span className="text-muted-foreground">%</span>
                             <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleRemoveIngredient(ing.id)}>
                                 <Trash2 className="h-4 w-4"/>
+                                <span className="sr-only">Remove {ing.name}</span>
                             </Button>
                         </div>
                     ))}
