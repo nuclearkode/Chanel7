@@ -4,76 +4,96 @@
 
 @layer base {
   :root {
-    --background: 255 17% 96%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 256 60% 59%;
+    /* Primary: #11a4d4 -> 195 85% 45% */
+    --primary: 195 85% 45%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 257 79% 77%;
-    --accent-foreground: 240 5.9% 10%;
+
+    /* Background Light: #f6f8f8 -> 180 9% 97% */
+    --background: 180 9% 97%;
+    --foreground: 200 34% 13%;
+
+    /* Surface Light / Card: White */
+    --card: 0 0% 100%;
+    --card-foreground: 200 34% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 200 34% 13%;
+
+    --secondary: 195 20% 90%;
+    --secondary-foreground: 195 85% 30%;
+
+    --muted: 195 20% 90%;
+    --muted-foreground: 200 10% 40%;
+
+    --accent: 195 85% 85%;
+    --accent-foreground: 195 85% 20%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 256 60% 59%;
-    --chart-1: 256 60% 59%;
-    --chart-2: 257 79% 77%;
-    --chart-3: 250 50% 60%;
-    --chart-4: 255 40% 70%;
-    --chart-5: 260 55% 55%;
+
+    --border: 200 10% 85%;
+    --input: 200 10% 85%;
+    --ring: 195 85% 45%;
+
     --radius: 0.5rem;
     
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 256 60% 59%;
+    /* Chart Colors */
+    --chart-1: 195 85% 45%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    /* Sidebar Light */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 200 34% 13%;
+    --sidebar-primary: 195 85% 45%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 256 60% 59%;
+    --sidebar-accent: 195 20% 95%;
+    --sidebar-accent-foreground: 195 85% 45%;
+    --sidebar-border: 200 10% 90%;
+    --sidebar-ring: 195 85% 45%;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
+    /* Background Dark: #101d22 -> 197 36% 10% */
+    --background: 197 36% 10%;
     --foreground: 0 0% 98%;
-    --card: 240 5.9% 10%;
+
+    /* Surface Dark: #16262d -> 200 34% 13% */
+    --card: 200 34% 13%;
     --card-foreground: 0 0% 98%;
-    --popover: 240 5.9% 10%;
+    --popover: 200 34% 13%;
     --popover-foreground: 0 0% 98%;
-    --primary: 256 60% 59%;
+
+    /* Primary same as light */
+    --primary: 195 85% 45%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 240 3.7% 15.9%;
+
+    --secondary: 197 36% 20%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 257 79% 77%;
+
+    --muted: 197 36% 20%;
+    --muted-foreground: 200 10% 60%;
+
+    --accent: 195 85% 30%;
     --accent-foreground: 0 0% 98%;
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 256 60% 59%;
-    --chart-1: 256 60% 59%;
-    --chart-2: 257 79% 77%;
-    --chart-3: 250 50% 60%;
-    --chart-4: 255 40% 70%;
-    --chart-5: 260 55% 55%;
 
-    --sidebar-background: 240 5.9% 10%;
+    --border: 197 36% 20%;
+    --input: 197 36% 20%;
+    --ring: 195 85% 45%;
+
+    /* Sidebar Dark: Match Background Dark */
+    --sidebar-background: 200 34% 13%; /* Using Surface Dark for sidebar in dark mode to distinguish? Or Background? Design uses bg-white for light, bg-surface-dark for dark sidebar */
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 256 60% 59%;
+    --sidebar-primary: 195 85% 45%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent: 197 36% 20%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 256 60% 59%;
+    --sidebar-border: 197 36% 20%;
+    --sidebar-ring: 195 85% 45%;
   }
 }
 

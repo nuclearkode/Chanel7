@@ -1,88 +1,82 @@
 "use client"
 
 import React from 'react'
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Progress } from '@/components/ui/progress'
+import { Button } from '@/components/ui/button'
+import { Plus } from 'lucide-react'
 import { type Ingredient } from '@/lib/types'
-import { AlertTriangle, Clock, MapPin } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
-// Mock extension of Ingredient type to include inventory-specific fields
-// In a real app, these would be part of the DB schema
-interface ExtendedIngredient extends Ingredient {
-    stockAmount?: number // in grams
-    maxStock?: number
-    location?: string
-    expiryDate?: string
+interface IngredientCardProps {
+    ingredient: Ingredient
+    isSelected?: boolean
+    onClick?: () => void
+    onAdd?: (e: React.MouseEvent) => void
 }
 
-export function IngredientCard({ ingredient }: { ingredient: ExtendedIngredient }) {
-    // Mock data generation if missing
-    const stock = ingredient.stockAmount || Math.floor(Math.random() * 100)
-    const max = ingredient.maxStock || 100
-    const percentage = (stock / max) * 100
-
-    // Determine status color
-    let statusColor = "bg-primary"
-    if (percentage < 30) statusColor = "bg-yellow-500"
-    if (percentage < 10) statusColor = "bg-destructive"
+export function IngredientCard({ ingredient, isSelected, onClick, onAdd }: IngredientCardProps) {
+    const isRestricted = ingredient.ifraLimit < 100
 
     return (
-        <Card className="hover:shadow-md transition-shadow">
-            <CardHeader className="pb-2">
-                <div className="flex justify-between items-start">
-                    <CardTitle className="text-lg font-bold truncate pr-2" title={ingredient.name}>
+        <div
+            onClick={onClick}
+            className={cn(
+                "group relative bg-card border rounded-xl p-4 cursor-pointer transition-all",
+                isSelected
+                    ? "border-primary shadow-lg ring-1 ring-primary/20"
+                    : "border-border hover:border-primary/50 hover:shadow-md"
+            )}
+        >
+            <div className="flex justify-between items-start mb-3 gap-2">
+                <div>
+                    <h3 className={cn(
+                        "text-lg font-bold transition-colors leading-tight",
+                        isSelected ? "text-primary" : "text-foreground group-hover:text-primary"
+                    )}>
                         {ingredient.name}
-                    </CardTitle>
-                    <Badge variant="outline" className="shrink-0 max-w-[80px] truncate">
-                        {ingredient.vendor}
+                    </h3>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium mt-1">{ingredient.vendor}</p>
+                </div>
+
+                <div className="flex gap-2 flex-shrink-0">
+                    <Badge variant="secondary" className={cn(
+                        "text-[10px] font-bold uppercase tracking-wide border",
+                        ingredient.note === 'Top' && "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
+                        ingredient.note === 'Mid' && "bg-pink-500/10 text-pink-500 border-pink-500/20",
+                        ingredient.note === 'Base' && "bg-indigo-500/10 text-indigo-500 border-indigo-500/20",
+                    )}>
+                        {ingredient.note}
+                    </Badge>
+                    <Badge variant="secondary" className={cn(
+                        "text-[10px] font-bold uppercase tracking-wide border",
+                        !isRestricted ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20" : "bg-orange-500/10 text-orange-500 border-orange-500/20"
+                    )}>
+                        {isRestricted ? "Restricted" : "IFRA OK"}
                     </Badge>
                 </div>
-                <div className="flex gap-1 flex-wrap mt-1">
-                    {ingredient.olfactiveFamilies.map(fam => (
-                        <Badge key={fam} variant="secondary" className="text-xs px-1 py-0 h-5">
-                            {fam}
-                        </Badge>
-                    ))}
-                </div>
-            </CardHeader>
+            </div>
 
-            <CardContent className="space-y-4">
-                {/* Stock Level */}
-                <div className="space-y-1">
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                        <span>Stock Level</span>
-                        <span>{stock}g / {max}g</span>
-                    </div>
-                    <Progress value={percentage} className="h-2" indicatorClassName={statusColor} />
-                    {percentage < 20 && (
-                        <div className="flex items-center gap-1 text-xs text-destructive mt-1">
-                            <AlertTriangle className="w-3 h-3" /> Low Stock
-                        </div>
+            <p className="text-sm text-muted-foreground line-clamp-2 mb-4 h-10 leading-relaxed">
+                {ingredient.description || "No description available."}
+            </p>
+
+            <div className="flex items-center justify-between pt-3 border-t border-border">
+                <div className="font-mono text-xs text-muted-foreground">CAS: {ingredient.casNumber || "N/A"}</div>
+                <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={onAdd}
+                    className={cn(
+                        "w-8 h-8 rounded flex items-center justify-center transition-colors",
+                        isSelected
+                            ? "text-primary bg-primary/10 hover:bg-primary hover:text-primary-foreground"
+                            : "text-muted-foreground hover:text-primary hover:bg-primary/10"
                     )}
-                </div>
-
-                {/* Note & IFRA */}
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div className="bg-muted/30 p-2 rounded">
-                        <span className="text-xs text-muted-foreground block">Note</span>
-                        <span className="font-medium">{ingredient.note}</span>
-                    </div>
-                    <div className="bg-muted/30 p-2 rounded">
-                        <span className="text-xs text-muted-foreground block">IFRA Limit</span>
-                        <span className="font-medium">{ingredient.ifraLimit}%</span>
-                    </div>
-                </div>
-            </CardContent>
-
-            <CardFooter className="pt-0 flex justify-between text-xs text-muted-foreground">
-                <div className="flex items-center gap-1">
-                    <MapPin className="w-3 h-3" /> {ingredient.location || 'Shelf A-1'}
-                </div>
-                <div className="flex items-center gap-1">
-                    <Clock className="w-3 h-3" /> {ingredient.expiryDate || '12/26'}
-                </div>
-            </CardFooter>
-        </Card>
+                >
+                    <Plus className="w-4 h-4" />
+                </Button>
+            </div>
+        </div>
     )
 }

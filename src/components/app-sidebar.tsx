@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -18,12 +17,11 @@ import {
   LayoutDashboard,
   FlaskConical,
   Library,
-  Trophy,
   Settings,
   UserCircle,
-  FileCheck2,
   Wand2,
-  ShoppingCart,
+  Activity,
+  FileText
 } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { PlaceHolderImages } from "@/lib/placeholder-images"
@@ -33,12 +31,11 @@ const userAvatar = PlaceHolderImages.find(p => p.id === 'user-avatar');
 
 const menuItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/formulas", label: "Formulas", icon: FlaskConical },
+  { href: "/lab", label: "The Lab", icon: FlaskConical },
   { href: "/inventory", label: "Inventory", icon: Library },
-  { href: "/creation", label: "Creation", icon: Wand2 },
-  { href: "/sourcing", label: "Sourcing", icon: ShoppingCart },
-  { href: "/compliance", label: "Compliance", icon: FileCheck2 },
-  { href: "/training", label: "Training", icon: Trophy },
+  { href: "/analysis", label: "Analysis", icon: Activity },
+  { href: "/formulas", label: "Formulas", icon: FileText },
+  { href: "/creation", label: "AI Tools", icon: Wand2 },
 ]
 
 export default function AppSidebar() {
@@ -47,9 +44,9 @@ export default function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
-        <div className="flex items-center gap-2">
-          <FlaskConical className="w-8 h-8 text-primary" />
-          <h1 className="text-xl font-semibold font-headline">ScentForge</h1>
+        <div className="flex items-center gap-2 px-2 py-1">
+          <div className="w-8 h-8 rounded bg-gradient-to-tr from-primary to-cyan-300 flex items-center justify-center text-primary-foreground font-bold text-xl">P</div>
+          <h1 className="text-xl font-bold font-display tracking-tight">PerFume</h1>
         </div>
       </SidebarHeader>
       <SidebarContent className="p-2">
@@ -82,17 +79,17 @@ export default function AppSidebar() {
           </SidebarMenuItem>
         </SidebarMenu>
 
-        <div className="flex items-center gap-3 p-2 rounded-md bg-sidebar-accent">
-          <Avatar className="h-9 w-9">
+        <div className="flex items-center gap-3 p-2 rounded-md bg-sidebar-accent border border-sidebar-border/50">
+          <Avatar className="h-9 w-9 border border-primary/20">
              {userAvatar && <AvatarImage src={userAvatar.imageUrl} alt="User Avatar" data-ai-hint={userAvatar.imageHint} />}
             <AvatarFallback>
               <UserCircle />
             </AvatarFallback>
           </Avatar>
           <div className="overflow-hidden">
-            <p className="font-medium truncate">Jane Doe</p>
-            <p className="text-xs text-sidebar-foreground/70 truncate">
-              Artisan Perfumer
+            <p className="font-medium truncate text-sm">Dr. A. Elara</p>
+            <p className="text-xs text-muted-foreground truncate">
+              Chief Nose
             </p>
           </div>
         </div>
