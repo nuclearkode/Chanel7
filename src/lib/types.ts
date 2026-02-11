@@ -17,14 +17,19 @@ export type Note = "Top" | "Mid" | "Base";
 export type Ingredient = {
   id: string;
   name: string;
-  concentration: number; // percentage
   vendor: string;
-  dilution: number; // percentage
   cost: number; // per gram
   note: Note;
   olfactiveFamilies: OlfactiveFamily[];
   isAllergen: boolean;
   ifraLimit: number; // percentage
+  casNumber?: string;
+  description?: string;
+};
+
+export type FormulaItem = {
+  ingredient: Ingredient;
+  amount: number; // in grams
 };
 
 export type Evaluation = {
@@ -40,6 +45,11 @@ export type Evaluation = {
 export type Formula = {
   id: string;
   name: string;
-  ingredients: Ingredient[];
+  items: FormulaItem[];
+  solvent: string;
+  solventAmount: number;
+  targetTotal: number;
   evaluations?: Evaluation[];
+  createdAt: string;
+  updatedAt: string;
 };

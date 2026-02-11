@@ -17,9 +17,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        body: ['Alegreya', 'serif'],
-        headline: ['Alegreya', 'serif'],
-        code: ['monospace'],
+        display: ['"Space Grotesk"', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',

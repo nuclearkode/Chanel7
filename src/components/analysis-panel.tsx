@@ -7,7 +7,6 @@ import { PyramidChart } from '@/components/charts/pyramid-chart'
 import { LongevityChart } from '@/components/charts/longevity-chart'
 import { CostPieChart } from '@/components/charts/cost-pie-chart'
 import { AllergenGauge } from '@/components/charts/allergen-gauge'
-import { CostPerGramCard } from '@/components/analysis/cost-summary' // We might need to create this or inline it
 
 // Re-using the SummaryCard logic but maybe simplifying or enhancing it
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'

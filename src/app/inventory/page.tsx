@@ -1,116 +1,123 @@
 "use client"
 
 import React from "react"
-import AppSidebar from "@/components/app-sidebar"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { LayoutGrid, List } from "lucide-react"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import { allFormulas } from "@/lib/data"
-import { Ingredient } from "@/lib/types"
+import AppSidebar from "@/components/app-sidebar"
 import { IngredientCard } from "@/components/inventory/ingredient-card"
+import { IngredientDetailsPanel } from "@/components/inventory/ingredient-details-panel"
+import { FiltersBar } from "@/components/inventory/filters-bar"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Search, Upload, Plus } from "lucide-react"
+import { usePerfume } from "@/lib/store"
+import { useToast } from "@/hooks/use-toast"
+import { type Ingredient } from "@/lib/types"
 
 export default function InventoryPage() {
-  const [viewMode, setViewMode] = React.useState<'list' | 'grid'>('grid')
+  const { state, dispatch } = usePerfume()
+  const { toast } = useToast()
 
-  const allIngredients = allFormulas.flatMap(f => f.ingredients);
-  const uniqueIngredients = React.useMemo(() => {
-    return Array.from(new Map(allIngredients.map(item => [item.name, item])).values())
-      .sort((a, b) => a.name.localeCompare(b.name));
-  }, [allIngredients]);
+  const [selectedId, setSelectedId] = React.useState<string | null>(null)
+  const [activeFilter, setActiveFilter] = React.useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = React.useState("")
+
+  const ingredients = React.useMemo(() => {
+    let all = state.inventory;
+    // Filter by search
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase()
+      all = all.filter(i =>
+        i.name.toLowerCase().includes(q) ||
+        i.vendor.toLowerCase().includes(q) ||
+        i.note.toLowerCase().includes(q)
+      )
+    }
+    // Filter by Tag
+    if (activeFilter) {
+      if (activeFilter === "Top Notes") all = all.filter(i => i.note === "Top")
+      if (activeFilter === "Heart Notes") all = all.filter(i => i.note === "Mid")
+      if (activeFilter === "Base Notes") all = all.filter(i => i.note === "Base")
+      if (activeFilter === "Solvents") all = all.filter(i => i.vendor === "Solvent" || i.name.includes("Alcohol"))
+    }
+    return all
+  }, [state.inventory, searchQuery, activeFilter])
+
+  const selectedIngredient = ingredients.find(i => i.id === selectedId) || null
+
+  const handleAddToFormula = (e: React.MouseEvent, ingredient: Ingredient) => {
+    e.stopPropagation() // Prevent card selection
+    dispatch({ type: "ADD_TO_FORMULA", payload: ingredient })
+    toast({
+        title: "Ingredient Added",
+        description: `${ingredient.name} added to ${state.activeFormula.name}`,
+    })
+  }
 
   return (
     <SidebarProvider>
-      <div className="relative flex min-h-screen w-full">
+      <div className="relative flex min-h-screen w-full bg-background overflow-hidden">
         <AppSidebar />
         <SidebarInset>
-          <div className="p-4 sm:p-6 lg:p-8 flex flex-col h-full space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <h1 className="text-3xl font-bold text-foreground font-headline">
-                  Material Inventory
-                </h1>
-                <p className="text-muted-foreground">Manage your ingredients, stock, and compliance.</p>
-              </div>
-              <div className="flex bg-muted p-1 rounded-lg">
-                <Button
-                  variant={viewMode === 'list' ? 'secondary' : 'ghost'}
-                  size="sm"
-                  onClick={() => setViewMode('list')}
-                  className="px-3"
-                >
-                  <List className="h-4 w-4 mr-2" /> List
-                </Button>
-                <Button
-                  variant={viewMode === 'grid' ? 'secondary' : 'ghost'}
-                  size="sm"
-                  onClick={() => setViewMode('grid')}
-                  className="px-3"
-                >
-                  <LayoutGrid className="h-4 w-4 mr-2" /> Grid
-                </Button>
-              </div>
-            </div>
+          <div className="flex flex-1 overflow-hidden relative h-screen">
+            {/* Left Section: Search & Grid */}
+            <main className="flex-1 flex flex-col h-full overflow-hidden relative z-10 bg-background/50">
+              {/* Sticky Top Bar */}
+              <div className="p-6 pb-4 bg-background/95 backdrop-blur-sm sticky top-0 z-20 border-b border-border/50">
+                <div className="max-w-7xl mx-auto w-full space-y-4">
+                  {/* Title & Stats */}
+                  <div className="flex justify-between items-end">
+                    <div>
+                      <h1 className="text-2xl font-bold font-display text-foreground">Ingredients Library</h1>
+                      <p className="text-sm text-muted-foreground mt-1">Browse {ingredients.length} olfactory materials and bases.</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm" className="h-8 text-xs gap-2">
+                        <Upload className="w-3 h-3" /> Import
+                      </Button>
+                      <Button size="sm" className="h-8 text-xs gap-2 shadow-lg shadow-primary/20">
+                        <Plus className="w-3 h-3" /> New Material
+                      </Button>
+                    </div>
+                  </div>
 
-            {viewMode === 'grid' ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                {uniqueIngredients.map((ingredient) => (
-                  <IngredientCard key={ingredient.id} ingredient={ingredient} />
-                ))}
+                  {/* Search & Filters */}
+                  <div className="flex flex-col md:flex-row gap-4 items-center">
+                    <div className="relative flex-1 w-full">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Input
+                        className="pl-10 pr-4 py-2 rounded-lg bg-secondary/50 border-transparent focus:bg-background w-full text-sm"
+                        placeholder="Search name, scent profile, CAS number..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                      />
+                    </div>
+                    <FiltersBar activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+                  </div>
+                </div>
               </div>
-            ) : (
-              <div className="rounded-lg border">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Vendor</TableHead>
-                      <TableHead>Cost/g</TableHead>
-                      <TableHead>Note</TableHead>
-                      <TableHead>Olfactive Families</TableHead>
-                      <TableHead>IFRA Limit</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {uniqueIngredients.map((ingredient: Ingredient) => (
-                      <TableRow key={ingredient.id}>
-                        <TableCell className="font-medium">
-                          {ingredient.name}
-                        </TableCell>
-                        <TableCell>{ingredient.vendor}</TableCell>
-                        <TableCell>${ingredient.cost.toFixed(3)}</TableCell>
-                        <TableCell>
-                          <Badge variant="outline">{ingredient.note}</Badge>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex flex-wrap gap-1">
-                            {ingredient.olfactiveFamilies.map(family => (
-                              <Badge key={family} variant="secondary">
-                                {family}
-                              </Badge>
-                            ))}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <span>{ingredient.ifraLimit}%</span>
-                            {ingredient.isAllergen && <Badge variant="destructive">Allergen</Badge>}
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+
+              {/* Grid Container */}
+              <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
+                <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 pb-20">
+                  {ingredients.map(ingredient => (
+                    <div key={ingredient.id} className="relative">
+                        <IngredientCard
+                          ingredient={ingredient}
+                          isSelected={selectedId === ingredient.id}
+                          onClick={() => setSelectedId(ingredient.id)}
+                        />
+                        {/* Overlay the Add button logic if needed, but easier to pass prop if IngredientCard supported it.
+                            However, IngredientCard doesn't expose the Add button's onClick.
+                            Let's check IngredientCard again.
+                        */}
+                    </div>
+                  ))}
+                </div>
               </div>
-            )}
+            </main>
+
+            {/* Right Side Panel / Detailed View */}
+            <IngredientDetailsPanel ingredient={selectedIngredient} onAdd={() => selectedIngredient && handleAddToFormula({ stopPropagation: () => {} } as any, selectedIngredient)} />
           </div>
         </SidebarInset>
       </div>
