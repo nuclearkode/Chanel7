@@ -56,7 +56,7 @@ const SummaryCard = ({ formula }: { formula: Formula }) => {
   )
 }
 
-export function AnalysisPanel({ formula }: { formula: Formula }) {
+export const AnalysisPanel = React.memo(function AnalysisPanel({ formula }: { formula: Formula }) {
   return (
     <div className="space-y-6">
       <SummaryCard formula={formula} />
@@ -72,4 +72,4 @@ export function AnalysisPanel({ formula }: { formula: Formula }) {
       </div>
     </div>
   )
-}
+})
