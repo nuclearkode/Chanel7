@@ -14,11 +14,11 @@ interface FormulaCardProps {
 }
 
 export function FormulaCard({ formula, onClick }: FormulaCardProps) {
-    const ingredientCount = formula.items.length
+    const ingredientCount = formula.items ? formula.items.length : (formula.ingredients ? formula.ingredients.length : 0)
     const stars = 4 // Mock
     const type = "Chypre" // Mock type derivation or just static for now
     const color = "bg-primary/10 text-primary border-primary/20"
-    const lastEdited = formatDistanceToNow(new Date(formula.updatedAt), { addSuffix: true })
+    const lastEdited = formula.updatedAt ? formatDistanceToNow(new Date(formula.updatedAt), { addSuffix: true }) : "Unknown"
 
   return (
     <div onClick={onClick} className="h-full">

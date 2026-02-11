@@ -17,7 +17,7 @@ const SummaryCard = ({ formula }: { formula: Formula }) => {
     const totalWeight = formula.ingredients.reduce((acc, ing) => acc + ing.concentration, 0)
     const pureMaterialWeight = formula.ingredients
       .filter(i => i.name.toLowerCase() !== 'ethanol')
-      .reduce((acc, ing) => acc + (ing.concentration * (ing.dilution / 100)), 0)
+      .reduce((acc, ing) => acc + (ing.concentration * ((ing.dilution || 100) / 100)), 0)
 
     const solventWeight = totalWeight - pureMaterialWeight;
     const finalDilution = totalWeight > 0 ? (pureMaterialWeight / totalWeight) * 100 : 0;

@@ -23,8 +23,14 @@ export type Ingredient = {
   olfactiveFamilies: OlfactiveFamily[];
   isAllergen: boolean;
   ifraLimit: number; // percentage
+
+  // New fields
   casNumber?: string;
   description?: string;
+
+  // Legacy fields - made mandatory for compatibility
+  concentration: number; // For inventory items: strength (usually 100). For formula ingredients: concentration in formula.
+  dilution?: number;
 };
 
 export type FormulaItem = {
@@ -45,11 +51,16 @@ export type Evaluation = {
 export type Formula = {
   id: string;
   name: string;
-  items: FormulaItem[];
-  solvent: string;
-  solventAmount: number;
-  targetTotal: number;
+
+  // Legacy structure
+  ingredients: Ingredient[];
+
+  // New structure
+  items?: FormulaItem[];
+  solvent?: string;
+  solventAmount?: number;
+  targetTotal?: number;
   evaluations?: Evaluation[];
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 };

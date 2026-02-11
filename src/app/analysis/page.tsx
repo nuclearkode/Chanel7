@@ -16,6 +16,10 @@ export default function AnalysisPage() {
   const { activeFormula } = state
   const router = useRouter()
 
+  const items = activeFormula.items || []
+  const createdDate = activeFormula.createdAt ? new Date(activeFormula.createdAt).toLocaleDateString() : "Unknown"
+  const updatedTime = activeFormula.updatedAt ? new Date(activeFormula.updatedAt).toLocaleTimeString() : "Unknown"
+
   return (
     <SidebarProvider>
       <div className="relative flex min-h-screen w-full bg-background overflow-hidden">
@@ -29,7 +33,7 @@ export default function AnalysisPage() {
                   <h1 className="text-3xl font-bold font-display text-foreground">{activeFormula.name}</h1>
                   <span className="px-2 py-0.5 rounded text-xs font-semibold bg-primary/10 text-primary border border-primary/20">DRAFT</span>
                 </div>
-                <p className="text-muted-foreground text-sm">Created on {new Date(activeFormula.createdAt).toLocaleDateString()} • Last modified {new Date(activeFormula.updatedAt).toLocaleTimeString()}</p>
+                <p className="text-muted-foreground text-sm">Created on {createdDate} • Last modified {updatedTime}</p>
               </div>
               <div className="flex items-center gap-3">
                 <Button variant="outline" className="gap-2">
@@ -48,18 +52,18 @@ export default function AnalysisPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Fragrance Fingerprint Card */}
               <div className="lg:col-span-1 h-full">
-                <FragranceRadar items={activeFormula.items} />
+                <FragranceRadar items={items} />
               </div>
 
               {/* Scent Timeline */}
               <div className="lg:col-span-2 h-full">
-                <ScentTimeline items={activeFormula.items} />
+                <ScentTimeline items={items} />
               </div>
             </div>
 
             {/* IFRA Compliance Section */}
             <section className="mt-6 pb-20">
-              <IFRAComplianceTable items={activeFormula.items} />
+              <IFRAComplianceTable items={items} />
             </section>
           </div>
         </SidebarInset>

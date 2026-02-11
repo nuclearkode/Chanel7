@@ -20,9 +20,10 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { ArrowLeftRight, Download, ShieldCheck, FlaskConical } from "lucide-react"
 import { usePerfume } from "@/lib/store"
+import { cn } from "@/lib/utils"
 
 export function ComparisonTool() {
-  const { formulas } = usePerfume()
+  const { state: { formulas } } = usePerfume()
 
   // Default to first two formulas if available, or empty string
   const [formulaAId, setFormulaAId] = useState<string>(formulas.length > 0 ? formulas[0].id : "")
@@ -44,33 +45,64 @@ export function ComparisonTool() {
 
     // Process Formula A
     if (formulaA) {
-      formulaA.ingredients.forEach(ing => {
-        ingredientsMap.set(ing.id, {
-          id: ing.id,
-          name: ing.name,
-          cas: ing.cas,
-          weightA: ing.weight,
-          weightB: 0
-        })
-      })
+        if (formulaA.items) {
+            formulaA.items.forEach(item => {
+                const ing = item.ingredient
+                ingredientsMap.set(ing.id, {
+                id: ing.id,
+                name: ing.name,
+                cas: ing.casNumber || "",
+                weightA: item.amount,
+                weightB: 0
+                })
+            })
+        } else {
+             formulaA.ingredients.forEach(ing => {
+                ingredientsMap.set(ing.id, {
+                id: ing.id,
+                name: ing.name,
+                cas: ing.casNumber || "",
+                weightA: ing.concentration,
+                weightB: 0
+                })
+            })
+        }
     }
 
     // Process Formula B
     if (formulaB) {
-      formulaB.ingredients.forEach(ing => {
-        const existing = ingredientsMap.get(ing.id)
-        if (existing) {
-          existing.weightB = ing.weight
+        if (formulaB.items) {
+            formulaB.items.forEach(item => {
+                const ing = item.ingredient
+                const existing = ingredientsMap.get(ing.id)
+                if (existing) {
+                existing.weightB = item.amount
+                } else {
+                ingredientsMap.set(ing.id, {
+                    id: ing.id,
+                    name: ing.name,
+                    cas: ing.casNumber || "",
+                    weightA: 0,
+                    weightB: item.amount
+                })
+                }
+            })
         } else {
-          ingredientsMap.set(ing.id, {
-            id: ing.id,
-            name: ing.name,
-            cas: ing.cas,
-            weightA: 0,
-            weightB: ing.weight
-          })
+             formulaB.ingredients.forEach(ing => {
+                const existing = ingredientsMap.get(ing.id)
+                if (existing) {
+                existing.weightB = ing.concentration
+                } else {
+                ingredientsMap.set(ing.id, {
+                    id: ing.id,
+                    name: ing.name,
+                    cas: ing.casNumber || "",
+                    weightA: 0,
+                    weightB: ing.concentration
+                })
+                }
+            })
         }
-      })
     }
 
     return Array.from(ingredientsMap.values()).map(item => ({
@@ -81,8 +113,8 @@ export function ComparisonTool() {
 
   }, [formulaA, formulaB])
 
-  const totalWeightA = formulaA ? formulaA.ingredients.reduce((acc, curr) => acc + curr.weight, 0) : 0
-  const totalWeightB = formulaB ? formulaB.ingredients.reduce((acc, curr) => acc + curr.weight, 0) : 0
+  const totalWeightA = formulaA ? (formulaA.items ? formulaA.items.reduce((acc, curr) => acc + curr.amount, 0) : formulaA.targetTotal || 100) : 0
+  const totalWeightB = formulaB ? (formulaB.items ? formulaB.items.reduce((acc, curr) => acc + curr.amount, 0) : formulaB.targetTotal || 100) : 0
   const totalDelta = totalWeightB - totalWeightA
 
   // Calculate Similarity (Basic Jaccard-ish index based on shared ingredients presence)
