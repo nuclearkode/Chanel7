@@ -28,6 +28,10 @@ export function InteractiveCanvasTool() {
   const [isLoading, setIsLoading] = React.useState(false)
   const [result, setResult] = React.useState<FormulaCanvasOutput | null>(null)
   const [formula, setFormula] = React.useState<Formula>({ id: 'canvas', name: 'Live Canvas', ingredients: []})
+
+  // Defer the formula passed to the heavy AnalysisPanel to avoid blocking input interactions
+  const deferredFormula = React.useDeferredValue(formula)
+
   const { toast } = useToast()
 
   const handleAddIngredient = (ingredientName: string) => {
@@ -210,7 +214,7 @@ export function InteractiveCanvasTool() {
         </div>
         <Separator />
         <div>
-            <AnalysisPanel formula={formula} />
+            <AnalysisPanel formula={deferredFormula} />
         </div>
       </CardContent>
     </Card>
