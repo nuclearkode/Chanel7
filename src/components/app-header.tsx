@@ -12,6 +12,7 @@ const userAvatar = PlaceHolderImages.find(p => p.id === 'user-avatar');
 
 const menuItems = [
   { href: "/dashboard", label: "Dashboard" },
+  { href: "/encyclopedia", label: "Encyclopedia" },
   { href: "/lab", label: "The Lab" },
   { href: "/inventory", label: "Inventory" },
   { href: "/analysis", label: "Analysis" },
