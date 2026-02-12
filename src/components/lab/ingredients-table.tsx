@@ -24,11 +24,19 @@ interface IngredientsTableProps {
 
 const getFamilyColor = (family: string) => {
   switch (family) {
-    case "Woody": return "bg-amber-900/30 text-amber-500 border-amber-900/50"
-    case "Floral": return "bg-pink-900/30 text-pink-400 border-pink-900/50"
-    case "Citrus": return "bg-yellow-900/30 text-yellow-500 border-yellow-900/50"
-    case "Amber": return "bg-amber-900/30 text-amber-500 border-amber-900/50"
-    default: return "bg-slate-900/30 text-slate-400 border-slate-700"
+    case "Floral": return "bg-pink-100 text-pink-700 border-pink-200"
+    case "Woody": return "bg-stone-100 text-stone-700 border-stone-200"
+    case "Citrus": return "bg-yellow-100 text-yellow-700 border-yellow-200"
+    case "Fruity": return "bg-orange-100 text-orange-700 border-orange-200"
+    case "Spicy": return "bg-red-100 text-red-700 border-red-200"
+    case "Green": return "bg-green-100 text-green-700 border-green-200"
+    case "Gourmand": return "bg-purple-100 text-purple-700 border-purple-200"
+    case "Aquatic": return "bg-cyan-100 text-cyan-700 border-cyan-200"
+    case "Amber": return "bg-amber-100 text-amber-700 border-amber-200"
+    case "Musky": return "bg-slate-100 text-slate-700 border-slate-200"
+    case "Animalic": return "bg-rose-100 text-rose-800 border-rose-200"
+    case "Earthy": return "bg-emerald-100 text-emerald-700 border-emerald-200"
+    default: return "bg-gray-100 text-gray-700 border-gray-200"
   }
 }
 
