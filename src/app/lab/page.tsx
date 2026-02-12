@@ -1,8 +1,6 @@
 "use client"
 
 import React from "react"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import AppSidebar from "@/components/app-sidebar"
 import { FormulaHeader } from "@/components/lab/formula-header"
 import { DilutantConfig } from "@/components/lab/dilutant-config"
 import { IngredientsTable } from "@/components/lab/ingredients-table"
@@ -61,13 +59,9 @@ export default function LabPage() {
   }
 
   return (
-    <SidebarProvider>
-      <div className="relative flex min-h-screen w-full bg-background">
-        <AppSidebar />
-        <SidebarInset>
-          <main className="flex-1 flex flex-col lg:flex-row overflow-hidden h-[calc(100vh-4rem)]">
-            {/* Left Pane: Editor (Scrollable) */}
-            <section className="flex-1 flex flex-col min-w-0 border-r border-border bg-background overflow-y-auto">
+    <main className="flex-1 flex flex-col lg:flex-row overflow-hidden h-full">
+      {/* Left Pane: Editor (Scrollable) */}
+      <section className="flex-1 flex flex-col min-w-0 border-r border-border bg-background overflow-y-auto">
               <FormulaHeader
                 formulaName={activeFormula.name}
                 setFormulaName={handleSetFormulaName}
@@ -146,15 +140,12 @@ export default function LabPage() {
               </Tabs>
             </section>
 
-            {/* Right Pane: Live Stats (Fixed width) */}
-            <LiveStats
-              totalWeight={totalWeight}
-              oilConcentration={oilConcentration}
-              items={items}
-            />
-          </main>
-        </SidebarInset>
-      </div>
-    </SidebarProvider>
+      {/* Right Pane: Live Stats (Fixed width) */}
+      <LiveStats
+        totalWeight={totalWeight}
+        oilConcentration={oilConcentration}
+        items={items}
+      />
+    </main>
   )
 }

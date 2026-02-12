@@ -1,0 +1,23 @@
+
+> nextn@0.1.0 dev /app
+> next dev -p 9002
+
+ ⚠ turbopack.root should be absolute, using: /app
+   ▲ Next.js 15.5.9
+   - Local:        http://localhost:9002
+   - Network:      http://192.168.0.2:9002
+
+ ✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+ ✓ Ready in 2.7s
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 8.9s (979 modules)
+ ✓ Compiled in 1926ms (393 modules)
+ GET /dashboard 200 in 10840ms
+ ○ Compiling /inventory ...
+ ✓ Compiled /inventory in 10.8s (1897 modules)
+ GET /inventory 200 in 12375ms

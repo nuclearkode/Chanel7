@@ -61,6 +61,14 @@ export function IngredientCard({ ingredient, isSelected, onClick, onAdd }: Ingre
                 {ingredient.description || "No description available."}
             </p>
 
+            <div className="flex flex-wrap gap-1 mb-3">
+                 {ingredient.olfactiveFamilies.map(f => (
+                    <span key={f} className="text-[10px] px-1.5 py-0.5 bg-secondary text-secondary-foreground rounded border border-secondary">
+                        {f}
+                    </span>
+                 ))}
+            </div>
+
             <div className="flex items-center justify-between pt-3 border-t border-border">
                 <div className="font-mono text-xs text-muted-foreground">CAS: {ingredient.casNumber || "N/A"}</div>
                 <Button
