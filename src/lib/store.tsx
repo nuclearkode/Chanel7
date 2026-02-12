@@ -1,7 +1,6 @@
 "use client"
 
 import { importedMaterials } from "@/lib/materials-data"
-"use client"
 
 import React, { createContext, useContext, useReducer } from "react"
 import { type Ingredient, type Formula, type FormulaItem } from "@/lib/types"
