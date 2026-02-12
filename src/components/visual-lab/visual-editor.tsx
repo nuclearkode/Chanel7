@@ -619,7 +619,7 @@ export function VisualEditor() {
       </div>
 
       {/* Inspector */}
-      <InspectorComponent selectionData={getInspectorData()} />
+      <InspectorComponent selectionData={getInspectorData()} allNodes={nodes} />
     </div>
   )
 }
