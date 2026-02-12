@@ -10,10 +10,9 @@ This information is used to shape Next.js' roadmap and prioritize features.
 You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
 https://nextjs.org/telemetry
 
- ✓ Ready in 2.3s
- ○ Compiling / ...
- ✓ Compiled / in 15.5s (2182 modules)
- GET / 307 in 547ms
- ○ Compiling /dashboard ...
- ✓ Compiled /dashboard in 14.3s (2203 modules)
- GET /dashboard 200 in 10065ms
+ ✓ Ready in 2.1s
+ ○ Compiling /lab ...
+ ✓ Compiled /lab in 22.1s (3487 modules)
+ GET /lab 200 in 25444ms
+ ✓ Compiled in 6.7s (1060 modules)
+ GET /lab 200 in 836ms
