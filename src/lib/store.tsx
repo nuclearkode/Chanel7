@@ -1,5 +1,8 @@
 "use client"
 
+import { importedMaterials } from "@/lib/materials-data"
+"use client"
+
 import React, { createContext, useContext, useReducer } from "react"
 import { type Ingredient, type Formula, type FormulaItem } from "@/lib/types"
 import { v4 as uuidv4 } from "uuid"
@@ -7,6 +10,7 @@ import { v4 as uuidv4 } from "uuid"
 // --- Mock Data ---
 
 const INITIAL_INVENTORY: Ingredient[] = [
+  ...importedMaterials,
   {
     id: "ing-1",
     name: "Iso E Super",
