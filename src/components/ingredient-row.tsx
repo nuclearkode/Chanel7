@@ -27,6 +27,7 @@ export const IngredientRow = React.memo(({
   onDelete,
 }: IngredientRowProps) => {
   const isOverLimit = ingredient.concentration > ingredient.ifraLimit
+  // const totalCost = (ingredient.concentration / 100) * 1000 * ingredient.cost
 
   const handleFieldChange = (field: keyof Ingredient, value: string | number) => {
     onUpdate({ ...ingredient, [field]: value });
@@ -85,10 +86,18 @@ export const IngredientRow = React.memo(({
                 {ingredient.olfactiveFamilies.map(family => <Badge key={family} variant="secondary">{family}</Badge>)}
               </div>
             </div>
-            <div className="flex justify-end items-center">
-              <Button variant="ghost" size="icon" onClick={() => onDelete(ingredient.id)}>
-                <Trash2 className="h-4 w-4 text-muted-foreground" />
-                <span className="sr-only">Delete Ingredient</span>
+            <div className="space-y-2">
+              <Label htmlFor={`longevity-${ingredient.id}`}>Longevity (h)</Label>
+              <Input id={`longevity-${ingredient.id}`} type="number" value={ingredient.longevity || 0} onChange={(e) => handleFieldChange('longevity', parseFloat(e.target.value) || 0)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor={`impact-${ingredient.id}`}>Impact (0-100)</Label>
+              <Input id={`impact-${ingredient.id}`} type="number" value={ingredient.impact || 0} onChange={(e) => handleFieldChange('impact', parseFloat(e.target.value) || 0)} />
+            </div>
+            <div className="flex justify-end items-center col-span-2 md:col-span-4">
+              <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={() => onDelete(ingredient.id)}>
+                <Trash2 className="h-4 w-4 mr-2" />
+                Delete Ingredient
               </Button>
             </div>
         </div>

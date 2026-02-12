@@ -1,5 +1,8 @@
 "use client"
 
+import { importedMaterials } from "@/lib/materials-data"
+"use client"
+
 import React, { createContext, useContext, useReducer } from "react"
 import { type Ingredient, type Formula, type FormulaItem } from "@/lib/types"
 import { v4 as uuidv4 } from "uuid"
@@ -7,6 +10,7 @@ import { v4 as uuidv4 } from "uuid"
 // --- Mock Data ---
 
 const INITIAL_INVENTORY: Ingredient[] = [
+  ...importedMaterials,
   {
     id: "ing-1",
     name: "Iso E Super",
@@ -19,6 +23,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "54464-57-2",
     description: "Velvety, woody, dry amber note. Provides fullness and subtle strength.",
     concentration: 100,
+    longevity: 400,
+    impact: 30,
   },
   {
     id: "ing-2",
@@ -32,6 +38,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "24851-98-7",
     description: "Transparent floral, jasmine-like, citrusy. Adds radiance and volume.",
     concentration: 100,
+    longevity: 200,
+    impact: 50,
   },
   {
     id: "ing-3",
@@ -45,6 +53,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "8007-75-8",
     description: "Fresh, zesty, sparkling citrus note with a distinct floral-peppery undertone.",
     concentration: 100,
+    longevity: 6,
+    impact: 70,
   },
   {
     id: "ing-4",
@@ -58,6 +68,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "6790-58-5",
     description: "Extremely powerful, ambergris-like, woody-amber note with dry, musky facets.",
     concentration: 100,
+    longevity: 400,
+    impact: 40,
   },
   {
     id: "ing-5",
@@ -71,6 +83,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "8007-01-0",
     description: "Deep, rich, spicy, honey-like rose. Classic floral heart for fine fragrance.",
     concentration: 100,
+    longevity: 160,
+    impact: 85,
   },
   {
     id: "ing-6",
@@ -84,6 +98,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "78-70-6",
     description: "Floral, fresh, lavender-like, woody. A key building block for floral accords.",
     concentration: 100,
+    longevity: 10,
+    impact: 40,
   },
   {
     id: "ing-7",
@@ -97,6 +113,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "8016-96-4",
     description: "Smoky, woody, earthy, rooty. Essential for masculine and woody fragrances.",
     concentration: 100,
+    longevity: 360,
+    impact: 60,
   },
   {
     id: "ing-8",
@@ -110,6 +128,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "8008-31-9",
     description: "Sweet, juicy, tangy citrus note. Adds brightness and joy.",
     concentration: 100,
+    longevity: 4,
+    impact: 60,
   },
   {
     id: "ing-9",
@@ -123,6 +143,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "8000-28-0",
     description: "Rich, floral, herbaceous, sweet. The heart of fougères.",
     concentration: 100,
+    longevity: 80,
+    impact: 65,
   },
     {
     id: "ing-10",
@@ -136,6 +158,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "1222-05-5",
     description: "Clean, sweet, musky, floral. Very long lasting and substantive.",
     concentration: 100,
+    longevity: 400,
+    impact: 30,
   },
   {
     id: "ing-11",
@@ -149,6 +173,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "8022-96-6",
     description: "Intense, warm, rich, floral, tea-like with spicy and fruity undertones.",
     concentration: 100,
+    longevity: 240,
+    impact: 90,
   },
   {
     id: "ing-12",
@@ -162,6 +188,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "8006-87-9",
     description: "Soft, sweet-woody, balsamic, tenacious, consistent.",
     concentration: 100,
+    longevity: 400,
+    impact: 50,
   },
   {
     id: "ing-13",
@@ -175,6 +203,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "8014-09-3",
     description: "Rich, sweet-herbaceous, aromatic, spicy and woody-balsamic.",
     concentration: 100,
+    longevity: 400,
+    impact: 80,
   },
   {
     id: "ing-14",
@@ -188,6 +218,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "8000-34-8",
     description: "Warm, strong, spicy, phenolic, sweet-woody.",
     concentration: 100,
+    longevity: 100,
+    impact: 90,
   },
   {
     id: "ing-15",
@@ -201,6 +233,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "28940-11-6",
     description: "The classic marine note. Sea breeze, oyster, watermelon.",
     concentration: 100,
+    longevity: 168,
+    impact: 95,
   },
   {
     id: "ing-16",
@@ -214,6 +248,8 @@ const INITIAL_INVENTORY: Ingredient[] = [
     casNumber: "8023-91-4",
     description: "Intensely green, bitter, leafy, peppery, woody-balsamic.",
     concentration: 100,
+    longevity: 24,
+    impact: 100,
   },
 ];
 
@@ -241,6 +277,15 @@ const INITIAL_FORMULA: Formula = {
   targetTotal: 100.00,
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
+  history: [
+    {
+      id: "hist-1",
+      date: new Date(Date.now() - 3600000).toISOString(),
+      user: "You",
+      action: "Created Formula",
+      details: "Initial formula creation"
+    }
+  ]
 }
 
 // --- Context & Reducer ---
@@ -268,6 +313,21 @@ const initialState: State = {
   activeFormula: INITIAL_FORMULA,
 }
 
+// Helper to add history
+const addHistory = (formula: Formula, action: string, details?: string): Formula => {
+  const newHistory = [
+    ...(formula.history || []),
+    {
+      id: uuidv4(),
+      date: new Date().toISOString(),
+      user: "You",
+      action,
+      details
+    }
+  ];
+  return { ...formula, history: newHistory, updatedAt: new Date().toISOString() };
+};
+
 function perfumeReducer(state: State, action: Action): State {
   switch (action.type) {
     case "ADD_TO_FORMULA": {
@@ -278,33 +338,37 @@ function perfumeReducer(state: State, action: Action): State {
       const newItems = [...currentItems, { ingredient: action.payload, amount: 0 }]
       const newIngredients = syncIngredients(newItems, state.activeFormula.targetTotal || 100)
 
+      const updatedFormula = {
+        ...state.activeFormula,
+        items: newItems,
+        ingredients: newIngredients,
+      }
+
       return {
         ...state,
-        activeFormula: {
-          ...state.activeFormula,
-          items: newItems,
-          ingredients: newIngredients,
-          updatedAt: new Date().toISOString(),
-        }
+        activeFormula: addHistory(updatedFormula, "Added Ingredient", action.payload.name)
       }
     }
     case "REMOVE_FROM_FORMULA": {
       const currentItems = state.activeFormula.items || []
+      const removedItem = currentItems.find(item => item.ingredient.id === action.payload);
       const newItems = currentItems.filter(item => item.ingredient.id !== action.payload)
       const newIngredients = syncIngredients(newItems, state.activeFormula.targetTotal || 100)
 
+      const updatedFormula = {
+        ...state.activeFormula,
+        items: newItems,
+        ingredients: newIngredients,
+      }
+
       return {
         ...state,
-        activeFormula: {
-          ...state.activeFormula,
-          items: newItems,
-          ingredients: newIngredients,
-          updatedAt: new Date().toISOString(),
-        }
+        activeFormula: addHistory(updatedFormula, "Removed Ingredient", removedItem?.ingredient.name || "Unknown")
       }
     }
     case "UPDATE_QUANTITY": {
       const currentItems = state.activeFormula.items || []
+      const itemToUpdate = currentItems.find(item => item.ingredient.id === action.payload.ingredientId);
       const newItems = currentItems.map(item =>
         item.ingredient.id === action.payload.ingredientId
           ? { ...item, amount: action.payload.amount }
@@ -312,48 +376,49 @@ function perfumeReducer(state: State, action: Action): State {
       )
       const newIngredients = syncIngredients(newItems, state.activeFormula.targetTotal || 100)
 
+      const updatedFormula = {
+        ...state.activeFormula,
+        items: newItems,
+        ingredients: newIngredients,
+      }
+
       return {
         ...state,
-        activeFormula: {
-          ...state.activeFormula,
-          items: newItems,
-          ingredients: newIngredients,
-          updatedAt: new Date().toISOString(),
-        }
+        activeFormula: addHistory(updatedFormula, "Updated Quantity", `${itemToUpdate?.ingredient.name}: ${action.payload.amount}g`)
       }
     }
     case "SET_SOLVENT": {
+      const updatedFormula = {
+        ...state.activeFormula,
+        solvent: action.payload.solvent,
+        solventAmount: action.payload.amount,
+      }
       return {
         ...state,
-        activeFormula: {
-          ...state.activeFormula,
-          solvent: action.payload.solvent,
-          solventAmount: action.payload.amount,
-          updatedAt: new Date().toISOString(),
-        }
+        activeFormula: addHistory(updatedFormula, "Updated Solvent", `${action.payload.solvent}: ${action.payload.amount}%`)
       }
     }
     case "SET_FORMULA_NAME": {
+      const updatedFormula = {
+        ...state.activeFormula,
+        name: action.payload,
+      }
       return {
         ...state,
-        activeFormula: {
-          ...state.activeFormula,
-          name: action.payload,
-          updatedAt: new Date().toISOString(),
-        }
+        activeFormula: addHistory(updatedFormula, "Renamed Formula", action.payload)
       }
     }
     case "SET_TARGET_TOTAL": {
       const currentItems = state.activeFormula.items || []
       const newIngredients = syncIngredients(currentItems, action.payload)
+      const updatedFormula = {
+        ...state.activeFormula,
+        targetTotal: action.payload,
+        ingredients: newIngredients,
+      }
       return {
         ...state,
-        activeFormula: {
-          ...state.activeFormula,
-          targetTotal: action.payload,
-          ingredients: newIngredients,
-          updatedAt: new Date().toISOString(),
-        }
+        activeFormula: addHistory(updatedFormula, "Updated Target Total", `${action.payload}g`)
       }
     }
     case "SAVE_FORMULA": {
@@ -390,6 +455,7 @@ function perfumeReducer(state: State, action: Action): State {
           targetTotal: 100,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
+          history: []
         }
       }
     }
