@@ -29,6 +29,10 @@ export type Ingredient = {
   description?: string;
   longevity: number; // hours (duration on skin)
   impact: number; // 0-100 relative impact (strength)
+  flashPoint?: number; // Celsius
+  vaporPressure?: number; // mmHg
+  smiles?: string; // SMILES string for molecular structure
+  olfactoryProfile?: Record<string, number>; // Detailed profile (e.g., { Floral: 90, Spicy: 20 })
 
   // Legacy fields - made mandatory for compatibility
   concentration: number; // For inventory items: strength (usually 100). For formula ingredients: concentration in formula.
