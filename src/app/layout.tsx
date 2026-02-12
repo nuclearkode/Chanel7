@@ -3,8 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { PerfumeProvider } from "@/lib/store"
 import { SidebarProvider } from "@/components/ui/sidebar"
-import { AppHeader } from "@/components/app-header"
-import { TacticalAISidebar } from "@/components/tactical-ai-sidebar"
+import { LayoutManager } from "@/components/layout-manager"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
@@ -31,13 +30,7 @@ export default function RootLayout({
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
           <PerfumeProvider>
             <SidebarProvider defaultOpen={true} className="flex flex-col h-full w-full">
-              <AppHeader />
-              <div className="flex flex-1 overflow-hidden">
-                <TacticalAISidebar />
-                <main className="flex-1 overflow-hidden relative flex flex-col bg-background">
-                  {children}
-                </main>
-              </div>
+              <LayoutManager>{children}</LayoutManager>
             </SidebarProvider>
             <Toaster />
           </PerfumeProvider>
