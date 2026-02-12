@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import { perfumes, Perfume } from "@/lib/encyclopedia-data"
+import { noteImages } from "@/lib/note-images"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -20,6 +21,7 @@ import {
   CheckCircle,
   History,
   Sparkles,
+  Triangle,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -31,6 +33,17 @@ export default function EncyclopediaPage() {
     p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     p.brand.toLowerCase().includes(searchQuery.toLowerCase())
   )
+
+  const getNoteImage = (note: string) => {
+    if (noteImages[note]) return noteImages[note]
+
+    // Try case-insensitive match
+    const lowerNote = note.toLowerCase()
+    const key = Object.keys(noteImages).find(k => k.toLowerCase() === lowerNote)
+    if (key) return noteImages[key]
+
+    return null
+  }
 
   return (
     <div className="flex flex-col h-full overflow-hidden relative">
@@ -253,28 +266,85 @@ export default function EncyclopediaPage() {
                            </div>
                          </TabsContent>
 
-                         <TabsContent value="pyramid" className="mt-0 h-full">
-                           <div className="relative flex flex-col items-center py-4 space-y-1 h-full justify-center">
-                             {/* Top */}
-                             <div className="w-2/5 aspect-[3/1] bg-primary/20 border border-primary/40 flex flex-col items-center justify-center p-2 rounded-t-lg relative z-30 overflow-hidden">
-                               <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent"></div>
-                               <span className="text-[9px] font-bold text-primary uppercase tracking-tighter">Top Notes</span>
-                               <span className="text-[11px] font-medium text-center leading-none mt-0.5">{selectedPerfume.pyramid.top.notes.join(", ")}</span>
+                         <TabsContent value="pyramid" className="mt-0 h-full overflow-y-auto pr-2">
+                           <div className="flex flex-col gap-6 py-4">
+                             {/* Top Notes */}
+                             <div className="space-y-3">
+                               <div className="flex items-center gap-2">
+                                 <Triangle className="w-4 h-4 text-primary fill-primary/20" />
+                                 <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Top Notes</h4>
+                               </div>
+                               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                 {selectedPerfume.pyramid.top.notes.map(note => {
+                                   const imgUrl = getNoteImage(note);
+                                   return (
+                                     <div key={note} className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30 border border-border/50 hover:bg-secondary/50 transition-colors">
+                                       <div className="w-10 h-10 rounded-full overflow-hidden bg-white shrink-0 border border-border flex items-center justify-center">
+                                         {imgUrl ? (
+                                           <img src={imgUrl} alt={note} className="w-full h-full object-cover" />
+                                         ) : (
+                                           <span className="text-[10px] text-muted-foreground">N/A</span>
+                                         )}
+                                       </div>
+                                       <span className="text-sm font-medium leading-tight">{note}</span>
+                                     </div>
+                                   );
+                                 })}
+                               </div>
                              </div>
-                             {/* Middle */}
-                             <div className="w-3/5 aspect-[4/1] bg-primary/15 border border-primary/30 flex flex-col items-center justify-center p-2 relative z-20 overflow-hidden">
-                               <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent"></div>
-                               <span className="text-[9px] font-bold text-primary uppercase tracking-tighter">Middle Notes</span>
-                               <span className="text-[11px] font-medium text-center leading-none mt-0.5">{selectedPerfume.pyramid.middle.notes.join(", ")}</span>
+
+                             {/* Middle Notes */}
+                             <div className="space-y-3">
+                               <div className="flex items-center gap-2">
+                                 <Triangle className="w-4 h-4 text-primary fill-primary/20 rotate-90" />
+                                 <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Heart Notes</h4>
+                               </div>
+                               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                 {selectedPerfume.pyramid.middle.notes.map(note => {
+                                   const imgUrl = getNoteImage(note);
+                                   return (
+                                     <div key={note} className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30 border border-border/50 hover:bg-secondary/50 transition-colors">
+                                       <div className="w-10 h-10 rounded-full overflow-hidden bg-white shrink-0 border border-border flex items-center justify-center">
+                                         {imgUrl ? (
+                                           <img src={imgUrl} alt={note} className="w-full h-full object-cover" />
+                                         ) : (
+                                           <span className="text-[10px] text-muted-foreground">N/A</span>
+                                         )}
+                                       </div>
+                                       <span className="text-sm font-medium leading-tight">{note}</span>
+                                     </div>
+                                   );
+                                 })}
+                               </div>
                              </div>
-                             {/* Base */}
-                             <div className="w-4/5 aspect-[5/1] bg-primary/10 border border-primary/20 flex flex-col items-center justify-center p-2 rounded-b-lg relative z-10 overflow-hidden">
-                               <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent"></div>
-                               <span className="text-[9px] font-bold text-primary uppercase tracking-tighter">Base Notes</span>
-                               <span className="text-[11px] font-medium text-center leading-none mt-0.5">{selectedPerfume.pyramid.base.notes.join(", ")}</span>
+
+                             {/* Base Notes */}
+                             <div className="space-y-3">
+                               <div className="flex items-center gap-2">
+                                 <Triangle className="w-4 h-4 text-primary fill-primary/20 rotate-180" />
+                                 <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Base Notes</h4>
+                               </div>
+                               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                 {selectedPerfume.pyramid.base.notes.map(note => {
+                                   const imgUrl = getNoteImage(note);
+                                   return (
+                                     <div key={note} className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30 border border-border/50 hover:bg-secondary/50 transition-colors">
+                                       <div className="w-10 h-10 rounded-full overflow-hidden bg-white shrink-0 border border-border flex items-center justify-center">
+                                         {imgUrl ? (
+                                           <img src={imgUrl} alt={note} className="w-full h-full object-cover" />
+                                         ) : (
+                                           <span className="text-[10px] text-muted-foreground">N/A</span>
+                                         )}
+                                       </div>
+                                       <span className="text-sm font-medium leading-tight">{note}</span>
+                                     </div>
+                                   );
+                                 })}
+                               </div>
                              </div>
-                             <div className="mt-4 text-center">
-                               <p className="text-[10px] text-muted-foreground font-medium">{selectedPerfume.pyramid.description}</p>
+
+                             <div className="mt-2 text-center pt-4 border-t border-border/50">
+                               <p className="text-[10px] text-muted-foreground font-medium italic">"{selectedPerfume.pyramid.description}"</p>
                              </div>
                            </div>
                          </TabsContent>
