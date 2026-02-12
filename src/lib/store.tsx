@@ -5,6 +5,7 @@ import { importedMaterials } from "@/lib/materials-data"
 import React, { createContext, useContext, useReducer } from "react"
 import { type Ingredient, type Formula, type FormulaItem } from "@/lib/types"
 import { v4 as uuidv4 } from "uuid"
+import { PCW_INVENTORY } from "@/lib/data/pcw-ingredients"
 
 // --- Mock Data ---
 
@@ -145,7 +146,7 @@ const INITIAL_INVENTORY: Ingredient[] = [
     longevity: 80,
     impact: 65,
   },
-    {
+  {
     id: "ing-10",
     name: "Galaxolide",
     vendor: "IFF",
@@ -250,6 +251,7 @@ const INITIAL_INVENTORY: Ingredient[] = [
     longevity: 24,
     impact: 100,
   },
+  ...PCW_INVENTORY,
 ];
 
 const syncIngredients = (items: FormulaItem[], targetTotal: number): Ingredient[] => {
@@ -260,10 +262,10 @@ const syncIngredients = (items: FormulaItem[], targetTotal: number): Ingredient[
 }
 
 const initialItems: FormulaItem[] = [
-    { ingredient: INITIAL_INVENTORY[0], amount: 12.00 }, // Iso E Super
-    { ingredient: INITIAL_INVENTORY[1], amount: 4.50 },  // Hedione
-    { ingredient: INITIAL_INVENTORY[2], amount: 2.80 },  // Bergamot
-    { ingredient: INITIAL_INVENTORY[3], amount: 0.70 },  // Ambroxan
+  { ingredient: INITIAL_INVENTORY[0], amount: 12.00 }, // Iso E Super
+  { ingredient: INITIAL_INVENTORY[1], amount: 4.50 },  // Hedione
+  { ingredient: INITIAL_INVENTORY[2], amount: 2.80 },  // Bergamot
+  { ingredient: INITIAL_INVENTORY[3], amount: 0.70 },  // Ambroxan
 ]
 
 const INITIAL_FORMULA: Formula = {
