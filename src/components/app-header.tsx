@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { PlaceHolderImages } from "@/lib/placeholder-images"
 import { UserCircle, Bell } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { ModeToggle } from "@/components/mode-toggle"
 
 const userAvatar = PlaceHolderImages.find(p => p.id === 'user-avatar');
 
@@ -50,6 +51,7 @@ export function AppHeader() {
       </div>
 
       <div className="flex items-center gap-4 w-64 justify-end">
+        <ModeToggle />
         <button className="text-muted-foreground hover:text-primary transition-colors">
           <Bell className="w-5 h-5" />
           <span className="sr-only">Notifications</span>
