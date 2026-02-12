@@ -161,6 +161,13 @@ export default function LabPage() {
             </section>
 
       {/* Right Pane: Live Stats (Fixed width) */}
+      {activeTab !== "visual" && (
+        <LiveStats
+          totalWeight={totalWeight}
+          oilConcentration={oilConcentration}
+          items={items}
+        />
+      )}
     </main>
   )
 }
