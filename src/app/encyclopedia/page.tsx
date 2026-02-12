@@ -1,7 +1,8 @@
 "use client"
 
-import React, { useState } from "react"
-import { perfumes, Perfume } from "@/lib/encyclopedia-data"
+import React, { useState, useEffect, useTransition } from "react"
+import { Perfume } from "@/lib/encyclopedia-data"
+import { searchPerfumesAction } from "./actions"
 import { noteImages } from "@/lib/note-images"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -22,28 +23,50 @@ import {
   History,
   Sparkles,
   Triangle,
+  Loader2,
+  AlertCircle
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export default function EncyclopediaPage() {
   const [selectedPerfume, setSelectedPerfume] = useState<Perfume | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
+  const [perfumesList, setPerfumesList] = useState<Perfume[]>([])
+  const [total, setTotal] = useState(0)
+  const [page, setPage] = useState(1)
+  const [isPending, startTransition] = useTransition()
 
-  const filteredPerfumes = perfumes.filter(p =>
-    p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.brand.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  // Initial load and search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      startTransition(async () => {
+        const result = await searchPerfumesAction(searchQuery, 1);
+        setPerfumesList(result.perfumes);
+        setTotal(result.total);
+        setPage(1);
+      });
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  const loadMore = () => {
+    const nextPage = page + 1;
+    startTransition(async () => {
+      const result = await searchPerfumesAction(searchQuery, nextPage);
+      setPerfumesList(prev => [...prev, ...result.perfumes]);
+      setPage(nextPage);
+    });
+  };
 
   const getNoteImage = (note: string) => {
     if (noteImages[note]) return noteImages[note]
-
-    // Try case-insensitive match
     const lowerNote = note.toLowerCase()
     const key = Object.keys(noteImages).find(k => k.toLowerCase() === lowerNote)
     if (key) return noteImages[key]
-
     return null
   }
+
+  const hasMore = perfumesList.length < total;
 
   return (
     <div className="flex flex-col h-full overflow-hidden relative">
@@ -66,6 +89,9 @@ export default function EncyclopediaPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
+            {isPending && (
+              <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4 animate-spin" />
+            )}
           </div>
           <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary">
             <Settings2 className="w-5 h-5" />
@@ -78,52 +104,75 @@ export default function EncyclopediaPage() {
 
       {/* Grid Content */}
       <ScrollArea className="flex-1 p-6 lg:p-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-20">
-          {filteredPerfumes.map((perfume) => (
-            <div
-              key={perfume.id}
-              className="group relative bg-card rounded-xl border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg overflow-hidden cursor-pointer"
-              onClick={() => setSelectedPerfume(perfume)}
-            >
-              {perfume.matchScore && (
-                <div className="absolute top-3 right-3 z-10">
-                  <Badge variant="outline" className="bg-background/80 backdrop-blur border-primary/20 text-primary font-bold tracking-wider uppercase text-[10px]">
-                    {perfume.matchScore}% Match
-                  </Badge>
-                </div>
-              )}
-              <div className="h-48 bg-secondary/30 flex items-center justify-center p-4 relative overflow-hidden">
-                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                 <div className="w-full h-full flex items-center justify-center text-muted-foreground/20 font-bold text-4xl select-none">
-                    {perfume.name.charAt(0)}
-                 </div>
-              </div>
-              <div className="p-4">
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <h3 className="font-bold text-lg leading-tight group-hover:text-primary transition-colors">{perfume.name}</h3>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wide mt-1">{perfume.brand} • {perfume.releaseYear}</p>
-                  </div>
-                  <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-xs font-mono text-muted-foreground border border-border">
-                    {perfume.concentration}
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-1.5 mt-3">
-                  {perfume.tags.map(tag => (
-                    <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0.5 font-normal">
-                      {tag}
+        {perfumesList.length === 0 && !isPending ? (
+           <div className="flex flex-col items-center justify-center h-64 text-muted-foreground">
+             <Info className="w-8 h-8 mb-2 opacity-50" />
+             <p>No perfumes found matching your criteria.</p>
+           </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-20">
+            {perfumesList.map((perfume) => (
+              <div
+                key={perfume.id}
+                className="group relative bg-card rounded-xl border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg overflow-hidden cursor-pointer"
+                onClick={() => setSelectedPerfume(perfume)}
+              >
+                {perfume.matchScore && (
+                  <div className="absolute top-3 right-3 z-10">
+                    <Badge variant="outline" className="bg-background/80 backdrop-blur border-primary/20 text-primary font-bold tracking-wider uppercase text-[10px]">
+                      {perfume.matchScore}% Match
                     </Badge>
-                  ))}
+                  </div>
+                )}
+                <div className="h-48 bg-secondary/30 flex items-center justify-center p-4 relative overflow-hidden">
+                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                   <div className="w-full h-full flex items-center justify-center text-muted-foreground/20 font-bold text-4xl select-none">
+                      {perfume.name.charAt(0)}
+                   </div>
+                </div>
+                <div className="p-4">
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <h3 className="font-bold text-lg leading-tight group-hover:text-primary transition-colors line-clamp-1" title={perfume.name}>{perfume.name}</h3>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wide mt-1 line-clamp-1">{perfume.brand} • {perfume.releaseYear}</p>
+                    </div>
+                    {perfume.concentration !== 'N/A' && (
+                        <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-xs font-mono text-muted-foreground border border-border">
+                            {perfume.concentration}
+                        </div>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 mt-3 h-12 overflow-hidden">
+                    {perfume.tags.slice(0, 4).map((tag, i) => (
+                      <Badge key={i} variant="secondary" className="text-[10px] px-2 py-0.5 font-normal">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+                <div className="px-4 pb-4 pt-0">
+                  <Button className="w-full text-xs font-medium uppercase tracking-wider" variant="secondary">
+                    Analyze
+                  </Button>
                 </div>
               </div>
-              <div className="px-4 pb-4 pt-0">
-                <Button className="w-full text-xs font-medium uppercase tracking-wider" variant="secondary">
-                  Analyze
+            ))}
+          </div>
+        )}
+
+        {hasMore && (
+            <div className="flex justify-center pb-10">
+                <Button
+                    variant="outline"
+                    onClick={loadMore}
+                    disabled={isPending}
+                    className="min-w-[200px]"
+                >
+                    {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                    {isPending ? 'Loading...' : 'Load More Perfumes'}
                 </Button>
-              </div>
             </div>
-          ))}
-        </div>
+        )}
       </ScrollArea>
 
       {/* Detailed View Overlay */}
@@ -163,7 +212,7 @@ export default function EncyclopediaPage() {
                   <div className="absolute bottom-4 left-4">
                     <div className="flex flex-col">
                       <span className="text-[10px] text-muted-foreground uppercase tracking-widest mb-1">Concentration</span>
-                      <span className="text-sm font-mono font-bold">{selectedPerfume.concentration === 'EdP' ? 'Eau de Parfum' : 'Extrait de Parfum'}</span>
+                      <span className="text-sm font-mono font-bold">{selectedPerfume.concentration === 'EdP' ? 'Eau de Parfum' : selectedPerfume.concentration === 'Ext' ? 'Extrait de Parfum' : selectedPerfume.concentration}</span>
                     </div>
                   </div>
                </div>
@@ -177,7 +226,7 @@ export default function EncyclopediaPage() {
                  <div className="flex items-center gap-4 text-xs font-mono text-muted-foreground border-t border-border pt-4">
                    <div>
                      <span className="block text-[10px] uppercase text-muted-foreground/70 mb-1">Release</span>
-                     {selectedPerfume.releaseYear}
+                     {selectedPerfume.releaseYear || 'N/A'}
                    </div>
                    <div>
                      <span className="block text-[10px] uppercase text-muted-foreground/70 mb-1">Gender</span>
@@ -200,16 +249,20 @@ export default function EncyclopediaPage() {
                      <p className="text-xs text-muted-foreground mb-0.5">The Nose</p>
                      <p className="font-bold text-sm">{selectedPerfume.inspiration.nose}</p>
                    </div>
-                   <div className="relative">
-                     <span className="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-yellow-500 ring-4 ring-background"></span>
-                     <p className="text-xs text-muted-foreground mb-0.5">The Muse</p>
-                     <p className="font-bold text-sm">{selectedPerfume.inspiration.muse}</p>
-                   </div>
-                   <div className="relative">
-                     <span className="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-slate-500 ring-4 ring-background"></span>
-                     <p className="text-xs text-muted-foreground mb-0.5">The Predecessor</p>
-                     <p className="font-bold text-sm">{selectedPerfume.inspiration.predecessor}</p>
-                   </div>
+                   {selectedPerfume.inspiration.muse !== 'N/A' && (
+                     <div className="relative">
+                       <span className="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-yellow-500 ring-4 ring-background"></span>
+                       <p className="text-xs text-muted-foreground mb-0.5">The Muse</p>
+                       <p className="font-bold text-sm">{selectedPerfume.inspiration.muse}</p>
+                     </div>
+                   )}
+                   {selectedPerfume.inspiration.predecessor !== 'N/A' && (
+                     <div className="relative">
+                       <span className="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-slate-500 ring-4 ring-background"></span>
+                       <p className="text-xs text-muted-foreground mb-0.5">The Predecessor</p>
+                       <p className="font-bold text-sm">{selectedPerfume.inspiration.predecessor}</p>
+                     </div>
+                   )}
                  </div>
                </div>
              </div>
@@ -219,12 +272,13 @@ export default function EncyclopediaPage() {
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                   {/* Composition Card */}
                   <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden flex flex-col h-full">
-                     <Tabs defaultValue="composition" className="w-full flex-1 flex flex-col">
+                     <Tabs defaultValue="pyramid" className="w-full flex-1 flex flex-col">
                        <div className="flex items-center px-5 pt-4 border-b border-border gap-6">
                          <TabsList className="bg-transparent p-0 h-auto gap-6">
                            <TabsTrigger
                              value="composition"
-                             className="pb-3 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:shadow-none px-0 text-[10px] font-bold uppercase tracking-widest text-muted-foreground data-[state=active]:text-primary"
+                             disabled={selectedPerfume.composition.length === 0}
+                             className="pb-3 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:shadow-none px-0 text-[10px] font-bold uppercase tracking-widest text-muted-foreground data-[state=active]:text-primary disabled:opacity-50"
                            >
                              Molecular Composition
                            </TabsTrigger>
@@ -243,7 +297,7 @@ export default function EncyclopediaPage() {
 
                        <div className="flex-1 p-5">
                          <TabsContent value="composition" className="mt-0 space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                           {selectedPerfume.composition.map((comp) => (
+                           {selectedPerfume.composition.length > 0 ? selectedPerfume.composition.map((comp) => (
                              <div key={comp.name} className="group cursor-pointer">
                                <div className="flex justify-between text-xs mb-1">
                                  <span className="font-medium group-hover:text-primary transition-colors">{comp.name}</span>
@@ -259,11 +313,18 @@ export default function EncyclopediaPage() {
                                  {comp.description}
                                </p>
                              </div>
-                           ))}
-                           <div className="mt-6 pt-4 border-t border-border flex items-center gap-3 opacity-60">
-                             <Hexagon className="w-4 h-4 text-muted-foreground" />
-                             <span className="text-[10px] font-mono text-muted-foreground">Detailed Formula available for subscribers</span>
-                           </div>
+                           )) : (
+                             <div className="flex flex-col items-center justify-center h-48 text-muted-foreground opacity-50">
+                               <AlertCircle className="w-8 h-8 mb-2" />
+                               <p className="text-sm">Composition data not available</p>
+                             </div>
+                           )}
+                           {selectedPerfume.composition.length > 0 && (
+                               <div className="mt-6 pt-4 border-t border-border flex items-center gap-3 opacity-60">
+                                   <Hexagon className="w-4 h-4 text-muted-foreground" />
+                                   <span className="text-[10px] font-mono text-muted-foreground">Detailed Formula available for subscribers</span>
+                               </div>
+                           )}
                          </TabsContent>
 
                          <TabsContent value="pyramid" className="mt-0 h-full overflow-y-auto pr-2">
@@ -275,10 +336,10 @@ export default function EncyclopediaPage() {
                                  <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Top Notes</h4>
                                </div>
                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                 {selectedPerfume.pyramid.top.notes.map(note => {
+                                 {selectedPerfume.pyramid.top.notes.map((note, i) => {
                                    const imgUrl = getNoteImage(note);
                                    return (
-                                     <div key={note} className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30 border border-border/50 hover:bg-secondary/50 transition-colors">
+                                     <div key={i} className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30 border border-border/50 hover:bg-secondary/50 transition-colors">
                                        <div className="w-10 h-10 rounded-full overflow-hidden bg-white shrink-0 border border-border flex items-center justify-center">
                                          {imgUrl ? (
                                            <img src={imgUrl} alt={note} className="w-full h-full object-cover" />
@@ -300,10 +361,10 @@ export default function EncyclopediaPage() {
                                  <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Heart Notes</h4>
                                </div>
                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                 {selectedPerfume.pyramid.middle.notes.map(note => {
+                                 {selectedPerfume.pyramid.middle.notes.map((note, i) => {
                                    const imgUrl = getNoteImage(note);
                                    return (
-                                     <div key={note} className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30 border border-border/50 hover:bg-secondary/50 transition-colors">
+                                     <div key={i} className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30 border border-border/50 hover:bg-secondary/50 transition-colors">
                                        <div className="w-10 h-10 rounded-full overflow-hidden bg-white shrink-0 border border-border flex items-center justify-center">
                                          {imgUrl ? (
                                            <img src={imgUrl} alt={note} className="w-full h-full object-cover" />
@@ -325,10 +386,10 @@ export default function EncyclopediaPage() {
                                  <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Base Notes</h4>
                                </div>
                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                 {selectedPerfume.pyramid.base.notes.map(note => {
+                                 {selectedPerfume.pyramid.base.notes.map((note, i) => {
                                    const imgUrl = getNoteImage(note);
                                    return (
-                                     <div key={note} className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30 border border-border/50 hover:bg-secondary/50 transition-colors">
+                                     <div key={i} className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30 border border-border/50 hover:bg-secondary/50 transition-colors">
                                        <div className="w-10 h-10 rounded-full overflow-hidden bg-white shrink-0 border border-border flex items-center justify-center">
                                          {imgUrl ? (
                                            <img src={imgUrl} alt={note} className="w-full h-full object-cover" />
@@ -361,42 +422,48 @@ export default function EncyclopediaPage() {
                          <span className="text-[10px] text-muted-foreground">Crowd Data</span>
                        </div>
                      </div>
-                     <div className="h-48 relative border-l border-b border-border ml-4 mb-4 flex-1">
-                        {/* Grid Lines */}
-                        <div className="absolute inset-0 grid grid-cols-4 grid-rows-4">
-                           {Array.from({ length: 16 }).map((_, i) => (
-                             <div key={i} className="border-r border-t border-border/20"></div>
-                           ))}
+                     {selectedPerfume.performance.sillage > 0 ? (
+                         <div className="h-48 relative border-l border-b border-border ml-4 mb-4 flex-1">
+                            {/* Grid Lines */}
+                            <div className="absolute inset-0 grid grid-cols-4 grid-rows-4">
+                               {Array.from({ length: 16 }).map((_, i) => (
+                                 <div key={i} className="border-r border-t border-border/20"></div>
+                               ))}
+                            </div>
+                            {/* Heatmap Blob */}
+                            <div
+                                className="absolute rounded-full bg-yellow-500/30 blur-xl transition-all duration-1000"
+                                style={{
+                                    width: '6rem',
+                                    height: '6rem',
+                                    left: `${(selectedPerfume.performance.sillage / 10) * 80}%`,
+                                    top: `${(1 - (selectedPerfume.performance.longevity / 10)) * 80}%`
+                                }}
+                            ></div>
+                             <div
+                                className="absolute rounded-full bg-yellow-500/60 blur-lg transition-all duration-1000"
+                                style={{
+                                    width: '4rem',
+                                    height: '4rem',
+                                    left: `${(selectedPerfume.performance.sillage / 10) * 85}%`,
+                                    top: `${(1 - (selectedPerfume.performance.longevity / 10)) * 85}%`
+                                }}
+                            ></div>
+
+                            {/* Labels */}
+                            <span className="absolute -bottom-6 left-0 text-[10px] text-muted-foreground">Intimate</span>
+                            <span className="absolute -bottom-6 right-0 text-[10px] text-muted-foreground">Room-Filling</span>
+                            <span className="absolute bottom-[-24px] w-full text-center text-[10px] uppercase text-muted-foreground font-bold tracking-wider">Sillage</span>
+
+                            <span className="absolute -left-8 bottom-0 text-[10px] text-muted-foreground rotate-[-90deg] origin-right">Weak</span>
+                            <span className="absolute -left-8 top-4 text-[10px] text-muted-foreground rotate-[-90deg] origin-right">Eternal</span>
+                            <span className="absolute left-[-30px] top-[50%] -translate-y-1/2 text-[10px] uppercase text-muted-foreground font-bold tracking-wider rotate-[-90deg]">Longevity</span>
+                         </div>
+                     ) : (
+                        <div className="h-48 flex items-center justify-center text-muted-foreground opacity-50">
+                             <p className="text-sm">Not enough data</p>
                         </div>
-                        {/* Heatmap Blob */}
-                        <div
-                            className="absolute rounded-full bg-yellow-500/30 blur-xl transition-all duration-1000"
-                            style={{
-                                width: '6rem',
-                                height: '6rem',
-                                left: `${(selectedPerfume.performance.sillage / 10) * 80}%`,
-                                top: `${(1 - (selectedPerfume.performance.longevity / 10)) * 80}%`
-                            }}
-                        ></div>
-                         <div
-                            className="absolute rounded-full bg-yellow-500/60 blur-lg transition-all duration-1000"
-                            style={{
-                                width: '4rem',
-                                height: '4rem',
-                                left: `${(selectedPerfume.performance.sillage / 10) * 85}%`,
-                                top: `${(1 - (selectedPerfume.performance.longevity / 10)) * 85}%`
-                            }}
-                        ></div>
-
-                        {/* Labels */}
-                        <span className="absolute -bottom-6 left-0 text-[10px] text-muted-foreground">Intimate</span>
-                        <span className="absolute -bottom-6 right-0 text-[10px] text-muted-foreground">Room-Filling</span>
-                        <span className="absolute bottom-[-24px] w-full text-center text-[10px] uppercase text-muted-foreground font-bold tracking-wider">Sillage</span>
-
-                        <span className="absolute -left-8 bottom-0 text-[10px] text-muted-foreground rotate-[-90deg] origin-right">Weak</span>
-                        <span className="absolute -left-8 top-4 text-[10px] text-muted-foreground rotate-[-90deg] origin-right">Eternal</span>
-                        <span className="absolute left-[-30px] top-[50%] -translate-y-1/2 text-[10px] uppercase text-muted-foreground font-bold tracking-wider rotate-[-90deg]">Longevity</span>
-                     </div>
+                     )}
                      <div className="text-center mt-2">
                         <p className="text-xs text-muted-foreground italic">{selectedPerfume.performance.description}</p>
                      </div>
@@ -408,34 +475,53 @@ export default function EncyclopediaPage() {
                  <h3 className="text-sm font-bold uppercase tracking-widest text-primary mb-4 flex items-center gap-2">
                    <History className="w-5 h-5" /> Historical Context
                  </h3>
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                   {selectedPerfume.history.map((item, idx) => (
-                     <div key={idx}>
-                       <h4 className="font-bold mb-2 text-sm">{item.title}</h4>
-                       <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                         {item.content}
-                       </p>
-                       <div className="flex gap-2 flex-wrap">
-                         {item.tags.map(tag => (
-                           <Badge key={tag} variant="outline" className="text-[10px]">
-                             {tag}
-                           </Badge>
-                         ))}
-                       </div>
-                     </div>
-                   ))}
-                   <div className="border-t md:border-t-0 md:border-l border-border pt-4 md:pt-0 md:pl-8">
-                     <h4 className="font-bold mb-2 text-sm">Trivia & Heritage</h4>
-                     <ul className="space-y-3">
-                       {selectedPerfume.trivia.map((triv, i) => (
-                         <li key={i} className="flex items-start gap-3">
-                           <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                           <p className="text-xs text-muted-foreground">{triv}</p>
-                         </li>
+                 {selectedPerfume.history.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                       {selectedPerfume.history.map((item, idx) => (
+                         <div key={idx}>
+                           <h4 className="font-bold mb-2 text-sm">{item.title}</h4>
+                           <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                             {item.content}
+                           </p>
+                           <div className="flex gap-2 flex-wrap">
+                             {item.tags.map(tag => (
+                               <Badge key={tag} variant="outline" className="text-[10px]">
+                                 {tag}
+                               </Badge>
+                             ))}
+                           </div>
+                         </div>
                        ))}
-                     </ul>
-                   </div>
-                 </div>
+                       <div className="border-t md:border-t-0 md:border-l border-border pt-4 md:pt-0 md:pl-8">
+                         <h4 className="font-bold mb-2 text-sm">Trivia & Heritage</h4>
+                         <ul className="space-y-3">
+                           {selectedPerfume.trivia.map((triv, i) => (
+                             <li key={i} className="flex items-start gap-3">
+                               <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                               <p className="text-xs text-muted-foreground">{triv}</p>
+                             </li>
+                           ))}
+                         </ul>
+                       </div>
+                    </div>
+                 ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <p className="text-sm text-muted-foreground italic">No historical context available for this fragrance.</p>
+                        </div>
+                        <div className="border-t md:border-t-0 md:border-l border-border pt-4 md:pt-0 md:pl-8">
+                            <h4 className="font-bold mb-2 text-sm">Trivia & Heritage</h4>
+                            <ul className="space-y-3">
+                                {selectedPerfume.trivia.map((triv, i) => (
+                                    <li key={i} className="flex items-start gap-3">
+                                    <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                                    <p className="text-xs text-muted-foreground">{triv}</p>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                 )}
                </div>
              </div>
           </div>
