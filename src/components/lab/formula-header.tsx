@@ -12,8 +12,8 @@ interface FormulaHeaderProps {
 
 export function FormulaHeader({ formulaName, setFormulaName }: FormulaHeaderProps) {
   return (
-    <div className="p-6 pb-4 border-b border-border ">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+    <div className="px-6 py-2 border-b border-border ">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-0">
         <div className="flex-1 w-full">
           <label className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-1 block">Formula Name</label>
           <Input
