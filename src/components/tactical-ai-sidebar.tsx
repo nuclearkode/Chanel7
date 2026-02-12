@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils"
 
 export function TacticalAISidebar() {
   return (
-    <Sidebar className="border-r border-border bg-sidebar w-80">
+    <Sidebar className="border-r border-border bg-sidebar w-80 top-16 !h-[calc(100svh-4rem)]">
       <SidebarHeader className="p-4 border-b border-border bg-sidebar-accent/50">
         <div className="flex items-center justify-between mb-2">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
