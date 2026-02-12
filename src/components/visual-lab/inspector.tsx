@@ -1,15 +1,20 @@
 import React from 'react'
 import { VisualNode } from './types'
-import { Info, Settings, AlertTriangle, CheckCircle } from 'lucide-react'
+import { Info, Settings, AlertTriangle, CheckCircle, Sparkles, BrainCircuit } from 'lucide-react'
 import { cn } from "@/lib/utils"
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface InspectorProps {
-  selectedNode: VisualNode | null
+  selectionData: {
+      type: 'single' | 'multi'
+      node?: VisualNode
+      nodes?: VisualNode[]
+  } | null
 }
 
-export function InspectorComponent({ selectedNode }: InspectorProps) {
-  if (!selectedNode) {
+export function InspectorComponent({ selectionData }: InspectorProps) {
+  if (!selectionData) {
     return (
       <aside className="w-96 bg-zinc-950 border-l border-slate-800 flex flex-col z-30 shadow-xl h-full p-6 items-center justify-center text-slate-500">
         <Info className="w-12 h-12 mb-4 opacity-20" />
@@ -17,6 +22,74 @@ export function InspectorComponent({ selectedNode }: InspectorProps) {
       </aside>
     )
   }
+
+  // --- Multi-Select / AI Insight Mode ---
+  if (selectionData.type === 'multi' && selectionData.nodes) {
+      const nodes = selectionData.nodes
+      // Mock AI Insight Data
+      const projectedAccord = nodes.length === 2 ? "Floral-Green Accord" : "Complex Accord"
+      const interactionDesc = nodes.length === 2
+        ? "High syngery detected. Ingredient A boosts the top-note diffusion of Ingredient B, while B extends the tenacity of A."
+        : "Multiple ingredients selected. Potential for muddiness if not balanced carefully. Consider simplifying the core structure.";
+
+      return (
+        <aside className="w-96 bg-zinc-950 border-l border-slate-800 flex flex-col z-30 shadow-xl h-full overflow-y-auto custom-scrollbar">
+            <div className="p-6 border-b border-slate-800 bg-gradient-to-b from-purple-500/10 to-transparent">
+                <div className="flex items-center gap-2 mb-2">
+                    <BrainCircuit className="w-5 h-5 text-purple-400" />
+                    <h2 className="text-lg font-light text-white tracking-tight">AI Insight</h2>
+                </div>
+                <p className="text-sm text-slate-400 font-light">Analyzing interaction between {nodes.length} selected components.</p>
+            </div>
+
+            <div className="p-6 space-y-6">
+                <div className="bg-zinc-900/50 border border-purple-500/20 rounded-xl p-4">
+                     <h3 className="text-xs font-mono uppercase text-purple-400 mb-2 flex items-center gap-2">
+                        <Sparkles className="w-3 h-3" /> Projected Accord
+                     </h3>
+                     <div className="text-xl font-display text-white mb-2">{projectedAccord}</div>
+                     <p className="text-sm text-slate-300 leading-relaxed">
+                        {interactionDesc}
+                     </p>
+                </div>
+
+                <div>
+                    <h3 className="text-xs font-mono uppercase text-slate-500 mb-3">Selected Components</h3>
+                    <div className="space-y-2">
+                        {nodes.map(n => (
+                            <div key={n.id} className="flex items-center justify-between p-2 bg-zinc-900 rounded border border-slate-800">
+                                <span className="text-sm text-slate-300">{n.data.label}</span>
+                                <span className="text-xs font-mono text-slate-500">{n.data.concentration}%</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Mock Radar for Combined Profile */}
+                <div className="h-48 w-full relative -ml-4 opacity-70">
+                     <ResponsiveContainer width="100%" height="100%">
+                        <RadarChart cx="50%" cy="50%" outerRadius="65%" data={[
+                            { subject: 'Floral', A: 80, fullMark: 100 },
+                            { subject: 'Green', A: 60, fullMark: 100 },
+                            { subject: 'Woody', A: 30, fullMark: 100 },
+                            { subject: 'Spicy', A: 20, fullMark: 100 },
+                            { subject: 'Citrus', A: 40, fullMark: 100 },
+                            { subject: 'Musk', A: 50, fullMark: 100 },
+                        ]}>
+                            <PolarGrid stroke="#334155" />
+                            <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 10 }} />
+                            <Radar name="Combined" dataKey="A" stroke="#a855f7" fill="#a855f7" fillOpacity={0.3} />
+                        </RadarChart>
+                     </ResponsiveContainer>
+                 </div>
+            </div>
+        </aside>
+      )
+  }
+
+  // --- Single Node Mode ---
+  const selectedNode = selectionData.node
+  if (!selectedNode) return null // Should not happen given check above
 
   const { data, type } = selectedNode
   const ingredient = data.ingredient
@@ -44,7 +117,6 @@ export function InspectorComponent({ selectedNode }: InspectorProps) {
               type === 'accord' ? "border-amber-500/30 text-amber-500 bg-amber-500/10" : "border-cyan-500/30 text-cyan-400 bg-cyan-500/10"
           )}>
             {type === 'accord' ? 'Macro Node' : 'Natural'}
-            {/* Note: Logic to distinguish Natural/Synthetic would need ingredient metadata */}
           </span>
         </div>
         <p className="text-sm text-slate-400 leading-relaxed font-light">
@@ -73,7 +145,6 @@ export function InspectorComponent({ selectedNode }: InspectorProps) {
                         <svg width="100" height="100" viewBox="0 0 100 100" className="opacity-60 stroke-slate-400 fill-none stroke-2">
                              <polygon points="50,20 80,35 80,65 50,80 20,65 20,35" />
                              <circle cx="50" cy="50" r="15" />
-                             {/* Just a dummy visual */}
                         </svg>
                         <span className="absolute bottom-2 right-2 text-[10px] text-slate-600 font-mono">
                             {ingredient.smiles ? "Structure Data Available" : "Structure Data Missing"}

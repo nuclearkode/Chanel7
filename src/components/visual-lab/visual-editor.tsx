@@ -9,7 +9,7 @@ import { AccordGroupComponent } from './group'
 import { VisualNode, Connection, NodeType, AccordGroup } from './types'
 import { Ingredient } from "@/lib/types"
 import { v4 as uuidv4 } from 'uuid'
-import { Plus, Minus, MousePointer2, Move, LayoutGrid, Layers, Archive, BoxSelect, Maximize } from 'lucide-react'
+import { Plus, Minus, MousePointer2, Move, LayoutGrid, Layers, Archive, BoxSelect, Maximize, WandSparkles } from 'lucide-react'
 import { cn } from "@/lib/utils"
 import { NODE_DIMENSIONS } from './constants'
 
@@ -108,11 +108,6 @@ export function VisualEditor() {
           setSelectedNodeIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id])
       } else {
           // If already selected and no shift, do nothing (dragging handled elsewhere)
-          // But if simple click, we want to clear others.
-          // Let's rely on logic: dragging sets selection if not selected.
-          // If we are just clicking, we might want to select ONLY this one.
-          // But `handleNodeDragStart` is called on pointer down.
-          // So let's just make sure `handleNodeDragStart` handles selection correctly.
           if (!selectedNodeIds.includes(id)) {
               setSelectedNodeIds([id])
           }
@@ -313,6 +308,65 @@ export function VisualEditor() {
       setSelectedGroupId(newGroup.id)
   }
 
+  const handleBridgeNodes = () => {
+      if (selectedNodeIds.length !== 2) return
+
+      const nodeA = nodes.find(n => n.id === selectedNodeIds[0])
+      const nodeB = nodes.find(n => n.id === selectedNodeIds[1])
+
+      if (!nodeA || !nodeB) return
+
+      // Mock AI Logic: Find a midpoint bridge
+      const midX = (nodeA.position.x + nodeB.position.x) / 2
+      const midY = (nodeA.position.y + nodeB.position.y) / 2
+
+      const bridgeX = midX
+      const bridgeY = midY + 100
+
+      const bridgeNode: VisualNode = {
+          id: uuidv4(),
+          type: 'ingredient',
+          data: {
+              label: 'AI Bridge',
+              concentration: 5,
+              color: 'bg-purple-500',
+              description: 'AI Suggestion: Hedione (Bridge). Connects floral and green notes efficiently.',
+              ingredient: {
+                  id: 'hedione-mock',
+                  name: 'Hedione',
+                  casNumber: '24851-98-7',
+                  description: 'Transparent floral jasmine note with citrus freshness.',
+                  family: 'Floral',
+                  subFamily: 'Jasmine',
+                  note: 'Mid',
+                  tenacity: 400,
+                  impact: 80,
+                  molecularWeight: 226.31,
+                  vaporPressure: 0.001,
+                  logP: 2.5,
+                  appearance: 'Colorless Liquid',
+                  odorType: 'Floral',
+                  odorStrength: 'Medium',
+                  isNatural: false,
+                  cost: 10,
+                  supplier: 'Generic'
+              }
+          },
+          position: { x: bridgeX, y: bridgeY }
+      }
+
+      setNodes(prev => [...prev, bridgeNode])
+
+      setConnections(prev => [
+          ...prev,
+          { id: uuidv4(), source: nodeA.id, target: bridgeNode.id },
+          { id: uuidv4(), source: nodeB.id, target: bridgeNode.id }
+      ])
+
+      setSelectedNodeIds([bridgeNode.id])
+  }
+
+
   const handleDelete = (id: string) => {
       setNodes(prev => prev.filter(n => n.id !== id))
       setConnections(prev => prev.filter(c => c.source !== id && c.target !== id))
@@ -365,6 +419,20 @@ export function VisualEditor() {
       return null
   }
 
+  const getInspectorData = () => {
+      const singleNode = getInspectorNode();
+      if (singleNode) return { type: 'single', node: singleNode };
+
+      if (selectedNodeIds.length > 1) {
+          const selectedNodes = nodes.filter(n => selectedNodeIds.includes(n.id));
+          return {
+              type: 'multi',
+              nodes: selectedNodes
+          }
+      }
+      return null;
+  }
+
   return (
     <div className="flex h-full w-full bg-zinc-950 overflow-hidden text-slate-200 font-sans select-none">
       {/* Sidebar */}
@@ -398,6 +466,15 @@ export function VisualEditor() {
                         onClick={handleCreateGroup}
                     >
                         <BoxSelect className="w-5 h-5" />
+                    </button>
+                )}
+                {selectedNodeIds.length === 2 && (
+                    <button
+                        className="p-2 rounded transition-colors text-purple-400 hover:bg-purple-500/10 animate-pulse"
+                        title="AI Bridge: Suggest Connector"
+                        onClick={handleBridgeNodes}
+                    >
+                        <WandSparkles className="w-5 h-5" />
                     </button>
                 )}
                 {selectedGroupId && (
@@ -542,7 +619,7 @@ export function VisualEditor() {
       </div>
 
       {/* Inspector */}
-      <InspectorComponent selectedNode={getInspectorNode()} />
+      <InspectorComponent selectionData={getInspectorData()} />
     </div>
   )
 }
