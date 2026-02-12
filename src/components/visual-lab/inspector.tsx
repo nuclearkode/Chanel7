@@ -51,14 +51,9 @@ export function InspectorComponent({ selectionData, allNodes = [] }: InspectorPr
     )
   }
 
-  // --- Multi-Select / AI Insight Mode ---
+    // --- Multi-Select / AI Insight Mode ---
   if (selectionData.type === 'multi' && selectionData.nodes) {
       const nodes = selectionData.nodes
-      // Mock AI Insight Data
-      const projectedAccord = nodes.length === 2 ? "Floral-Green Accord" : "Complex Accord"
-      const interactionDesc = nodes.length === 2
-        ? "High syngery detected. Ingredient A boosts the top-note diffusion of Ingredient B, while B extends the tenacity of A."
-        : "Multiple ingredients selected. Potential for muddiness if not balanced carefully. Consider simplifying the core structure.";
 
       return (
         <aside className="w-96 bg-zinc-950 border-l border-slate-800 flex flex-col z-30 shadow-xl h-full overflow-y-auto custom-scrollbar">
@@ -71,15 +66,7 @@ export function InspectorComponent({ selectionData, allNodes = [] }: InspectorPr
             </div>
 
             <div className="p-6 space-y-6">
-                <div className="bg-zinc-900/50 border border-purple-500/20 rounded-xl p-4">
-                     <h3 className="text-xs font-mono uppercase text-purple-400 mb-2 flex items-center gap-2">
-                        <Sparkles className="w-3 h-3" /> Projected Accord
-                     </h3>
-                     <div className="text-xl font-display text-white mb-2">{projectedAccord}</div>
-                     <p className="text-sm text-slate-300 leading-relaxed">
-                        {interactionDesc}
-                     </p>
-                </div>
+                <AiAnalysisPanel key={nodes.map(n => n.id).join(',')} nodes={nodes} />
 
                 <div>
                     <h3 className="text-xs font-mono uppercase text-slate-500 mb-3">Selected Components</h3>
@@ -92,24 +79,6 @@ export function InspectorComponent({ selectionData, allNodes = [] }: InspectorPr
                         ))}
                     </div>
                 </div>
-
-                {/* Mock Radar for Combined Profile */}
-                <div className="h-48 w-full relative -ml-4 opacity-70">
-                     <ResponsiveContainer width="100%" height="100%">
-                        <RadarChart cx="50%" cy="50%" outerRadius="65%" data={[
-                            { subject: 'Floral', A: 80, fullMark: 100 },
-                            { subject: 'Green', A: 60, fullMark: 100 },
-                            { subject: 'Woody', A: 30, fullMark: 100 },
-                            { subject: 'Spicy', A: 20, fullMark: 100 },
-                            { subject: 'Citrus', A: 40, fullMark: 100 },
-                            { subject: 'Musk', A: 50, fullMark: 100 },
-                        ]}>
-                            <PolarGrid stroke="#334155" />
-                            <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 10 }} />
-                            <Radar name="Combined" dataKey="A" stroke="#a855f7" fill="#a855f7" fillOpacity={0.3} />
-                        </RadarChart>
-                     </ResponsiveContainer>
-                 </div>
             </div>
         </aside>
       )
