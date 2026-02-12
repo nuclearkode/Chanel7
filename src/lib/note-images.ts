@@ -1816,3 +1816,14 @@ export const noteImages: Record<string, string> = {
   "cocoa shell": "https://fimgs.net/mdimg/sastojci/m.1553.jpg?1733161259",
   "latex": "https://fimgs.net/mdimg/sastojci/m.1104.jpg?1733161258",
 };
+
+export const getNoteImage = (note: string): string | null => {
+  if (noteImages[note]) return noteImages[note];
+
+  // Try case-insensitive match
+  const lowerNote = note.toLowerCase();
+  const key = Object.keys(noteImages).find(k => k.toLowerCase() === lowerNote);
+  if (key) return noteImages[key];
+
+  return null;
+};

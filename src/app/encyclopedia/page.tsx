@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { perfumes, Perfume } from "@/lib/encyclopedia-data"
-import { noteImages } from "@/lib/note-images"
+import { noteImages, getNoteImage } from "@/lib/note-images"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -34,15 +34,6 @@ export default function EncyclopediaPage() {
     p.brand.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  const getNoteImage = (note: string) => {
-    if (noteImages[note]) return noteImages[note]
-
-    // Try case-insensitive match
-    const lowerNote = note.toLowerCase()
-    const key = Object.keys(noteImages).find(k => k.toLowerCase() === lowerNote)
-    if (key) return noteImages[key]
-
-    return null
   }
 
   return (
@@ -274,19 +265,19 @@ export default function EncyclopediaPage() {
                                  <Triangle className="w-4 h-4 text-primary fill-primary/20" />
                                  <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Top Notes</h4>
                                </div>
-                               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                               <div className="flex flex-wrap gap-2">
                                  {selectedPerfume.pyramid.top.notes.map(note => {
                                    const imgUrl = getNoteImage(note);
                                    return (
-                                     <div key={note} className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30 border border-border/50 hover:bg-secondary/50 transition-colors">
-                                       <div className="w-10 h-10 rounded-full overflow-hidden bg-white shrink-0 border border-border flex items-center justify-center">
+                                     <div key={note} className="flex items-center gap-2 p-1 pr-3 rounded-full bg-secondary/50 border border-border/50 hover:bg-secondary/80 transition-colors group/note relative">
+                                       <div className="w-8 h-8 rounded-full overflow-hidden bg-white shrink-0 border border-border flex items-center justify-center shadow-sm">
                                          {imgUrl ? (
-                                           <img src={imgUrl} alt={note} className="w-full h-full object-cover" />
+                                           <img src={imgUrl} alt={note} className="w-full h-full object-cover transition-transform group-hover/note:scale-110 duration-500" />
                                          ) : (
-                                           <span className="text-[10px] text-muted-foreground">N/A</span>
+                                           <span className="text-[8px] text-muted-foreground font-mono">N/A</span>
                                          )}
                                        </div>
-                                       <span className="text-sm font-medium leading-tight">{note}</span>
+                                       <span className="text-xs font-medium leading-none text-foreground/90 whitespace-nowrap">{note}</span>
                                      </div>
                                    );
                                  })}
@@ -299,19 +290,19 @@ export default function EncyclopediaPage() {
                                  <Triangle className="w-4 h-4 text-primary fill-primary/20 rotate-90" />
                                  <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Heart Notes</h4>
                                </div>
-                               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                               <div className="flex flex-wrap gap-2">
                                  {selectedPerfume.pyramid.middle.notes.map(note => {
                                    const imgUrl = getNoteImage(note);
                                    return (
-                                     <div key={note} className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30 border border-border/50 hover:bg-secondary/50 transition-colors">
-                                       <div className="w-10 h-10 rounded-full overflow-hidden bg-white shrink-0 border border-border flex items-center justify-center">
+                                     <div key={note} className="flex items-center gap-2 p-1 pr-3 rounded-full bg-secondary/50 border border-border/50 hover:bg-secondary/80 transition-colors group/note relative">
+                                       <div className="w-8 h-8 rounded-full overflow-hidden bg-white shrink-0 border border-border flex items-center justify-center shadow-sm">
                                          {imgUrl ? (
-                                           <img src={imgUrl} alt={note} className="w-full h-full object-cover" />
+                                           <img src={imgUrl} alt={note} className="w-full h-full object-cover transition-transform group-hover/note:scale-110 duration-500" />
                                          ) : (
-                                           <span className="text-[10px] text-muted-foreground">N/A</span>
+                                           <span className="text-[8px] text-muted-foreground font-mono">N/A</span>
                                          )}
                                        </div>
-                                       <span className="text-sm font-medium leading-tight">{note}</span>
+                                       <span className="text-xs font-medium leading-none text-foreground/90 whitespace-nowrap">{note}</span>
                                      </div>
                                    );
                                  })}
@@ -324,19 +315,19 @@ export default function EncyclopediaPage() {
                                  <Triangle className="w-4 h-4 text-primary fill-primary/20 rotate-180" />
                                  <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Base Notes</h4>
                                </div>
-                               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                               <div className="flex flex-wrap gap-2">
                                  {selectedPerfume.pyramid.base.notes.map(note => {
                                    const imgUrl = getNoteImage(note);
                                    return (
-                                     <div key={note} className="flex items-center gap-3 p-2 rounded-lg bg-secondary/30 border border-border/50 hover:bg-secondary/50 transition-colors">
-                                       <div className="w-10 h-10 rounded-full overflow-hidden bg-white shrink-0 border border-border flex items-center justify-center">
+                                     <div key={note} className="flex items-center gap-2 p-1 pr-3 rounded-full bg-secondary/50 border border-border/50 hover:bg-secondary/80 transition-colors group/note relative">
+                                       <div className="w-8 h-8 rounded-full overflow-hidden bg-white shrink-0 border border-border flex items-center justify-center shadow-sm">
                                          {imgUrl ? (
-                                           <img src={imgUrl} alt={note} className="w-full h-full object-cover" />
+                                           <img src={imgUrl} alt={note} className="w-full h-full object-cover transition-transform group-hover/note:scale-110 duration-500" />
                                          ) : (
-                                           <span className="text-[10px] text-muted-foreground">N/A</span>
+                                           <span className="text-[8px] text-muted-foreground font-mono">N/A</span>
                                          )}
                                        </div>
-                                       <span className="text-sm font-medium leading-tight">{note}</span>
+                                       <span className="text-xs font-medium leading-none text-foreground/90 whitespace-nowrap">{note}</span>
                                      </div>
                                    );
                                  })}
