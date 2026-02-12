@@ -14,7 +14,7 @@ import { IngredientBrowser } from "@/components/ingredient-browser"
 import { FormulaHistory } from "@/components/formula-history"
 import { type Ingredient } from "@/lib/types"
 import { ScentTimeline } from "@/components/analysis/scent-timeline"
-import { VisualEditor } from "@/components/lab/visual-editor"
+import { VisualEditor } from "@/components/visual-lab/visual-editor"
 
 
 export default function LabPage() {
@@ -141,7 +141,7 @@ export default function LabPage() {
                 </TabsContent>
 
                 <TabsContent value="visual" className="flex-1 p-0 mt-0 overflow-hidden h-full">
-                   <VisualEditor ingredients={state.inventory} />
+                   <VisualEditor />
                 </TabsContent>
               </Tabs>
             </section>

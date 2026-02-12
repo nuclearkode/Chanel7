@@ -1,0 +1,144 @@
+
+> nextn@0.1.0 dev /app
+> next dev -p 9002
+
+ ⚠ turbopack.root should be absolute, using: /app
+   ▲ Next.js 15.5.9
+   - Local:        http://localhost:9002
+   - Network:      http://192.168.0.2:9002
+
+ ✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+ ✓ Ready in 2.4s
+ ○ Compiling /lab ...
+ ⚠ ./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/view.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/view.js
+./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/application.js
+./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/express.js
+./node_modules/.pnpm/express@4.22.1/node_modules/express/index.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/reflection.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/index.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/common.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/index.mjs
+./src/ai/flows/suggest-formula-additions.ts
+
+./node_modules/.pnpm/require-in-the-middle@7.5.2/node_modules/require-in-the-middle/index.js
+Critical dependency: require function is used in a way in which dependencies cannot be statically extracted
+
+Import trace for requested module:
+./node_modules/.pnpm/require-in-the-middle@7.5.2/node_modules/require-in-the-middle/index.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/platform/node/instrumentation.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/platform/node/index.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/platform/index.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/index.js
+./node_modules/.pnpm/@opentelemetry+sdk-node@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/sdk-node/build/src/sdk.js
+./node_modules/.pnpm/@opentelemetry+sdk-node@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/sdk-node/build/src/index.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/tracing/node-telemetry-provider.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/node.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/common.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/index.mjs
+./src/ai/flows/suggest-formula-additions.ts
+`legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components
+ GET /lab 200 in 30447ms
+ ⚠ ./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/view.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/view.js
+./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/application.js
+./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/express.js
+./node_modules/.pnpm/express@4.22.1/node_modules/express/index.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/reflection.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/index.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/common.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/index.mjs
+./src/ai/flows/suggest-formula-additions.ts
+
+./node_modules/.pnpm/require-in-the-middle@7.5.2/node_modules/require-in-the-middle/index.js
+Critical dependency: require function is used in a way in which dependencies cannot be statically extracted
+
+Import trace for requested module:
+./node_modules/.pnpm/require-in-the-middle@7.5.2/node_modules/require-in-the-middle/index.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/platform/node/instrumentation.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/platform/node/index.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/platform/index.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/index.js
+./node_modules/.pnpm/@opentelemetry+sdk-node@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/sdk-node/build/src/sdk.js
+./node_modules/.pnpm/@opentelemetry+sdk-node@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/sdk-node/build/src/index.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/tracing/node-telemetry-provider.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/node.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/common.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/index.mjs
+./src/ai/flows/suggest-formula-additions.ts
+ GET /lab 200 in 868ms
+ ⚠ ./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/view.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/view.js
+./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/application.js
+./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/express.js
+./node_modules/.pnpm/express@4.22.1/node_modules/express/index.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/reflection.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/index.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/common.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/index.mjs
+./src/ai/flows/suggest-formula-additions.ts
+
+./node_modules/.pnpm/require-in-the-middle@7.5.2/node_modules/require-in-the-middle/index.js
+Critical dependency: require function is used in a way in which dependencies cannot be statically extracted
+
+Import trace for requested module:
+./node_modules/.pnpm/require-in-the-middle@7.5.2/node_modules/require-in-the-middle/index.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/platform/node/instrumentation.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/platform/node/index.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/platform/index.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/index.js
+./node_modules/.pnpm/@opentelemetry+sdk-node@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/sdk-node/build/src/sdk.js
+./node_modules/.pnpm/@opentelemetry+sdk-node@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/sdk-node/build/src/index.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/tracing/node-telemetry-provider.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/node.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/common.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/index.mjs
+./src/ai/flows/suggest-formula-additions.ts
+ ⚠ ./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/view.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/view.js
+./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/application.js
+./node_modules/.pnpm/express@4.22.1/node_modules/express/lib/express.js
+./node_modules/.pnpm/express@4.22.1/node_modules/express/index.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/reflection.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/index.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/genkit.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/index.mjs
+./src/ai/flows/suggest-formula-additions.ts
+
+./node_modules/.pnpm/require-in-the-middle@7.5.2/node_modules/require-in-the-middle/index.js
+Critical dependency: require function is used in a way in which dependencies cannot be statically extracted
+
+Import trace for requested module:
+./node_modules/.pnpm/require-in-the-middle@7.5.2/node_modules/require-in-the-middle/index.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/platform/node/instrumentation.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/platform/node/index.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/platform/index.js
+./node_modules/.pnpm/@opentelemetry+instrumentation@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/instrumentation/build/esm/index.js
+./node_modules/.pnpm/@opentelemetry+sdk-node@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/sdk-node/build/src/sdk.js
+./node_modules/.pnpm/@opentelemetry+sdk-node@0.52.1_@opentelemetry+api@1.9.0/node_modules/@opentelemetry/sdk-node/build/src/index.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/tracing/node-telemetry-provider.js
+./node_modules/.pnpm/@genkit-ai+core@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11_6ffd0222144acb227ad7c84840d8d50c/node_modules/@genkit-ai/core/lib/node.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/common.js
+./node_modules/.pnpm/genkit@1.28.0_@google-cloud+firestore@7.11.6_firebase-admin@13.6.1_firebase@11.10.0/node_modules/genkit/lib/index.mjs
+./src/ai/flows/suggest-formula-additions.ts

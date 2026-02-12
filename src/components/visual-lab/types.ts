@@ -32,3 +32,10 @@ export interface DragItem {
   type: 'sidebar-ingredient' | 'canvas-node'
   data: Ingredient | VisualNode
 }
+
+export interface AccordGroup {
+  id: string
+  label: string
+  nodeIds: string[]
+  color?: string
+}

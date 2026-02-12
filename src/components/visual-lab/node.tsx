@@ -1,23 +1,25 @@
 import React from 'react'
 import { VisualNode } from './types'
-import { Layers, CheckCircle, GripVertical, Beaker, Box, Check } from 'lucide-react'
+import { Layers, CheckCircle, Beaker, X } from 'lucide-react'
 import { cn } from "@/lib/utils"
 import { NODE_DIMENSIONS } from './constants'
 
 interface NodeProps {
   node: VisualNode
   selected?: boolean
-  onSelect: (id: string) => void
+  onSelect: (id: string, shiftKey: boolean) => void
   onDragStart: (e: React.PointerEvent, id: string) => void
   onConnectStart: (e: React.PointerEvent, nodeId: string) => void
+  onUpdate?: (id: string, updates: Partial<VisualNode['data']>) => void
+  onDelete?: (id: string) => void
 }
 
-export function NodeComponent({ node, selected, onSelect, onDragStart, onConnectStart }: NodeProps) {
+export function NodeComponent({ node, selected, onSelect, onDragStart, onConnectStart, onUpdate, onDelete }: NodeProps) {
   const { type, data } = node
 
   const handlePointerDown = (e: React.PointerEvent) => {
     e.stopPropagation()
-    onSelect(node.id)
+    onSelect(node.id, e.shiftKey)
     onDragStart(e, node.id)
   }
 
@@ -26,9 +28,16 @@ export function NodeComponent({ node, selected, onSelect, onDragStart, onConnect
     onConnectStart(e, node.id)
   }
 
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (onUpdate) {
+          onUpdate(node.id, { concentration: parseFloat(e.target.value) })
+      }
+  }
+
   // --- Styles ---
   const baseClasses = "absolute transition-all duration-200 cursor-grab active:cursor-grabbing select-none"
-  const selectedClasses = selected ? "ring-2 ring-primary ring-offset-2 ring-offset-background" : ""
+  const selectedClasses = selected ? "ring-1 ring-primary shadow-lg shadow-primary/20" : "shadow-lg"
+  const glassPanel = "bg-zinc-900/90 backdrop-blur-sm border border-cyan-500/20"
 
   // --- Output Node ---
   if (type === 'output') {
@@ -36,7 +45,7 @@ export function NodeComponent({ node, selected, onSelect, onDragStart, onConnect
       <div
         className={cn(
           baseClasses,
-          "bg-zinc-900 border border-slate-700 border-l-4 border-l-green-500 rounded-xl shadow-lg z-10",
+          "bg-zinc-950 border border-slate-700 border-l-4 border-l-green-500 rounded-xl z-10",
           selectedClasses
         )}
         style={{
@@ -56,7 +65,7 @@ export function NodeComponent({ node, selected, onSelect, onDragStart, onConnect
         {/* Input Port */}
         <div
           className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-slate-400 rounded-full border-2 border-zinc-900 hover:bg-primary cursor-crosshair transition-colors"
-          onPointerDown={(e) => { e.stopPropagation(); /* Output usually doesn't connect outwards? Or acts as input? This is input port. */ }}
+           title="Input"
         />
       </div>
     )
@@ -68,7 +77,8 @@ export function NodeComponent({ node, selected, onSelect, onDragStart, onConnect
       <div
         className={cn(
           baseClasses,
-          "bg-zinc-900/95 backdrop-blur-sm border-2 border-primary rounded-xl shadow-[0_0_30px_rgba(17,164,212,0.15)] z-20",
+          glassPanel,
+          "rounded-xl z-20 border-amber-500/50",
           selectedClasses
         )}
         style={{
@@ -79,55 +89,59 @@ export function NodeComponent({ node, selected, onSelect, onDragStart, onConnect
         onPointerDown={handlePointerDown}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-slate-700 bg-primary/10 rounded-t-lg">
-          <div className="flex items-center gap-3">
-            <div className="p-1.5 bg-primary rounded-md shadow-lg shadow-primary/20">
-              <Layers className="text-white w-4 h-4" />
+        <div className="flex items-center justify-between p-3 border-b border-amber-500/20 bg-amber-500/10 rounded-t-lg">
+          <div className="flex items-center gap-2">
+            <div className="p-1 bg-amber-500 rounded shadow-lg shadow-amber-500/20">
+              <Layers className="text-zinc-950 w-3 h-3" />
             </div>
             <div>
-              <h3 className="font-bold text-white leading-none">{data.label}</h3>
-              <span className="text-[10px] text-primary uppercase tracking-wider font-semibold">Macro Node</span>
+              <h3 className="font-bold text-slate-200 text-sm leading-none">{data.label}</h3>
+              <span className="text-[10px] text-amber-500 uppercase tracking-wider font-semibold">Macro Node</span>
             </div>
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-4 space-y-4">
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-zinc-950 p-2 rounded border border-slate-700">
-              <span className="block text-[10px] text-slate-500 uppercase">Materials</span>
-              <span className="text-lg font-mono text-white">{data.items ? data.items.length : 0}</span>
+        <div className="p-3 space-y-3">
+          <div className="grid grid-cols-2 gap-2">
+            <div className="bg-zinc-950/50 p-2 rounded border border-slate-700/50">
+              <span className="block text-[9px] text-slate-500 uppercase tracking-wider">Materials</span>
+              <span className="text-base font-mono text-white">{data.items ? data.items.length : 0}</span>
             </div>
-            <div className="bg-zinc-950 p-2 rounded border border-slate-700">
-              <span className="block text-[10px] text-slate-500 uppercase">Total Wt</span>
-              <span className="text-lg font-mono text-white">{data.totalWeight || 0}g</span>
+            <div className="bg-zinc-950/50 p-2 rounded border border-slate-700/50">
+              <span className="block text-[9px] text-slate-500 uppercase tracking-wider">Total Wt</span>
+              <span className="text-base font-mono text-white">{data.totalWeight || 0}g</span>
             </div>
           </div>
         </div>
 
         {/* Footer / Ports */}
-        <div className="bg-zinc-950/50 p-2 rounded-b-lg border-t border-slate-700 flex justify-center">
-            <span className="text-[10px] text-slate-500 font-mono">ID: {node.id.slice(0, 8)}</span>
+        <div className="bg-zinc-950/30 p-1.5 rounded-b-lg border-t border-slate-700/50 flex justify-center">
+            <span className="text-[9px] text-slate-600 font-mono tracking-widest">ID: {node.id.slice(0, 8)}</span>
         </div>
 
         {/* Input Port */}
-        <div className="absolute left-[-8px] top-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full border-4 border-zinc-900 shadow-sm" />
+        <div className="absolute left-[-8px] top-1/2 -translate-y-1/2 w-4 h-4 bg-amber-500 rounded-full border-4 border-zinc-900 shadow-sm" title="Input" />
 
         {/* Output Port */}
         <div
-            className="absolute right-[-8px] top-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full border-4 border-zinc-900 shadow-sm hover:scale-125 transition-transform cursor-crosshair"
+            className="absolute right-[-8px] top-1/2 -translate-y-1/2 w-4 h-4 bg-amber-500 rounded-full border-4 border-zinc-900 shadow-sm hover:scale-125 transition-transform cursor-crosshair"
             onPointerDown={handleConnectStart}
+            title="Output"
         />
       </div>
     )
   }
 
   // --- Ingredient Node (Default) ---
+  const iconColorClass = data.color?.replace('bg-', 'text-') || 'text-slate-400';
+
   return (
     <div
       className={cn(
         baseClasses,
-        "bg-zinc-900 border border-slate-600 rounded-xl shadow-lg hover:border-primary/50 transition-colors group z-10",
+        glassPanel,
+        "rounded-lg z-10 hover:shadow-cyan-500/20 transition-all",
         selectedClasses
       )}
       style={{
@@ -137,32 +151,60 @@ export function NodeComponent({ node, selected, onSelect, onDragStart, onConnect
       }}
       onPointerDown={handlePointerDown}
     >
-      <div className="flex items-center justify-between p-3 border-b border-slate-700 bg-zinc-950 rounded-t-xl">
+      <div className="h-8 bg-zinc-950/50 border-b border-cyan-500/20 rounded-t-lg flex items-center justify-between px-3">
         <div className="flex items-center gap-2">
-          <span className={cn("w-2 h-2 rounded-full", data.color || "bg-slate-400")}></span>
-          <span className="font-medium text-slate-200 truncate max-w-[120px]" title={data.label}>{data.label}</span>
+           {/* Icon based on color/type */}
+          <Beaker className={cn("w-3 h-3", iconColorClass)} />
+          <span className="text-xs font-bold tracking-wide uppercase text-slate-300 truncate max-w-[140px]" title={data.label}>{data.label}</span>
         </div>
-        <span className="text-xs text-slate-500 font-mono">MAT-{node.id.slice(-2)}</span>
+        <button
+            className="text-slate-600 hover:text-red-400 transition-colors"
+            onClick={(e) => { e.stopPropagation(); onDelete && onDelete(node.id) }}
+        >
+            <X className="w-3 h-3" />
+        </button>
       </div>
 
-      <div className="p-3">
-        <div className="flex justify-between items-end mb-2">
-          <span className="text-xs text-slate-400">Concentration</span>
-          <span className="text-sm font-mono text-primary">{data.concentration?.toFixed(1) || "0.0"}%</span>
-        </div>
-        <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-          <div
-            className={cn("h-full", data.color || "bg-slate-400")}
-            style={{ width: `${Math.min(data.concentration || 0, 100)}%` }}
-          />
-        </div>
-      </div>
+      <div className="p-3 relative">
+        <div className="space-y-3">
+            <div>
+                <div className="flex justify-between text-[10px] text-slate-400 mb-1">
+                    <span>Part / Dilution</span>
+                    <span className="text-cyan-400 font-mono">{data.concentration?.toFixed(1) || "10.0"}%</span>
+                </div>
 
-      {/* Output Port */}
-      <div
-        className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-slate-400 rounded-full border-2 border-zinc-900 hover:bg-primary cursor-crosshair transition-colors"
-        onPointerDown={handleConnectStart}
-      />
+                {/* Interactive Slider */}
+                <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    step="0.5"
+                    value={data.concentration || 10}
+                    onChange={handleSliderChange}
+                    onPointerDown={(e) => e.stopPropagation()} // Allow slider interaction without dragging node
+                    className="w-full h-1 bg-zinc-950 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-cyan-500 hover:[&::-webkit-slider-thumb]:bg-cyan-400 transition-all"
+                />
+            </div>
+
+            {/* Molecule Info / Extra line */}
+             <div className="text-[9px] text-slate-500 font-mono leading-tight truncate">
+                {data.ingredient?.casNumber ? `CAS: ${data.ingredient.casNumber}` : "CAS: N/A"}
+            </div>
+        </div>
+
+        {/* Input Port (Optional, if we want chaining) */}
+        <div
+            className="absolute left-[-7px] top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-slate-600 bg-zinc-900 hover:border-cyan-500 transition-colors cursor-crosshair"
+            title="Input: Modulation"
+        />
+
+        {/* Output Port */}
+        <div
+            className="absolute right-[-7px] top-1/2 -translate-y-1/2 w-3 h-3 bg-cyan-500 rounded-full border-2 border-zinc-900 shadow-[0_0_10px_rgba(34,211,238,0.5)] hover:scale-125 transition-transform cursor-crosshair"
+            onPointerDown={handleConnectStart}
+            title="Output"
+        />
+      </div>
     </div>
   )
 }
