@@ -2,6 +2,8 @@ import React from 'react'
 import { VisualNode } from './types'
 import { Info, Settings, AlertTriangle, CheckCircle, Sparkles, BrainCircuit } from 'lucide-react'
 import { cn } from "@/lib/utils"
+import { AiAnalysisPanel } from "./ai-analysis-panel"
+import { Activity } from "lucide-react"
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -11,14 +13,40 @@ interface InspectorProps {
       node?: VisualNode
       nodes?: VisualNode[]
   } | null
+  allNodes?: VisualNode[]
 }
 
-export function InspectorComponent({ selectionData }: InspectorProps) {
+export function InspectorComponent({ selectionData, allNodes = [] }: InspectorProps) {
   if (!selectionData) {
     return (
-      <aside className="w-96 bg-zinc-950 border-l border-slate-800 flex flex-col z-30 shadow-xl h-full p-6 items-center justify-center text-slate-500">
-        <Info className="w-12 h-12 mb-4 opacity-20" />
-        <p className="text-sm">Select a node to inspect properties and impact.</p>
+      <aside className="w-96 bg-zinc-950 border-l border-slate-800 flex flex-col z-30 shadow-xl h-full overflow-y-auto custom-scrollbar">
+         <div className="p-6 border-b border-slate-800 bg-gradient-to-b from-cyan-900/10 to-transparent">
+             <div className="flex items-center gap-2 mb-2">
+                 <Activity className="w-5 h-5 text-cyan-400" />
+                 <h2 className="text-lg font-light text-white tracking-tight">Formula Overview</h2>
+             </div>
+             <p className="text-sm text-slate-400 font-light">
+                 {allNodes.length > 0
+                   ? `Analyzing entire formula with ${allNodes.length} nodes.`
+                   : "Formula is empty."}
+             </p>
+         </div>
+
+         <div className="p-6 space-y-6">
+             {allNodes.length > 0 ? (
+                 <>
+                    <AiAnalysisPanel nodes={allNodes} />
+                    <div className="text-xs text-slate-500 text-center pt-4 border-t border-slate-800/50">
+                        Select individual nodes for detailed material inspection.
+                    </div>
+                 </>
+             ) : (
+                 <div className="flex flex-col items-center justify-center py-12 text-slate-600">
+                    <Info className="w-8 h-8 mb-3 opacity-30" />
+                    <p className="text-xs">Drag ingredients onto the canvas to begin.</p>
+                 </div>
+             )}
+         </div>
       </aside>
     )
   }

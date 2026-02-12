@@ -14,6 +14,7 @@ import { type Ingredient } from "@/lib/types"
 import { ScentTimeline } from "@/components/analysis/scent-timeline"
 import { VisualEditor } from "@/components/visual-lab/visual-editor"
 import { ComparisonTool } from "@/components/formulas/comparison-tool"
+import { cn } from "@/lib/utils"
 
 
 export default function LabPage() {
@@ -63,11 +64,13 @@ export default function LabPage() {
   return (
     <main className="flex-1 flex flex-col lg:flex-row overflow-hidden h-full">
       {/* Left Pane: Editor (Scrollable) */}
-      <section className="flex-1 flex flex-col min-w-0 border-r border-border bg-background overflow-y-auto">
-              <FormulaHeader
-                formulaName={activeFormula.name}
-                setFormulaName={handleSetFormulaName}
-              />
+      <section className={cn("flex-1 flex flex-col min-w-0 border-r border-border bg-background", activeTab === "visual" ? "overflow-hidden" : "overflow-y-auto")}>
+              {activeTab !== "visual" && (
+                <FormulaHeader
+                  formulaName={activeFormula.name}
+                  setFormulaName={handleSetFormulaName}
+                />
+              )}
 
               <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
                 <div className="px-6 border-b bg-background/95 backdrop-blur z-10 sticky top-0">
