@@ -65,12 +65,6 @@ export default function LabPage() {
     <main className="flex-1 flex flex-col lg:flex-row overflow-hidden h-full">
       {/* Left Pane: Editor (Scrollable) */}
       <section className={cn("flex-1 flex flex-col min-w-0 border-r border-border bg-background", activeTab === "visual" ? "overflow-hidden" : "overflow-y-auto")}>
-              {activeTab !== "visual" && (
-                <FormulaHeader
-                  formulaName={activeFormula.name}
-                  setFormulaName={handleSetFormulaName}
-                />
-              )}
 
               <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
                 <div className="px-6 border-b bg-background/95 backdrop-blur z-10 sticky top-0">
@@ -108,6 +102,13 @@ export default function LabPage() {
                     </TabsTrigger>
                   </TabsList>
                 </div>
+
+                {activeTab !== "visual" && (
+                  <FormulaHeader
+                    formulaName={activeFormula.name}
+                    setFormulaName={handleSetFormulaName}
+                  />
+                )}
 
                 <TabsContent value="visual" className="flex-1 p-0 mt-0 overflow-hidden h-full">
                    <VisualEditor />
@@ -160,13 +161,6 @@ export default function LabPage() {
             </section>
 
       {/* Right Pane: Live Stats (Fixed width) */}
-      {activeTab !== "visual" && (
-        <LiveStats
-            totalWeight={totalWeight}
-            oilConcentration={oilConcentration}
-            items={items}
-        />
-      )}
     </main>
   )
 }
