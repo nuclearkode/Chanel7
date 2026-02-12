@@ -1,6 +1,7 @@
 import { config } from 'dotenv';
 config();
 
+import '@/ai/flows/tactical-ai-chat.ts';
 import '@/ai/flows/banned-material-replacement-suggestions.ts';
 import '@/ai/flows/accord-suggestion-engine.ts';
 import '@/ai/flows/formula-spark-generation.ts';
