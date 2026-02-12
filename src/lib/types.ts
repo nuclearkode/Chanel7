@@ -26,6 +26,7 @@ export type Ingredient = {
 
   // New fields
   casNumber?: string;
+  imageUrl?: string;
   description?: string;
   longevity: number; // hours (duration on skin)
   impact: number; // 0-100 relative impact (strength)

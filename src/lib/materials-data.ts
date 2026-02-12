@@ -2085,6 +2085,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "iso_e_super",
     "name": "Iso E Super",
+    "imageUrl": "https://images.unsplash.com/photo-1542614471-001ccf2b449c?auto=format&fit=crop&q=80&w=200", // Placeholder for Woody/Amber
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Base",
@@ -2497,6 +2498,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ambroxan",
     "name": "Ambroxan",
+    "imageUrl": "https://images.unsplash.com/photo-1618331835717-801e976710b2?auto=format&fit=crop&q=80&w=200", // Placeholder for Ambergris
     "vendor": "Kao",
     "cost": 0.5,
     "note": "Base",
@@ -2763,6 +2765,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "rose_abs_bulgarian",
     "name": "Bulgarian Rose Abs.",
+    "imageUrl": "https://images.unsplash.com/photo-1496857239036-1fb13768f0db?auto=format&fit=crop&q=80&w=200", // Placeholder for Rose
     "vendor": "Generic",
     "cost": 12.5,
     "note": "Mid",
