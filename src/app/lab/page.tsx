@@ -13,6 +13,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { IngredientBrowser } from "@/components/ingredient-browser"
 import { FormulaHistory } from "@/components/formula-history"
 import { type Ingredient } from "@/lib/types"
+import { ScentTimeline } from "@/components/analysis/scent-timeline"
+import { VisualEditor } from "@/components/lab/visual-editor"
+
 
 export default function LabPage() {
   const { state, dispatch } = usePerfume()
@@ -85,6 +88,18 @@ export default function LabPage() {
                     >
                       History & Changes
                     </TabsTrigger>
+                    <TabsTrigger
+                      value="analysis"
+                      className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-full px-6"
+                    >
+                      Analysis
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="visual"
+                      className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-full px-6"
+                    >
+                      Visual Formula
+                    </TabsTrigger>
                   </TabsList>
                 </div>
 
@@ -117,6 +132,16 @@ export default function LabPage() {
                    <div className="max-w-3xl mx-auto">
                       <FormulaHistory history={activeFormula.history} />
                    </div>
+                </TabsContent>
+
+                <TabsContent value="analysis" className="flex-1 p-6 mt-0 overflow-y-auto">
+                   <div className="max-w-4xl mx-auto h-full">
+                      <ScentTimeline items={items} />
+                   </div>
+                </TabsContent>
+
+                <TabsContent value="visual" className="flex-1 p-0 mt-0 overflow-hidden h-full">
+                   <VisualEditor ingredients={state.inventory} />
                 </TabsContent>
               </Tabs>
             </section>

@@ -167,7 +167,10 @@ export function IngredientBrowser({ onAdd }: IngredientBrowserProps) {
                     <div className="flex items-center gap-1">Note <ArrowUpDown className="h-3 w-3" /></div>
                   </TableHead>
                   <TableHead>Families</TableHead>
-                  <TableHead className="text-right cursor-pointer hover:bg-muted" onClick={() => handleSort('longevity')}>
+                                    <TableHead className="text-right cursor-pointer hover:bg-muted" onClick={() => handleSort('concentration')}>
+                    <div className="flex items-center justify-end gap-1">Conc. <ArrowUpDown className="h-3 w-3" /></div>
+                  </TableHead>
+<TableHead className="text-right cursor-pointer hover:bg-muted" onClick={() => handleSort('longevity')}>
                     <div className="flex items-center justify-end gap-1">Longevity (h) <ArrowUpDown className="h-3 w-3" /></div>
                   </TableHead>
                   <TableHead className="text-right cursor-pointer hover:bg-muted" onClick={() => handleSort('impact')}>
@@ -204,7 +207,10 @@ export function IngredientBrowser({ onAdd }: IngredientBrowserProps) {
                           )}
                         </div>
                       </TableCell>
-                      <TableCell className="text-right font-mono text-xs">{ing.longevity}</TableCell>
+                                            <TableCell className="text-right font-mono text-xs">
+                        {ing.concentration}%
+                      </TableCell>
+<TableCell className="text-right font-mono text-xs">{ing.longevity}</TableCell>
                       <TableCell className="text-right font-mono text-xs">
                         <div className="flex items-center justify-end gap-2">
                            <div className="w-16 h-1.5 bg-secondary rounded-full overflow-hidden">
