@@ -4,6 +4,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "unknown",
     "name": "Unknown Material",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=284840886",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -21,6 +22,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "perfumers_alcohol",
     "name": "Perfumer's Alcohol",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=182588244",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -38,6 +40,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "propylene_glycol",
     "name": "Propylene Glycol",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=653536315",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -56,6 +59,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "dpg",
     "name": "Dipropylene Glycol",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=99675",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -73,6 +77,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ipm",
     "name": "Isopropyl Myristate",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=104486",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -90,6 +95,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "tec",
     "name": "Triethyl Citrate",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=114706",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -108,6 +114,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "benzyl_benzoate",
     "name": "Benzyl Benzoate",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=2087255921",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -126,6 +133,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "triplal",
     "name": "Triplal",
+    "imageUrl": "https://loremflickr.com/320/240/leaf?lock=1059618990",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Top",
@@ -144,6 +152,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ethyl_safranate",
     "name": "Ethyl Safranate",
+    "imageUrl": "https://loremflickr.com/320/240/spice?lock=1629696552",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -165,6 +174,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "safranal",
     "name": "Safranal",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1776690098",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -185,6 +195,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "safraleine",
     "name": "Safraleine",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1999526880",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -206,6 +217,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ionone_alpha",
     "name": "Ionone Alpha",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=561893181",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Mid",
@@ -225,6 +237,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "citronellol",
     "name": "Citronellol",
+    "imageUrl": "https://loremflickr.com/320/240/citrus?lock=383544097",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -247,6 +260,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "dynascone",
     "name": "Dynascone",
+    "imageUrl": "https://loremflickr.com/320/240/leaf?lock=1797282318",
     "vendor": "Firmenich",
     "cost": 0.5,
     "note": "Mid",
@@ -269,6 +283,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "geraniol",
     "name": "Geraniol",
+    "imageUrl": "https://loremflickr.com/320/240/citrus?lock=1921082853",
     "vendor": "Firmenich",
     "cost": 0.5,
     "note": "Mid",
@@ -291,6 +306,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "zenolide",
     "name": "Zenolide",
+    "imageUrl": "https://loremflickr.com/320/240/cloud?lock=573093610",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Base",
@@ -310,6 +326,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "cinnamic_alcohol",
     "name": "Cinnamic Alcohol",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=838498885",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Base",
@@ -330,6 +347,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "methyl_isoeugenol",
     "name": "Methyl Isoeugenol",
+    "imageUrl": "https://loremflickr.com/320/240/spice?lock=1879348104",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Base",
@@ -349,6 +367,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "heliotropin",
     "name": "Heliotropin",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1034095879",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -370,6 +389,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "anisaldehyde",
     "name": "Anisaldehyde",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=256489557",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -391,6 +411,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "veratric_aldehyde",
     "name": "Veratric Aldehyde",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=864250151",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -412,6 +433,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "acetate_c6",
     "name": "Acetate C6",
+    "imageUrl": "https://loremflickr.com/320/240/leaf?lock=2037617519",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Top",
@@ -433,6 +455,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "acetate_c9",
     "name": "Acetate C9",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=2037617516",
     "vendor": "Vigon",
     "cost": 0.5,
     "note": "Top",
@@ -453,6 +476,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "acetate_c12",
     "name": "Acetate C12",
+    "imageUrl": "https://loremflickr.com/320/240/citrus?lock=1258366246",
     "vendor": "Vigon",
     "cost": 0.5,
     "note": "Mid",
@@ -474,6 +498,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "damascone_alpha",
     "name": "Damascone Alpha",
+    "imageUrl": "https://loremflickr.com/320/240/leaf?lock=186368380",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -495,6 +520,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "damascone_beta",
     "name": "Damascone Beta",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=698725366",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -517,6 +543,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "damascone_delta",
     "name": "Damascone Delta",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=183809826",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -539,6 +566,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "damascone_gamma",
     "name": "Damascone Gamma",
+    "imageUrl": "https://loremflickr.com/320/240/leaf?lock=181157683",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -561,6 +589,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "terpinene_alpha",
     "name": "Terpinene Alpha",
+    "imageUrl": "https://loremflickr.com/320/240/pine?lock=429286631",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -582,6 +611,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ethyl_propionate",
     "name": "Ethyl Propionate",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=2092657056",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -603,6 +633,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "allyl_caproate",
     "name": "Allyl Caproate",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=458929650",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -624,6 +655,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "hexalon",
     "name": "Hexalon",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=816466149",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Mid",
@@ -644,6 +676,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "delphol_hc",
     "name": "Delphol HC",
+    "imageUrl": "https://loremflickr.com/320/240/leaf?lock=1691381446",
     "vendor": "Firmenich",
     "cost": 0.5,
     "note": "Mid",
@@ -666,6 +699,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "citral_dimethyl_acetal",
     "name": "Citral Dimethyl Acetal",
+    "imageUrl": "https://loremflickr.com/320/240/citrus?lock=833525319",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Top",
@@ -686,6 +720,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "methyl_cinnamic_aldehyde",
     "name": "Methyl Cinnamic Aldehyde",
+    "imageUrl": "https://loremflickr.com/320/240/spice?lock=900901359",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Mid",
@@ -705,6 +740,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "cinnamyl_acetate",
     "name": "Cinnamyl Acetate",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=969358407",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -725,6 +761,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "benzyl_cinnamate",
     "name": "Benzyl Cinnamate",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=232256163",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -744,6 +781,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "eugenol",
     "name": "Eugenol",
+    "imageUrl": "https://loremflickr.com/320/240/spice?lock=1403557251",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -763,6 +801,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "benzoic_acid",
     "name": "Benzoic Acid",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1143984190",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -782,6 +821,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ethanol",
     "name": "Ethanol",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1431382045",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -798,6 +838,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ethyl_vanillin",
     "name": "Ethyl Vanillin",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1933224382",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -817,6 +858,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "vanillin",
     "name": "Vanillin",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1363765941",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -839,6 +881,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ethyl_heptoate",
     "name": "Ethyl Heptoate",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1668740233",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -861,6 +904,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "butyl_propionate",
     "name": "Butyl Propionate",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=825238920",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -881,6 +925,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "cedryl_acetate",
     "name": "Cedryl Acetate",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=197747685",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -900,6 +945,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "vertenex",
     "name": "Vertenex",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1984249907",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Base",
@@ -920,6 +966,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ambercore",
     "name": "Ambercore",
+    "imageUrl": "https://loremflickr.com/320/240/amber?lock=1539274498",
     "vendor": "Kao",
     "cost": 0.5,
     "note": "Base",
@@ -938,6 +985,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "poivrol",
     "name": "Poivrol",
+    "imageUrl": "https://loremflickr.com/320/240/spice?lock=400368925",
     "vendor": "Symrise",
     "cost": 0.5,
     "note": "Top",
@@ -957,6 +1005,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "isobutyl_quinoline",
     "name": "Isobutyl Quinoline",
+    "imageUrl": "https://loremflickr.com/320/240/soil?lock=647838742",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -979,6 +1028,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "kohinool",
     "name": "Kohinool",
+    "imageUrl": "https://loremflickr.com/320/240/amber?lock=308594243",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Base",
@@ -999,6 +1049,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "datilat",
     "name": "Datilat",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1443445933",
     "vendor": "Symrise",
     "cost": 0.5,
     "note": "Mid",
@@ -1020,6 +1071,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "symroxane",
     "name": "Symroxane",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=51379108",
     "vendor": "Symrise",
     "cost": 0.5,
     "note": "Base",
@@ -1039,6 +1091,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "methyl_anthranilate",
     "name": "Methyl Anthranilate",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=1964297809",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -1060,6 +1113,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "methyl_diantilis",
     "name": "Methyl Diantilis",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=716587439",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Mid",
@@ -1080,6 +1134,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ethyl_caprate",
     "name": "Ethyl Caprate",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=1003707169",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -1102,6 +1157,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "benzaldehyde",
     "name": "Benzaldehyde",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1371581555",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -1123,6 +1179,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "coumarin",
     "name": "Coumarin",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=373498086",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -1144,6 +1201,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "isoeugenol",
     "name": "Isoeugenol",
+    "imageUrl": "https://loremflickr.com/320/240/spice?lock=2083052968",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -1165,6 +1223,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "tobacarol",
     "name": "Tobacarol",
+    "imageUrl": "https://loremflickr.com/320/240/amber?lock=619605239",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Base",
@@ -1185,6 +1244,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "azarbre",
     "name": "Azarbre",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=520624213",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Base",
@@ -1206,6 +1266,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "isobutavan",
     "name": "Isobutavan",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=438702850",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -1225,6 +1286,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "dimethyl_benzyl_carbinyl_butyrate",
     "name": "Dimethyl Benzyl Carbinyl Butyrate",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=524622161",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -1246,6 +1308,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ethylene_brassylate",
     "name": "Ethylene Brassylate",
+    "imageUrl": "https://loremflickr.com/320/240/spice?lock=636998211",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -1268,6 +1331,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "galaxolide",
     "name": "Galaxolide",
+    "imageUrl": "https://loremflickr.com/320/240/cloud?lock=684351172",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -1286,6 +1350,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "violiff",
     "name": "Violiff",
+    "imageUrl": "https://loremflickr.com/320/240/leaf?lock=463145241",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Mid",
@@ -1307,6 +1372,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "iso_amyl_acetate",
     "name": "Iso Amyl Acetate",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=302711269",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -1326,6 +1392,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "melonal",
     "name": "Melonal",
+    "imageUrl": "https://loremflickr.com/320/240/melon?lock=948353566",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Top",
@@ -1348,6 +1415,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "lilial",
     "name": "Lilial",
+    "imageUrl": "https://loremflickr.com/320/240/leaf?lock=1102727835",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -1369,6 +1437,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "hedione",
     "name": "Hedione",
+    "imageUrl": "https://loremflickr.com/320/240/citrus?lock=798236900",
     "vendor": "Firmenich",
     "cost": 0.5,
     "note": "Mid",
@@ -1394,6 +1463,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "veloutone",
     "name": "Veloutone",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=1754526261",
     "vendor": "Firmenich",
     "cost": 0.5,
     "note": "Mid",
@@ -1416,6 +1486,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "jasmatone",
     "name": "Jasmatone",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=1134699042",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Mid",
@@ -1437,6 +1508,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "indolene_50",
     "name": "Indolene 50",
+    "imageUrl": "https://loremflickr.com/320/240/texture?lock=41001434",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Base",
@@ -1457,6 +1529,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "benzyl_acetate",
     "name": "Benzyl Acetate",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=503424516",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -1479,6 +1552,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "decalactone_delta",
     "name": "Decalactone Delta",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=405368954",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -1498,6 +1572,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "octalactone_gamma",
     "name": "Octalactone Gamma",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1005796089",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -1517,6 +1592,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "dihydrocoumarin",
     "name": "Dihydrocoumarin",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1800549797",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -1539,6 +1615,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "clarycet",
     "name": "Clarycet",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=691693203",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Mid",
@@ -1562,6 +1639,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "guaiacol",
     "name": "Guaiacol",
+    "imageUrl": "https://loremflickr.com/320/240/spice?lock=1538427883",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -1584,6 +1662,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ambrettolide",
     "name": "Ambrettolide",
+    "imageUrl": "https://loremflickr.com/320/240/cloud?lock=1699670364",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Base",
@@ -1603,6 +1682,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "edenolide",
     "name": "Edenolide",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=1278302427",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Base",
@@ -1623,6 +1703,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "isoraldeine_95",
     "name": "Isoraldeine 95",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=1248211692",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Mid",
@@ -1644,6 +1725,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "allyl_cyclohexyl_propionate",
     "name": "Allyl Cyclohexyl Propionate",
+    "imageUrl": "https://loremflickr.com/320/240/leaf?lock=1707581315",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -1666,6 +1748,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "linalool",
     "name": "Linalool",
+    "imageUrl": "https://loremflickr.com/320/240/citrus?lock=1185676944",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -1689,6 +1772,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ethyl_maltol",
     "name": "Ethyl Maltol",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=115249708",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -1708,6 +1792,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "hercolyn_d",
     "name": "Hercolyn D",
+    "imageUrl": "https://loremflickr.com/320/240/amber?lock=934880901",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -1727,6 +1812,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "vetacetex",
     "name": "Vetacetex",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=153252695",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -1747,6 +1833,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "sylvamber",
     "name": "Sylvamber",
+    "imageUrl": "https://loremflickr.com/320/240/amber?lock=734864269",
     "vendor": "DRT",
     "cost": 0.5,
     "note": "Base",
@@ -1767,6 +1854,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "cetalox",
     "name": "Cetalox",
+    "imageUrl": "https://loremflickr.com/320/240/amber?lock=670220966",
     "vendor": "Firmenich",
     "cost": 0.5,
     "note": "Base",
@@ -1787,6 +1875,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "fructone",
     "name": "Fructone",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=1081162548",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Top",
@@ -1809,6 +1898,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "aprifloren",
     "name": "Aprifloren",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=380444088",
     "vendor": "Symrise",
     "cost": 0.5,
     "note": "Mid",
@@ -1830,6 +1920,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "magnolan",
     "name": "Magnolan",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=64887099",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -1852,6 +1943,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "anisyl_acetone",
     "name": "Anisyl Acetone",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1711680672",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -1874,6 +1966,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "cyclabute",
     "name": "Cyclabute",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=1564562970",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Top",
@@ -1898,6 +1991,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "bicyclononalactone",
     "name": "Bicyclononalactone",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1272721827",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Mid",
@@ -1922,6 +2016,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "nectaryl",
     "name": "Nectaryl",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=823584620",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Base",
@@ -1943,6 +2038,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "methyl_benzoate",
     "name": "Methyl Benzoate",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1821972402",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -1963,6 +2059,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "jessemal",
     "name": "Jessemal",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=1395432914",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Base",
@@ -1983,6 +2080,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "anisyl_alcohol",
     "name": "Anisyl Alcohol",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1967340345",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -2008,6 +2106,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "sandalore",
     "name": "Sandalore",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1647026387",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Base",
@@ -2026,6 +2125,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "sandela",
     "name": "Sandela",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1865402774",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Base",
@@ -2044,6 +2144,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "decalactone_gamma",
     "name": "Decalactone Gamma",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=408021097",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -2065,6 +2166,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "methyl_cyclo_pentenolone",
     "name": "Methyl Cyclo Pentenolone",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=493524330",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -2111,6 +2213,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ebanol",
     "name": "Ebanol",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=1309919001",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Base",
@@ -2129,6 +2232,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "kephalis",
     "name": "Kephalis",
+    "imageUrl": "https://loremflickr.com/320/240/amber?lock=251211367",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Base",
@@ -2149,6 +2253,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "dihydro_ionone_beta",
     "name": "Dihydro Ionone Beta",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=2012002173",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Mid",
@@ -2169,6 +2274,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "raspberry_ketone",
     "name": "Raspberry Ketone",
+    "imageUrl": "https://loremflickr.com/320/240/berry?lock=1169197537",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -2189,6 +2295,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "auralva",
     "name": "Auralva",
+    "imageUrl": "https://loremflickr.com/320/240/citrus?lock=648566828",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Mid",
@@ -2211,6 +2318,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "orange_flower_ether",
     "name": "Orange Flower Ether",
+    "imageUrl": "https://loremflickr.com/320/240/orange?lock=462209133",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Top",
@@ -2230,6 +2338,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "stemone",
     "name": "Stemone",
+    "imageUrl": "https://loremflickr.com/320/240/leaf?lock=1893644547",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -2249,6 +2358,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "cyclamen_aldehyde",
     "name": "Cyclamen Aldehyde",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=1738731671",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -2272,6 +2382,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "phenyl_ethyl_alcohol",
     "name": "Phenyl Ethyl Alcohol",
+    "imageUrl": "https://loremflickr.com/320/240/leaf?lock=556882256",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -2293,6 +2404,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "fructalate",
     "name": "Fructalate",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=371887981",
     "vendor": "Firmenich",
     "cost": 0.5,
     "note": "Mid",
@@ -2313,6 +2425,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "exaltolide_total",
     "name": "Exaltolide Total",
+    "imageUrl": "https://loremflickr.com/320/240/cloud?lock=1474974300",
     "vendor": "Firmenich",
     "cost": 0.5,
     "note": "Base",
@@ -2333,6 +2446,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "bacdanol",
     "name": "Bacdanol",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=2114869162",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -2351,6 +2465,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "nectarate",
     "name": "Nectarate",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=238703271",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Mid",
@@ -2370,6 +2485,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "fraistone",
     "name": "Fraistone",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=444496625",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Mid",
@@ -2392,6 +2508,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "citronellyl_acetate",
     "name": "Citronellyl Acetate",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=1622406025",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -2412,6 +2529,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "cashmeran",
     "name": "Cashmeran",
+    "imageUrl": "https://loremflickr.com/320/240/spice?lock=769470516",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Base",
@@ -2434,6 +2552,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "acetophenone",
     "name": "Acetophenone",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=179040729",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -2456,6 +2575,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "benzyl_propionate",
     "name": "Benzyl Propionate",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=717177450",
     "vendor": "Symrise",
     "cost": 0.5,
     "note": "Top",
@@ -2479,6 +2599,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "benzyl_salicylate",
     "name": "Benzyl Salicylate",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=2070937572",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -2519,6 +2640,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "allyl_amyl_glycoate",
     "name": "Allyl Amyl Glycoate",
+    "imageUrl": "https://loremflickr.com/320/240/leaf?lock=1177705063",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Mid",
@@ -2542,6 +2664,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "amyl_cinnamic_aldehyde",
     "name": "Amyl Cinnamic Aldehyde",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=2065824817",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Base",
@@ -2562,6 +2685,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "amyl_salicylate",
     "name": "Amyl Salicylate",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=1821059033",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Mid",
@@ -2583,6 +2707,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "apo_patchone_coeur",
     "name": "Apo Patchone Coeur",
+    "imageUrl": "https://loremflickr.com/320/240/flower?lock=558013580",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Mid",
@@ -2604,6 +2729,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "diethyl_malonate",
     "name": "Diethyl Malonate",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=1053494733",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -2623,6 +2749,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ethyl_acetate",
     "name": "Ethyl Acetate",
+    "imageUrl": "https://loremflickr.com/320/240/fruit?lock=1563411918",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -2643,6 +2770,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "grape_butyrate",
     "name": "Grape Butyrate",
+    "imageUrl": "https://loremflickr.com/320/240/grape?lock=1234077548",
     "vendor": "Generic",
     "cost": 0.5,
     "note": "Top",
@@ -2663,6 +2791,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "ionone_beta",
     "name": "Ionone Beta",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=710885425",
     "vendor": "IFF",
     "cost": 0.5,
     "note": "Mid",
@@ -2683,6 +2812,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "lavender_aldehyde_fcc",
     "name": "Lavender Aldehyde FCC",
+    "imageUrl": "https://loremflickr.com/320/240/lavender?lock=1258629181",
     "vendor": "Bedoukian",
     "cost": 0.5,
     "note": "Mid",
@@ -2704,6 +2834,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "lime_oxide",
     "name": "Lime Oxide",
+    "imageUrl": "https://loremflickr.com/320/240/lime?lock=1590463689",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Top",
@@ -2725,6 +2856,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "methylbutyraldehyde",
     "name": "Methylbutyraldehyde",
+    "imageUrl": "https://loremflickr.com/320/240/perfume?lock=916245721",
     "vendor": "Givaudan",
     "cost": 0.5,
     "note": "Top",
@@ -2745,6 +2877,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "bergamot_reggio",
     "name": "Bergamot Reggio",
+    "imageUrl": "https://loremflickr.com/320/240/bergamot?lock=78323439",
     "vendor": "Capua",
     "cost": 1.2,
     "note": "Top",
@@ -2786,6 +2919,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "oud_wood",
     "name": "Oud Wood (Agar)",
+    "imageUrl": "https://loremflickr.com/320/240/oud?lock=403527922",
     "vendor": "Generic",
     "cost": 50,
     "note": "Base",
@@ -2806,6 +2940,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "lemon_oil",
     "name": "Lemon Oil",
+    "imageUrl": "https://loremflickr.com/320/240/lemon?lock=765352314",
     "vendor": "Generic",
     "cost": 0.8,
     "note": "Top",
@@ -2826,6 +2961,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "labdanum_abs",
     "name": "Labdanum Abs",
+    "imageUrl": "https://loremflickr.com/320/240/resin?lock=41596369",
     "vendor": "Generic",
     "cost": 4.5,
     "note": "Base",
@@ -2846,6 +2982,7 @@ export const importedMaterials: Ingredient[] = [
   {
     "id": "benzoin_siam",
     "name": "Benzoin Siam",
+    "imageUrl": "https://loremflickr.com/320/240/resin?lock=828521764",
     "vendor": "Generic",
     "cost": 2.5,
     "note": "Base",
