@@ -24,10 +24,6 @@ const menuItems = [
 export function AppHeader() {
   const pathname = usePathname()
 
-  if (pathname.startsWith('/collaboration')) {
-    return null
-  }
-
   return (
     <nav className="h-16 border-b border-border bg-background flex items-center justify-between px-6 shrink-0 z-20">
       <div className="flex items-center gap-2 w-64">

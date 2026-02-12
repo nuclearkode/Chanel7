@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { usePathname } from "next/navigation"
 import { Bot, Sparkles, Send, Share2, User } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import {
@@ -44,7 +43,6 @@ const SuggestedPairings = () => (
 )
 
 export function TacticalAISidebar() {
-  const pathname = usePathname()
   const [messages, setMessages] = React.useState<Message[]>([
     {
       id: "init-1",
@@ -133,10 +131,6 @@ export function TacticalAISidebar() {
       e.preventDefault()
       handleSendMessage()
     }
-  }
-
-  if (pathname.startsWith('/collaboration')) {
-    return null
   }
 
   return (
