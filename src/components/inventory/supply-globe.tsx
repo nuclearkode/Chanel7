@@ -1,19 +1,70 @@
 "use client"
 
-import React, { useState, useEffect, useMemo, useRef } from "react"
-import dynamic from "next/dynamic"
+import React, { useState, useEffect, useMemo, useRef, useImperativeHandle } from "react"
+// import dynamic from "next/dynamic"
 import { Ingredient } from "@/lib/types"
 import { getIngredientOrigin, GeoPoint } from "@/lib/geo-data"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { X, MapPin, Factory, AlertTriangle } from "lucide-react"
+import { X, MapPin, Factory, AlertTriangle, Globe as GlobeIcon } from "lucide-react"
 
-// Dynamically import Globe with SSR disabled
-const Globe = dynamic(() => import("react-globe.gl"), {
-  ssr: false,
-  loading: () => <div className="flex items-center justify-center h-full text-primary animate-pulse">Initializing Geospatial View...</div>
-})
+// Mock implementation of Globe for environments where react-globe.gl is unavailable
+const Globe = React.forwardRef((props: any, ref: any) => {
+  // Mock the ref methods expected by the parent
+  useImperativeHandle(ref, () => ({
+    controls: () => ({ autoRotate: false, autoRotateSpeed: 0 }),
+    pointOfView: () => {},
+  }));
+
+  return (
+    <div
+      style={{ width: props.width, height: props.height }}
+      className="flex flex-col items-center justify-center bg-[#000011] text-slate-500 relative overflow-hidden"
+    >
+      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900 via-slate-900 to-black"></div>
+
+      {/* Central Visual Placeholder */}
+      <div className="z-10 flex flex-col items-center gap-4 p-8 border border-slate-800/50 rounded-2xl bg-slate-950/80 backdrop-blur-md max-w-md text-center shadow-2xl shadow-blue-900/10">
+        <div className="w-16 h-16 rounded-full bg-slate-900/50 flex items-center justify-center border border-slate-800">
+          <GlobeIcon className="w-8 h-8 text-primary/50 animate-pulse" />
+        </div>
+        <div>
+          <h3 className="text-lg font-bold text-slate-300">3D Globe Visualization</h3>
+          <p className="text-xs text-slate-500 mt-1">
+            WebGL rendering is currently unavailable in this environment.
+            <br/>Showing list view of {props.pointsData?.length || 0} supply points.
+          </p>
+        </div>
+
+        {/* Interactive List Placeholder */}
+        <div className="w-full mt-4 max-h-60 overflow-y-auto custom-scrollbar border border-slate-800/50 rounded bg-black/20 text-left">
+           {props.pointsData?.length > 0 ? (
+             <div className="divide-y divide-slate-800/50">
+               {props.pointsData.map((p: any) => (
+                 <div
+                   key={p.id}
+                   className="p-3 cursor-pointer hover:bg-white/5 transition-colors flex items-center justify-between group"
+                   onClick={() => props.onPointClick && props.onPointClick(p)}
+                 >
+                   <div>
+                     <div className="font-medium text-xs text-slate-300 group-hover:text-primary transition-colors">{p.name}</div>
+                     <div className="text-[10px] text-slate-600">{p.country}</div>
+                   </div>
+                   <MapPin className="w-3 h-3 text-slate-700 group-hover:text-primary/70" />
+                 </div>
+               ))}
+             </div>
+           ) : (
+             <div className="p-4 text-center text-xs text-slate-600">No data points available</div>
+           )}
+        </div>
+      </div>
+    </div>
+  );
+});
+
+Globe.displayName = "GlobeMock";
 
 interface SupplyGlobeProps {
   ingredients: Ingredient[]
