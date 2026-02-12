@@ -199,12 +199,9 @@ export function IngredientBrowser({ onAdd }: IngredientBrowserProps) {
                       </TableCell>
                       <TableCell>
                         <div className="flex flex-wrap gap-1">
-                          {ing.olfactiveFamilies.slice(0, 2).map(f => (
+                          {ing.olfactiveFamilies.map(f => (
                             <span key={f} className="text-xs bg-secondary px-1.5 py-0.5 rounded text-secondary-foreground">{f}</span>
                           ))}
-                          {ing.olfactiveFamilies.length > 2 && (
-                            <span className="text-xs text-muted-foreground">+{ing.olfactiveFamilies.length - 2}</span>
-                          )}
                         </div>
                       </TableCell>
                                             <TableCell className="text-right font-mono text-xs">

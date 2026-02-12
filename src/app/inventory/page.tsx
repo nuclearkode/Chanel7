@@ -1,8 +1,6 @@
 "use client"
 
 import React from "react"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import AppSidebar from "@/components/app-sidebar"
 import { IngredientCard } from "@/components/inventory/ingredient-card"
 import { IngredientDetailsPanel } from "@/components/inventory/ingredient-details-panel"
 import { FiltersBar } from "@/components/inventory/filters-bar"
@@ -57,13 +55,9 @@ export default function InventoryPage() {
   }
 
   return (
-    <SidebarProvider>
-      <div className="relative flex min-h-screen w-full bg-background overflow-hidden">
-        <AppSidebar />
-        <SidebarInset>
-          <div className="flex flex-1 overflow-hidden relative h-screen">
-            {/* Left Section: Search & Grid */}
-            <main className="flex-1 flex flex-col h-full overflow-hidden relative z-10 bg-background/50">
+    <div className="flex flex-1 overflow-hidden relative h-screen">
+      {/* Left Section: Search & Grid */}
+      <main className="flex-1 flex flex-col h-full overflow-hidden relative z-10 bg-background/50">
               <Tabs defaultValue="grid" value={viewMode} onValueChange={setViewMode} className="flex-1 flex flex-col overflow-hidden">
                 {/* Sticky Top Bar */}
                 <div className="p-6 pb-4 bg-background/95 backdrop-blur-sm sticky top-0 z-20 border-b border-border/50">
@@ -125,11 +119,8 @@ export default function InventoryPage() {
               </Tabs>
             </main>
 
-            {/* Right Side Panel / Detailed View */}
-            <IngredientDetailsPanel ingredient={selectedIngredient} onAdd={() => selectedIngredient && handleAddToFormula({ stopPropagation: () => {} } as any, selectedIngredient)} />
-          </div>
-        </SidebarInset>
-      </div>
-    </SidebarProvider>
+      {/* Right Side Panel / Detailed View */}
+      <IngredientDetailsPanel ingredient={selectedIngredient} onAdd={() => selectedIngredient && handleAddToFormula({ stopPropagation: () => {} } as any, selectedIngredient)} />
+    </div>
   )
 }

@@ -1,6 +1,4 @@
 "use client"
-import AppSidebar from "@/components/app-sidebar"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -59,13 +57,9 @@ export default function SettingsPage() {
     }
 
   return (
-    <SidebarProvider>
-      <div className="relative flex min-h-screen w-full">
-        <AppSidebar />
-        <SidebarInset>
-          <div className="p-4 sm:p-6 lg:p-8 flex flex-col h-full">
-            <h1 className="text-3xl font-bold text-foreground font-headline mb-6">Settings</h1>
-            <div className="max-w-2xl mx-auto space-y-8">
+    <div className="p-4 sm:p-6 lg:p-8 flex flex-col h-full">
+      <h1 className="text-3xl font-bold text-foreground font-headline mb-6">Settings</h1>
+      <div className="max-w-2xl mx-auto space-y-8">
               <Form {...profileForm}>
                 <form onSubmit={profileForm.handleSubmit(onProfileSubmit)}>
                     <Card>
@@ -155,11 +149,8 @@ export default function SettingsPage() {
                         </CardFooter>
                     </Card>
                 </form>
-              </Form>
-            </div>
-          </div>
-        </SidebarInset>
+        </Form>
       </div>
-    </SidebarProvider>
+    </div>
   )
 }

@@ -2,8 +2,6 @@
 
 import React from "react"
 import Link from "next/link"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import AppSidebar from "@/components/app-sidebar"
 import { FragrancePyramid } from "@/components/dashboard/fragrance-pyramid"
 import {
   Search,
@@ -38,13 +36,9 @@ export default function DashboardPage() {
   const formulasCount = state.formulas.length
 
   return (
-    <SidebarProvider>
-      <div className="relative flex min-h-screen w-full bg-background">
-        <AppSidebar />
-        <SidebarInset>
-          <div className="flex flex-col h-full overflow-hidden relative">
-            {/* Top Bar */}
-            <header className="h-20 bg-background/80 backdrop-blur-md border-b border-border flex items-center justify-between px-8 sticky top-0 z-10">
+    <div className="flex flex-col h-full overflow-hidden relative">
+      {/* Top Bar */}
+      <header className="h-20 bg-background/80 backdrop-blur-md border-b border-border flex items-center justify-between px-8 sticky top-0 z-10">
               <div className="flex flex-col justify-center">
                 <h1 className="text-2xl font-bold font-display tracking-tight">Dashboard</h1>
                 <p className="text-xs text-primary font-medium tracking-wider uppercase">Computational Perfumery & Compliance Engine</p>
@@ -228,11 +222,8 @@ export default function DashboardPage() {
                 <div className="lg:col-span-1 h-full">
                   <FragrancePyramid />
                 </div>
-              </div>
-            </div>
-          </div>
-        </SidebarInset>
+        </div>
       </div>
-    </SidebarProvider>
+    </div>
   )
 }

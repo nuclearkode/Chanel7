@@ -1,8 +1,6 @@
 "use client"
 
 import React from "react"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import AppSidebar from "@/components/app-sidebar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search, Plus, Grid3X3 } from "lucide-react"
@@ -26,13 +24,9 @@ export default function FormulasPage() {
   }
 
   return (
-    <SidebarProvider>
-      <div className="relative flex min-h-screen w-full bg-background overflow-hidden">
-        <AppSidebar />
-        <SidebarInset>
-          <div className="flex flex-col h-full w-full">
-            {/* Top Bar */}
-            <header className="h-16 bg-background/95 backdrop-blur-sm border-b border-border flex items-center justify-between px-6 shrink-0 z-20 sticky top-0">
+    <div className="flex flex-col h-full w-full">
+      {/* Top Bar */}
+      <header className="h-16 bg-background/95 backdrop-blur-sm border-b border-border flex items-center justify-between px-6 shrink-0 z-20 sticky top-0">
               <div className="flex items-center gap-4">
                 <h1 className="text-xl font-bold font-display text-foreground">Formulas & Comparison</h1>
               </div>
@@ -76,14 +70,11 @@ export default function FormulasPage() {
                 </div>
               </section>
 
-              {/* SECTION 2: Comparison Tool */}
-              <section className="mt-8">
-                <ComparisonTool />
-              </section>
-            </div>
-          </div>
-        </SidebarInset>
+        {/* SECTION 2: Comparison Tool */}
+        <section className="mt-8">
+          <ComparisonTool />
+        </section>
       </div>
-    </SidebarProvider>
+    </div>
   )
 }

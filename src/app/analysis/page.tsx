@@ -1,8 +1,6 @@
 "use client"
 
 import React from "react"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import AppSidebar from "@/components/app-sidebar"
 import { Button } from "@/components/ui/button"
 import { Copy, Download, Edit } from "lucide-react"
 import { FragranceRadar } from "@/components/analysis/fragrance-radar"
@@ -21,13 +19,9 @@ export default function AnalysisPage() {
   const updatedTime = activeFormula.updatedAt ? new Date(activeFormula.updatedAt).toLocaleTimeString() : "Unknown"
 
   return (
-    <SidebarProvider>
-      <div className="relative flex min-h-screen w-full bg-background overflow-hidden">
-        <AppSidebar />
-        <SidebarInset>
-          <div className="flex-grow p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6 overflow-y-auto h-screen custom-scrollbar">
-            {/* Header Section */}
-            <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="flex-grow p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6 overflow-y-auto h-full custom-scrollbar">
+      {/* Header Section */}
+      <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-3 mb-1">
                   <h1 className="text-3xl font-bold font-display text-foreground">{activeFormula.name}</h1>
@@ -61,13 +55,10 @@ export default function AnalysisPage() {
               </div>
             </div>
 
-            {/* IFRA Compliance Section */}
-            <section className="mt-6 pb-20">
-              <IFRAComplianceTable items={items} />
-            </section>
-          </div>
-        </SidebarInset>
-      </div>
-    </SidebarProvider>
+      {/* IFRA Compliance Section */}
+      <section className="mt-6 pb-20">
+        <IFRAComplianceTable items={items} />
+      </section>
+    </div>
   )
 }

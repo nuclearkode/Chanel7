@@ -2,6 +2,9 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { PerfumeProvider } from "@/lib/store"
+import { SidebarProvider } from "@/components/ui/sidebar"
+import { AppHeader } from "@/components/app-header"
+import { TacticalAISidebar } from "@/components/tactical-ai-sidebar"
 
 export const metadata: Metadata = {
   title: 'PerFume Lab',
@@ -23,11 +26,19 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
       </head>
-      <body className="font-display antialiased">
+      <body className="font-display antialiased flex flex-col h-screen overflow-hidden">
         <PerfumeProvider>
-          {children}
+          <SidebarProvider defaultOpen={true} className="flex flex-col h-full w-full">
+            <AppHeader />
+            <div className="flex flex-1 overflow-hidden">
+              <TacticalAISidebar />
+              <main className="flex-1 overflow-hidden relative flex flex-col bg-background">
+                {children}
+              </main>
+            </div>
+          </SidebarProvider>
+          <Toaster />
         </PerfumeProvider>
-        <Toaster />
       </body>
     </html>
   );
