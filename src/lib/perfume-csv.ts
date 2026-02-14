@@ -1,7 +1,7 @@
 import 'server-only';
 import fs from 'fs';
 import path from 'path';
-import { Perfume, PerfumeComposition, PerfumeHistory, PerfumeInspiration, PerfumePerformance, PerfumePyramid } from './encyclopedia-data';
+import { Perfume } from './encyclopedia-data';
 
 // Singleton cache
 let cachedPerfumes: Perfume[] | null = null;
@@ -27,6 +27,15 @@ function parseCSVLine(line: string): string[] {
   }
   result.push(current.trim());
   return result;
+}
+
+function toTitleCase(str: string): string {
+  if (!str) return '';
+  return str
+    .split(/[- ]+/) // Split by one or more hyphens or spaces
+    .filter(Boolean) // Remove empty strings
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
 }
 
 async function loadPerfumes(): Promise<Perfume[]> {
@@ -61,10 +70,19 @@ async function loadPerfumes(): Promise<Perfume[]> {
       // 16: mainaccord4
       // 17: mainaccord5
 
-      const name = cols[1] || 'Unknown Perfume';
-      const brand = cols[2] || 'Unknown Brand';
-      const country = cols[3] || 'Unknown';
-      const gender = cols[4] || 'Unisex';
+      // Apply Title Case transformation
+      const rawName = cols[1] || 'Unknown Perfume';
+      const name = toTitleCase(rawName);
+
+      const rawBrand = cols[2] || 'Unknown Brand';
+      const brand = toTitleCase(rawBrand);
+
+      const rawCountry = cols[3] || 'Unknown';
+      const country = toTitleCase(rawCountry);
+
+      const rawGender = cols[4] || 'Unisex';
+      const gender = toTitleCase(rawGender);
+
       const ratingValue = parseFloat((cols[5] || '0').replace(',', '.'));
       const ratingCount = parseInt(cols[6] || '0', 10);
       const year = parseInt(cols[7] || '0', 10);
@@ -73,13 +91,15 @@ async function loadPerfumes(): Promise<Perfume[]> {
       const middleNotes = (cols[9] || '').split(',').map(n => n.trim()).filter(Boolean);
       const baseNotes = (cols[10] || '').split(',').map(n => n.trim()).filter(Boolean);
 
-      const perfumer1 = cols[11];
-      const perfumer2 = cols[12];
+      const perfumer1 = toTitleCase(cols[11] || '');
+      const perfumer2 = toTitleCase(cols[12] || '');
       const nose = [perfumer1, perfumer2].filter(Boolean).join(', ') || 'N/A';
 
       const accords = [cols[13], cols[14], cols[15], cols[16], cols[17]].filter(Boolean);
-      const family = accords[0] || 'Unknown';
-      const tags = accords;
+      const family = accords[0] ? toTitleCase(accords[0]) : 'Unknown';
+
+      // Ensure tags are title cased too
+      const tags = accords.map(t => toTitleCase(t));
 
       // Map to Perfume interface
       const perfume: Perfume = {
@@ -87,7 +107,7 @@ async function loadPerfumes(): Promise<Perfume[]> {
         name,
         brand,
         releaseYear: year || 0,
-        image: '', // No image available
+        image: '', // No image available - will trigger placeholder
         concentration: 'N/A', // Not in CSV
         gender,
         family,
@@ -105,7 +125,7 @@ async function loadPerfumes(): Promise<Perfume[]> {
           top: { notes: topNotes, description: 'Top notes' },
           middle: { notes: middleNotes, description: 'Heart notes' },
           base: { notes: baseNotes, description: 'Base notes' },
-          description: `Characterized by ${accords.slice(0, 3).join(', ')} notes.`,
+          description: `Characterized by ${tags.slice(0, 3).join(', ')} notes.`,
         },
         performance: {
           sillage: 0, // Missing
@@ -116,7 +136,7 @@ async function loadPerfumes(): Promise<Perfume[]> {
         trivia: [
           `Origin: ${country}`,
           `Rated by ${ratingCount} users on Fragrantica`,
-          `Main Accords: ${accords.join(', ')}`
+          `Main Accords: ${tags.join(', ')}`
         ],
       };
 
