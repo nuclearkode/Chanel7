@@ -63,6 +63,47 @@ export type HistoryEntry = {
   details?: string;
 };
 
+// --- Visual Lab Types ---
+
+export type ConnectionType = 'boost' | 'suppress' | 'blend';
+
+export interface VisualConnection {
+  id: string;
+  source: string;
+  target: string;
+  type: ConnectionType;
+  strength: number; // 0-1
+}
+
+export interface VisualNodeMeta {
+  id: string;
+  ingredientId?: string; // Link to formula item (undefined for accord/output/utility nodes)
+  type: 'ingredient' | 'accord' | 'output';
+  position: { x: number; y: number };
+
+  // Custom metadata for visualization
+  label?: string;
+  color?: string;
+  description?: string;
+
+  // For Accords/Groups
+  children?: string[]; // IDs of child nodes
+  collapsed?: boolean;
+}
+
+export interface VisualGroup {
+  id: string;
+  label: string;
+  nodeIds: string[];
+  color?: string;
+}
+
+export interface VisualLayout {
+  nodes: VisualNodeMeta[];
+  connections: VisualConnection[];
+  groups: VisualGroup[];
+}
+
 export type Formula = {
   id: string;
   name: string;
@@ -79,4 +120,7 @@ export type Formula = {
   createdAt?: string;
   updatedAt?: string;
   history?: HistoryEntry[];
+
+  // Visual Editor State
+  visualLayout?: VisualLayout;
 };

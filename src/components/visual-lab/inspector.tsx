@@ -1,11 +1,13 @@
 import React from 'react'
-import { VisualNode } from './types'
-import { Info, Settings, AlertTriangle, CheckCircle, Sparkles, BrainCircuit } from 'lucide-react'
+import { VisualNode, Connection } from './types'
+import { Info, Settings, AlertTriangle, CheckCircle, Sparkles, BrainCircuit, Unplug, Zap, activity } from 'lucide-react'
 import { cn } from "@/lib/utils"
 import { AiAnalysisPanel } from "./ai-analysis-panel"
 import { Activity } from "lucide-react"
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Slider } from "@/components/ui/slider"
+import { usePerfume } from "@/lib/store"
 
 interface InspectorProps {
   selectionData: {
@@ -14,9 +16,27 @@ interface InspectorProps {
       nodes?: VisualNode[]
   } | null
   allNodes?: VisualNode[]
+  allConnections?: Connection[]
+  onUpdateConnection?: (id: string, updates: Partial<Connection>) => void
 }
 
-export function InspectorComponent({ selectionData, allNodes = [] }: InspectorProps) {
+export function InspectorComponent({ selectionData, allNodes = [], allConnections = [], onUpdateConnection }: InspectorProps) {
+  const { dispatch, state } = usePerfume()
+  const { activeFormula } = state
+
+  // Handle concentration change
+  const handleConcentrationChange = (node: VisualNode, newVal: number) => {
+      if (node.type === 'ingredient' && node.data.ingredient) {
+          // Calculate amount from percentage
+          // targetTotal * percentage / 100
+          const amount = (activeFormula.targetTotal || 100) * newVal / 100
+          dispatch({
+              type: "UPDATE_QUANTITY",
+              payload: { ingredientId: node.data.ingredient.id, amount }
+          })
+      }
+  }
+
   if (!selectionData) {
     return (
       <aside className="w-96 bg-zinc-950 border-l border-slate-800 flex flex-col z-30 shadow-xl h-full overflow-y-auto custom-scrollbar">
@@ -55,6 +75,15 @@ export function InspectorComponent({ selectionData, allNodes = [] }: InspectorPr
   if (selectionData.type === 'multi' && selectionData.nodes) {
       const nodes = selectionData.nodes
 
+      // Check for connection between exactly 2 nodes
+      let activeConnection: Connection | undefined
+      if (nodes.length === 2) {
+          activeConnection = allConnections.find(c =>
+              (c.source === nodes[0].id && c.target === nodes[1].id) ||
+              (c.source === nodes[1].id && c.target === nodes[0].id)
+          )
+      }
+
       return (
         <aside className="w-96 bg-zinc-950 border-l border-slate-800 flex flex-col z-30 shadow-xl h-full overflow-y-auto custom-scrollbar">
             <div className="p-6 border-b border-slate-800 bg-gradient-to-b from-purple-500/10 to-transparent">
@@ -66,6 +95,48 @@ export function InspectorComponent({ selectionData, allNodes = [] }: InspectorPr
             </div>
 
             <div className="p-6 space-y-6">
+
+                {/* Connection Editor */}
+                {activeConnection && onUpdateConnection && (
+                    <div className="bg-zinc-900/50 border border-slate-700 rounded-lg p-4 space-y-4">
+                        <div className="flex items-center gap-2 text-sm font-medium text-slate-200">
+                            <Zap className="w-4 h-4 text-amber-400" />
+                            <span>Active Link</span>
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-2">
+                            {['blend', 'boost', 'suppress'].map(t => (
+                                <button
+                                    key={t}
+                                    onClick={() => onUpdateConnection(activeConnection!.id, { type: t as any })}
+                                    className={cn(
+                                        "px-2 py-1.5 text-xs rounded border capitalize transition-colors",
+                                        activeConnection?.type === t
+                                            ? "bg-primary/20 border-primary text-primary"
+                                            : "bg-zinc-900 border-slate-700 text-slate-400 hover:text-slate-200"
+                                    )}
+                                >
+                                    {t}
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="space-y-2">
+                             <div className="flex justify-between text-xs text-slate-400">
+                                 <span>Strength</span>
+                                 <span>{Math.round((activeConnection.strength || 0.5) * 100)}%</span>
+                             </div>
+                             <input
+                                type="range"
+                                min="0" max="1" step="0.1"
+                                value={activeConnection.strength || 0.5}
+                                onChange={(e) => onUpdateConnection(activeConnection!.id, { strength: parseFloat(e.target.value) })}
+                                className="w-full accent-cyan-500"
+                             />
+                        </div>
+                    </div>
+                )}
+
                 <AiAnalysisPanel key={nodes.map(n => n.id).join(',')} nodes={nodes} />
 
                 <div>
@@ -74,7 +145,7 @@ export function InspectorComponent({ selectionData, allNodes = [] }: InspectorPr
                         {nodes.map(n => (
                             <div key={n.id} className="flex items-center justify-between p-2 bg-zinc-900 rounded border border-slate-800">
                                 <span className="text-sm text-slate-300">{n.data.label}</span>
-                                <span className="text-xs font-mono text-slate-500">{n.data.concentration}%</span>
+                                <span className="text-xs font-mono text-slate-500">{n.data.concentration?.toFixed(1)}%</span>
                             </div>
                         ))}
                     </div>
@@ -123,6 +194,23 @@ export function InspectorComponent({ selectionData, allNodes = [] }: InspectorPr
 
       {/* Content */}
       <div className="flex-1 p-6 space-y-6">
+
+        {/* Concentration Slider (Step 5 feature, added now for convenience) */}
+        {type === 'ingredient' && (
+            <div className="bg-zinc-900/50 p-4 rounded-lg border border-slate-800">
+                <div className="flex justify-between items-center mb-2">
+                    <span className="text-xs font-medium text-slate-300 uppercase tracking-wider">Concentration</span>
+                    <span className="text-sm font-mono text-cyan-400">{data.concentration?.toFixed(2)}%</span>
+                </div>
+                <input
+                    type="range"
+                    min="0" max="100" step="0.1"
+                    value={data.concentration || 0}
+                    onChange={(e) => handleConcentrationChange(selectedNode, parseFloat(e.target.value))}
+                    className="w-full accent-cyan-500 h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer"
+                />
+            </div>
+        )}
 
         {/* Ingredient Specifics */}
         {type === 'ingredient' && ingredient && (

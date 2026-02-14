@@ -1,11 +1,11 @@
-import { Ingredient } from "@/lib/types"
+import { Ingredient, ConnectionType } from "@/lib/types"
 
 export type NodeType = 'ingredient' | 'accord' | 'output'
 
 export interface NodeData {
   ingredient?: Ingredient
   label: string
-  concentration?: number // Percentage in formula
+  concentration?: number // Percentage in formula (calculated)
   items?: VisualNode[] // For accord/macro nodes
   color?: string
   description?: string
@@ -26,6 +26,8 @@ export interface Connection {
   id: string
   source: string
   target: string
+  type: ConnectionType
+  strength: number // 0-1
 }
 
 export interface DragItem {
