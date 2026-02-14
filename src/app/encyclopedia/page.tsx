@@ -27,6 +27,7 @@ import {
   AlertCircle
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { PerfumePlaceholder } from "@/components/encyclopedia/perfume-placeholder"
 
 export default function EncyclopediaPage() {
   const [selectedPerfume, setSelectedPerfume] = useState<Perfume | null>(null)
@@ -124,11 +125,12 @@ export default function EncyclopediaPage() {
                     </Badge>
                   </div>
                 )}
-                <div className="h-48 bg-secondary/30 flex items-center justify-center p-4 relative overflow-hidden">
-                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                   <div className="w-full h-full flex items-center justify-center text-muted-foreground/20 font-bold text-4xl select-none">
-                      {perfume.name.charAt(0)}
-                   </div>
+                <div className="h-48 bg-secondary/30 relative overflow-hidden">
+                   {perfume.image ? (
+                     <img src={perfume.image} alt={perfume.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                   ) : (
+                     <PerfumePlaceholder name={perfume.name} brand={perfume.brand} family={perfume.family} className="w-full h-full" />
+                   )}
                 </div>
                 <div className="p-4">
                   <div className="flex justify-between items-start mb-2">
@@ -207,9 +209,13 @@ export default function EncyclopediaPage() {
           <div className="flex-1 overflow-hidden flex flex-col lg:flex-row">
              {/* Left Panel */}
              <div className="w-full lg:w-1/3 xl:w-1/4 p-6 overflow-y-auto border-r border-border bg-muted/10">
-               <div className="relative w-full aspect-square mb-6 bg-secondary/20 rounded-xl flex items-center justify-center p-6 border border-border">
-                  <div className="text-6xl font-bold text-muted-foreground/20">{selectedPerfume.name.charAt(0)}</div>
-                  <div className="absolute bottom-4 left-4">
+               <div className="relative w-full aspect-square mb-6 bg-secondary/20 rounded-xl border border-border overflow-hidden">
+                  {selectedPerfume.image ? (
+                    <img src={selectedPerfume.image} alt={selectedPerfume.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <PerfumePlaceholder name={selectedPerfume.name} brand={selectedPerfume.brand} family={selectedPerfume.family} />
+                  )}
+                  <div className="absolute bottom-4 left-4 z-10 bg-background/80 backdrop-blur px-3 py-2 rounded-md border border-border/50 shadow-sm">
                     <div className="flex flex-col">
                       <span className="text-[10px] text-muted-foreground uppercase tracking-widest mb-1">Concentration</span>
                       <span className="text-sm font-mono font-bold">{selectedPerfume.concentration === 'EdP' ? 'Eau de Parfum' : selectedPerfume.concentration === 'Ext' ? 'Extrait de Parfum' : selectedPerfume.concentration}</span>
