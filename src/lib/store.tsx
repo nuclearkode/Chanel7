@@ -2,8 +2,8 @@
 
 import { importedMaterials } from "@/lib/materials-data"
 
-import React, { createContext, useContext, useReducer } from "react"
-import { type Ingredient, type Formula, type FormulaItem } from "@/lib/types"
+import React, { createContext, useContext, useReducer, useEffect } from "react"
+import { type Ingredient, type Formula, type FormulaItem, type VisualLayout } from "@/lib/types"
 import { v4 as uuidv4 } from "uuid"
 import { PCW_INVENTORY } from "@/lib/data/pcw-ingredients"
 
@@ -286,7 +286,8 @@ const INITIAL_FORMULA: Formula = {
       action: "Created Formula",
       details: "Initial formula creation"
     }
-  ]
+  ],
+  visualLayout: { nodes: [], connections: [], groups: [] }
 }
 
 // --- Context & Reducer ---
@@ -295,6 +296,7 @@ type State = {
   inventory: Ingredient[]
   formulas: Formula[]
   activeFormula: Formula
+  isHydrated?: boolean
 }
 
 type Action =
@@ -307,11 +309,14 @@ type Action =
   | { type: "SAVE_FORMULA" }
   | { type: "LOAD_FORMULA"; payload: string } // formulaId
   | { type: "CLEAR_FORMULA" }
+  | { type: "UPDATE_VISUAL_LAYOUT"; payload: VisualLayout }
+  | { type: "HYDRATE"; payload: State }
 
 const initialState: State = {
   inventory: INITIAL_INVENTORY,
   formulas: [INITIAL_FORMULA],
   activeFormula: INITIAL_FORMULA,
+  isHydrated: false,
 }
 
 // Helper to add history
@@ -356,10 +361,17 @@ function perfumeReducer(state: State, action: Action): State {
       const newItems = currentItems.filter(item => item.ingredient.id !== action.payload)
       const newIngredients = syncIngredients(newItems, state.activeFormula.targetTotal || 100)
 
+      // Also remove from visual layout
+      const currentVisuals = state.activeFormula.visualLayout || { nodes: [], connections: [], groups: [] }
+      const newNodes = currentVisuals.nodes.filter(n => n.ingredientId !== action.payload)
+      const removedNodeIds = currentVisuals.nodes.filter(n => n.ingredientId === action.payload).map(n => n.id)
+      const newConnections = currentVisuals.connections.filter(c => !removedNodeIds.includes(c.source) && !removedNodeIds.includes(c.target))
+
       const updatedFormula = {
         ...state.activeFormula,
         items: newItems,
         ingredients: newIngredients,
+        visualLayout: { ...currentVisuals, nodes: newNodes, connections: newConnections }
       }
 
       return {
@@ -456,9 +468,26 @@ function perfumeReducer(state: State, action: Action): State {
           targetTotal: 100,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-          history: []
+          history: [],
+          visualLayout: { nodes: [], connections: [], groups: [] }
         }
       }
+    }
+    case "UPDATE_VISUAL_LAYOUT": {
+      return {
+        ...state,
+        activeFormula: {
+          ...state.activeFormula,
+          visualLayout: action.payload
+        }
+      }
+    }
+    case "HYDRATE": {
+      // Merge saved state with initial state structure if needed, or just replace
+      // Ensuring inventory is fresh in case imports changed is often good practice, but for full persistence we might want the saved inventory too if users can add custom ingredients.
+      // For now, let's trust the saved state but maybe refresh the PCW inventory if needed?
+      // Let's stick to simple replacement for now as per requirements.
+      return { ...action.payload, isHydrated: true }
     }
     default:
       return state
@@ -473,8 +502,36 @@ const PerfumeContext = createContext<{
   dispatch: () => null,
 })
 
+const LOCAL_STORAGE_KEY = "perfume-lab-state-v1"
+
 export function PerfumeProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(perfumeReducer, initialState)
+
+  // Load from local storage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEY)
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        // Ensure activeFormula has visualLayout if missing in saved state
+        if (!parsed.activeFormula.visualLayout) {
+            parsed.activeFormula.visualLayout = { nodes: [], connections: [], groups: [] }
+        }
+        dispatch({ type: "HYDRATE", payload: parsed })
+      } catch (e) {
+        console.error("Failed to load state", e)
+      }
+    } else {
+        dispatch({ type: "HYDRATE", payload: initialState })
+    }
+  }, [])
+
+  // Save to local storage on change
+  useEffect(() => {
+    if (state.isHydrated) {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state))
+    }
+  }, [state])
 
   return (
     <PerfumeContext.Provider value={{ state, dispatch }}>
