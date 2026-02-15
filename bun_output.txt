@@ -29,3 +29,20 @@ https://nextjs.org/telemetry
  GET /lab 200 in 656ms
  GET /lab 200 in 634ms
  GET /lab 200 in 647ms
+ ✓ Compiled in 14.4s (3486 modules)
+ ✓ Compiled in 3.6s (3488 modules)
+ ✓ Compiled in 6.3s (3488 modules)
+ GET /lab 200 in 2183ms
+ GET /lab 200 in 927ms
+ GET /lab 200 in 659ms
+ GET /lab 200 in 646ms
+ ✓ Compiled in 1855ms (3488 modules)
+ GET /lab 200 in 1664ms
+ GET /lab 200 in 835ms
+ GET /lab 200 in 856ms
+ GET /lab 200 in 857ms
+ GET /lab 200 in 969ms
+ ✓ Compiled in 2s (3488 modules)
+ GET /lab 200 in 1559ms
+ GET /lab 200 in 887ms
+ ✓ Compiled in 1712ms (3488 modules)

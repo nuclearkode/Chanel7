@@ -110,14 +110,14 @@ export function VisualEditor() {
               }
               // If item not found, skip (it was removed from formula)
           } else if (meta.type === 'accord') {
-             // Reconstruct accord node (simplified for now, deep reconstruction would require recursion)
+             // Reconstruct accord node
              newNodes.push({
                  id: meta.id,
                  type: 'accord',
                  data: {
                      label: meta.label || 'Accord',
-                     items: [], // Populated later if needed, or we rely on groups
-                     concentration: 100, // Placeholder
+                     items: [],
+                     concentration: 100,
                      color: meta.color,
                      description: meta.description
                  },
@@ -165,20 +165,7 @@ export function VisualEditor() {
       setConnections(newConns)
       setGroups(newGroups)
 
-      // If we added default nodes for new items, save the layout immediately so positions persist
-      if (newNodesAdded) {
-          // We use a timeout to avoid dispatching during render if this effect runs synchronously?
-          // Actually effects run after render.
-          // However, we want to avoid infinite loops.
-          // newNodesAdded is true only if layout was missing items.
-          // Dispatching will trigger this effect again, but next time exists will be true.
-          // To be safe, we can defer it or rely on user action.
-          // But "instant gratification" means seeing it.
-          // Let's defer commit to user action OR strictly check layout mismatch.
-          // For now, let's NOT auto-commit, just render. User moves -> commit.
-      }
-
-  }, [activeFormula, draggingNodeId]) // Dependency on activeFormula ensures updates when formula changes
+  }, [activeFormula, draggingNodeId])
 
   // --- Handlers ---
 
@@ -205,17 +192,15 @@ export function VisualEditor() {
       const x = (e.clientX - rect.left - pan.x) / scale
       const y = (e.clientY - rect.top - pan.y) / scale
 
-      // 1. Dispatch to Store (Add Ingredient)
       dispatch({ type: "ADD_TO_FORMULA", payload: ingredient })
 
-      // 2. Create Visual Node locally immediately for feedback
       const newNode: VisualNode = {
         id: uuidv4(),
         type: 'ingredient',
         data: {
           ingredient,
           label: ingredient.name,
-          concentration: 0, // Starts at 0 in store
+          concentration: 0,
           color: 'bg-primary',
           description: ingredient.description
         },
@@ -225,8 +210,6 @@ export function VisualEditor() {
       const nextNodes = [...nodes, newNode]
       setNodes(nextNodes)
       setSelectedNodeIds([newNode.id])
-
-      // 3. Commit Layout (Save Position)
       commitLayout(nextNodes, connections, groups)
 
     } catch (err) {
@@ -302,7 +285,6 @@ export function VisualEditor() {
   }
 
   const handlePointerUp = (e: React.PointerEvent) => {
-    // If we were dragging, commit the new positions
     if (draggingNodeId) {
         commitLayout(nodes, connections, groups)
     }
@@ -380,48 +362,15 @@ export function VisualEditor() {
   }
 
   const handleCollapseGroup = () => {
-     // Simplified implementation for now - just UI logic, skipping full persistence complexity for accord collapsing in this step
-     // Ideally collapsing creates a new node in store and hides others.
-     // For this plan, I'll keep it local-ish or defer full refactor of collapsing to a later step if needed.
-     // But to keep it working:
       if (!selectedGroupId) return
-      const group = groups.find(g => g.id === selectedGroupId)
-      if (!group) return
-
-      const memberNodes = nodes.filter(n => group.nodeIds.includes(n.id))
-      if (memberNodes.length === 0) return
-
-      const avgX = memberNodes.reduce((sum, n) => sum + n.position.x, 0) / memberNodes.length
-      const avgY = memberNodes.reduce((sum, n) => sum + n.position.y, 0) / memberNodes.length
-
-      const macroNode: VisualNode = {
-          id: uuidv4(),
-          type: 'accord',
-          data: {
-              label: group.label,
-              items: memberNodes,
-              totalWeight: memberNodes.reduce((sum, n) => sum + (n.data.concentration || 0), 0),
-              concentration: 100,
-              description: `Collapsed from ${memberNodes.length} nodes.`
-          },
-          position: { x: avgX, y: avgY }
-      }
-
-      // We remove members from visual view but they exist in formula.
-      // This is tricky. If we remove them from 'nodes', the sync effect might re-add them as ingredients!
-      // To properly support accords, the 'syncVisualNodes' logic needs to know about hidden nodes.
-      // For now, let's DISABLE collapsing until we handle "hidden by accord" state,
-      // OR we just mark them as hidden in metadata?
-      // Let's defer this specific feature fix to ensure the core persistence works first.
       console.warn("Collapsing temporarily disabled during refactor to ensure data integrity.")
   }
 
   const handleExpandGroup = () => {
-      // Similar complexity.
+      // Disabled for now
   }
 
   const handleBridgeNodes = () => {
-      // Keep mocked for now, but save to store
       if (selectedNodeIds.length !== 2) return
       const nodeA = nodes.find(n => n.id === selectedNodeIds[0])
       const nodeB = nodes.find(n => n.id === selectedNodeIds[1])
@@ -432,14 +381,8 @@ export function VisualEditor() {
       const bridgeX = midX
       const bridgeY = midY + 100
 
-      // Bridge is a suggestion, it's not in formula yet unless we add it?
-      // The mock created a visual node with ingredient data.
-      // If we want it to be real, we must add to formula.
-      // For now, let's just make it a visual annotation?
-      // Or better, let's actually add the mock ingredient to formula!
-
       const bridgeIngredient: Ingredient = {
-          id: uuidv4(), // New instance
+          id: uuidv4(),
           name: 'Hedione (Bridge)',
           vendor: 'Generic',
           cost: 10,
@@ -455,8 +398,6 @@ export function VisualEditor() {
 
       dispatch({ type: "ADD_TO_FORMULA", payload: bridgeIngredient })
 
-      // Visual placement handled by sync or manual add:
-      // We manually add visual node to position it correctly
       const bridgeNode: VisualNode = {
           id: uuidv4(),
           type: 'ingredient',
@@ -485,13 +426,10 @@ export function VisualEditor() {
 
 
   const handleDelete = (id: string) => {
-      // If it's an ingredient node, we should remove from formula
       const node = nodes.find(n => n.id === id)
       if (node && node.type === 'ingredient' && node.data.ingredient) {
           dispatch({ type: "REMOVE_FROM_FORMULA", payload: node.data.ingredient.id })
-          // The effect will handle visual removal
       } else {
-          // Just a visual node (accord/output)
           const nextNodes = nodes.filter(n => n.id !== id)
           const nextConns = connections.filter(c => c.source !== id && c.target !== id)
           setNodes(nextNodes)
@@ -501,20 +439,28 @@ export function VisualEditor() {
       setSelectedNodeIds(prev => prev.filter(nid => nid !== id))
   }
 
-  const handleConnectionUpdate = (id: string, updates: Partial<Connection>) => { const nextConns = connections.map(c => c.id === id ? { ...c, ...updates } : c); setConnections(nextConns); commitLayout(nodes, nextConns, groups) }
-
   const handleNodeUpdate = (id: string, updates: Partial<VisualNode['data']>) => {
-      // Mostly used for visual updates. If modifying concentration, we should use dispatch.
-      // But for color/label:
       const nextNodes = nodes.map(n => n.id === id ? { ...n, data: { ...n.data, ...updates } } : n)
       setNodes(nextNodes)
       commitLayout(nextNodes, connections, groups)
   }
 
+  const handleConnectionUpdate = (id: string, updates: Partial<Connection>) => {
+      const nextConns = connections.map(c => c.id === id ? { ...c, ...updates } : c);
+      setConnections(nextConns);
+      commitLayout(nodes, nextConns, groups)
+  }
+
+  // --- New Group Update Logic ---
+  const handleGroupUpdate = (id: string, updates: Partial<AccordGroup>) => {
+      const nextGroups = groups.map(g => g.id === id ? { ...g, ...updates } : g)
+      setGroups(nextGroups)
+      commitLayout(nodes, connections, nextGroups)
+  }
+
   // --- Inspector Data ---
   const getInspectorData = () => {
       if (selectedGroupId) {
-          // Group logic
            const group = groups.find(g => g.id === selectedGroupId)
            if (!group) return null
            return {
@@ -522,9 +468,16 @@ export function VisualEditor() {
                node: {
                    id: group.id,
                    type: 'accord' as const,
-                   data: { label: group.label, items: nodes.filter(n => group.nodeIds.includes(n.id)), concentration: 100, description: "Group" },
+                   data: {
+                        label: group.label,
+                        items: nodes.filter(n => group.nodeIds.includes(n.id)),
+                        concentration: 100,
+                        description: "Group",
+                        color: group.color // Pass color for visual feedback in Inspector
+                   },
                    position: {x:0, y:0}
-               }
+               },
+               group: group // Explicit group data
            }
       }
       if (selectedNodeIds.length === 1) {
@@ -538,10 +491,11 @@ export function VisualEditor() {
   }
 
   return (
-    <div className="flex h-full w-full bg-zinc-950 overflow-hidden text-slate-200 font-sans select-none">
+    <div className="flex h-full w-full bg-zinc-950 overflow-hidden text-slate-200 font-sans select-none flex-col md:flex-row">
+      {/* Sidebar - Wrapped in div to ensure correct flex behavior if needed, but flex-col on container handles it */}
       <SidebarComponent onDragStart={handleSidebarDragStart} />
 
-      <div className="flex-1 relative flex flex-col min-w-0">
+      <div className="flex-1 relative flex flex-col min-w-0 h-full">
         <div className="absolute top-6 left-6 z-20 flex flex-col gap-2">
             <div className="bg-zinc-900 border border-slate-700 rounded-lg shadow-lg flex flex-col p-1">
                 <button
@@ -561,7 +515,7 @@ export function VisualEditor() {
                 {selectedNodeIds.length > 1 && (
                     <button
                         className="p-2 rounded transition-colors text-amber-500 hover:bg-amber-500/10"
-                        onClick={handleCreateGroup}
+                        title="Group Selection" onClick={handleCreateGroup}
                     >
                         <BoxSelect className="w-5 h-5" />
                     </button>
@@ -690,7 +644,24 @@ export function VisualEditor() {
 
       </div>
 
-      <InspectorComponent selectionData={getInspectorData()} allNodes={nodes} allConnections={connections} onUpdateConnection={handleConnectionUpdate} />
+      <InspectorComponent
+          selectionData={getInspectorData()}
+          allNodes={nodes}
+          allConnections={connections}
+          onUpdateConnection={handleConnectionUpdate}
+          onUpdateGroup={handleGroupUpdate}
+      />
     </div>
   )
+}
+
+const getNodeCenter = (node: VisualNode) => {
+    const dims = NODE_DIMENSIONS[node.type] || NODE_DIMENSIONS.ingredient
+    const width = dims.width
+    const height = dims.height
+
+    return {
+        input: { x: node.position.x, y: node.position.y + height / 2 },
+        output: { x: node.position.x + width, y: node.position.y + height / 2 }
+    }
 }
